@@ -9,15 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100624122823) do
+ActiveRecord::Schema.define(:version => 20100624163517) do
 
   create_table "events", :force => true do |t|
-    t.string   "location",                      :null => false
-    t.text     "benefit",                       :null => false
+    t.string   "location",                         :null => false
+    t.text     "benefit",                          :null => false
     t.text     "notes"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.boolean  "live_in",    :default => false
+    t.boolean  "live_in",       :default => false
+    t.integer  "instructor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,6 +32,41 @@ ActiveRecord::Schema.define(:version => 20100624122823) do
     t.string   "persistence_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "manikins", :force => true do |t|
+    t.string  "name"
+    t.string  "serial_number"
+    t.string  "type"
+    t.boolean "oos"
+  end
+
+  create_table "scenario_templates", :force => true do |t|
+    t.string   "title",            :null => false
+    t.text     "equipment"
+    t.boolean  "staff_support"
+    t.boolean  "moulage"
+    t.text     "notes"
+    t.text     "support_material"
+    t.text     "description"
+    t.boolean  "video"
+    t.boolean  "mobile"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "manikin_id"
+  end
+
+  create_table "scenarios", :force => true do |t|
+    t.text    "equipment"
+    t.boolean "staff_support"
+    t.boolean "moulage"
+    t.text    "notes"
+    t.text    "support_material"
+    t.text    "description"
+    t.boolean "video"
+    t.boolean "mobile"
+    t.integer "event_id"
+    t.integer "manikin_id"
   end
 
 end
