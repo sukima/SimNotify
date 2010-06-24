@@ -1,0 +1,24 @@
+<% title "Sign up" %>
+
+<p>Already have an account? <%= link_to "Log in", login_path %>.</p>
+
+<% form_for @instructor do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :email, "Email Address" %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :office %><br />
+    <%= f.password_field :office %>
+  </p>
+  <p>
+    <%= f.label :phone %><br />
+    <%= f.password_field :phone %>
+  </p>
+  <p><%= f.submit "Sign up" %></p>
+<% end %>
