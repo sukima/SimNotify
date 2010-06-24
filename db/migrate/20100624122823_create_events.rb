@@ -7,7 +7,7 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime :start_time
       t.datetime :end_time
       t.boolean :live_in, :default => false
-      t.reference :instructor
+      t.references :instructor
       t.timestamps
     end
   end
