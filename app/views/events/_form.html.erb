@@ -1,0 +1,28 @@
+<% form_for @event do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    <%= f.label :benefit %><br />
+    <%= f.text_area :benefit %>
+  </p>
+  <p>
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </p>
+  <p>
+    <%= f.label :start_time %><br />
+    <%= f.datetime_select :start_time %>
+  </p>
+  <p>
+    <%= f.label :end_time %><br />
+    <%= f.datetime_select :end_time %>
+  </p>
+  <p>
+    <%= f.label :live_in %><br />
+    <%= f.check_box :live_in %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
