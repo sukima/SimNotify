@@ -1,0 +1,83 @@
+SimNotify
+=========
+
+SimNotify is a simple web app designed to make it easy for instructors to
+schedule a class (Event) and register equipment needs. Basically it is a
+simple form that they can fill out and the system will store the information
+and then send a notification to the administrator(s) who will accept, reject,
+coordinate, and schedule.
+
+Requirements
+============
+
+Phase 1
+-------
+1. An instructor can register and login
+2. An instructor can submit an event
+3. event submissions will send a notification (email?) to a designated
+   administrator.
+4. Every event has one Instructor, Instructors can have many Events.
+5. Events have many scenarios, Scenarios can be in many events.
+6. A scenario has one manikin. A manikin can be in many scenarios.
+7. An event can be a "live in" were the there is a manikin (which implies a
+   scenario) that stays in use for the duration.
+
+Phase 2
+-------
+1. Instructors can see the calendar of Events.
+2. Events can have a accept reject option.
+3. Acceptance and rejects have email confirmations.
+4. Entering data can be picked from prior templates and/or walk the instructor
+   through the process using a wizard style setup.
+5. Application will determine if a manikin is available based on if it's in
+   service or not and if it is in use or not.
+
+Data Model
+==========
+
+       ,---------------------.      ,------------.
+       | instructor          |<--.  | event      |
+       |---------------------|   |  |------------|
+       | name                |   |  | location   |
+       | email               |   |  | benefit    |
+       | office              |   |  | notes      |
+       | phone               |   |  | start_time |
+       | admin?              |   |  | end_time   |
+       | (acts_as_authentic) |   |  | live_in    |
+       `---------------------'   `--| instructor |
+                                 ,--| scenarios  |
+       ,---------------------.   |  `------------'
+    ...| scenario            |<<-'
+    .  |---------------------|      ,-------------------.
+    .  | equipment           |......| equipment_suggest |
+    .  | staff_support?      |      |-------------------|
+    .  | moulage?            |      | name              |
+    .  | notes               |      `-------------------'
+    .  | support_material    |
+    .  | description         |      ,---------------.
+    .  | video?              |  ,-->| manikin       |
+    .  | mobile?             |  |   |---------------|
+    .  | manikin             |--'   | name          |
+    .  `---------------------'      | serial_number |
+    .                               | type          |
+    .  ,-------------------.        | oos?          |
+    ...| scenario_template |        `---------------'
+       |-------------------|
+       | title             |
+       | equipment         |
+       | staff_support?    |
+       | moulage?          |
+       | notes             |
+       | support_material  |
+       | description       |
+       | video?            |
+       | mobile?           |
+       | manikin           |
+       `-------------------'
+
+Notes
+=====
+
+What we are looking at is a simple data entry form with a basic relational
+data model. The interface is not the concern yet. Just the ability to enter
+data. Data management is for later.
