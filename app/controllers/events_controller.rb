@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_filter :login_required
+
   def index
     @events = Event.all
   end
@@ -13,6 +15,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
+    @event.instructor = @current_instructor
     if @event.save
       flash[:notice] = "Successfully created event."
       redirect_to @event
