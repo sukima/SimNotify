@@ -32,5 +32,13 @@
     <div class="value-description">
     </div>
   </p>
+  <p class="value-entry">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p class="value-entry">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
   <p><%= f.submit "Sign up" %></p>
 <% end %>
