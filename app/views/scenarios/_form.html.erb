@@ -1,0 +1,37 @@
+<% form_for @scenario do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :event_id %>
+  <p>
+    <%= f.label :equipment %><br />
+    <%= f.text_area :equipment %>
+  </p>
+  <p>
+    <%= f.label :staff_support %><br />
+    <%= f.check_box :staff_support %>
+  </p>
+  <p>
+    <%= f.label :moulage %><br />
+    <%= f.check_box :moulage %>
+  </p>
+  <p>
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </p>
+  <p>
+    <%= f.label :support_material %><br />
+    <%= f.text_area :support_material %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :video %><br />
+    <%= f.check_box :video %>
+  </p>
+  <p>
+    <%= f.label :mobile %><br />
+    <%= f.check_box :mobile %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

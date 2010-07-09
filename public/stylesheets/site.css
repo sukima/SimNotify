@@ -1,0 +1,21 @@
+/* Custom look and feel */
+
+.box {
+  margin: 20px auto 0px auto;
+  background-color: #FFF;
+  padding: 5px 40px;
+}
+
+.border {
+  border: solid 1px black;
+}
+
+.scenario-title {
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.scenario-title span {
+  padding: 0px 5px 10px 5px;
+  border-bottom: solid thin black;
+}

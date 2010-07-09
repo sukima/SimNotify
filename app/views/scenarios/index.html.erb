@@ -1,0 +1,35 @@
+<% title "Scenarios" %>
+
+<table>
+  <tr>
+    <th>Equipment</th>
+    <th>Staff Support</th>
+    <th>Moulage</th>
+    <th>Notes</th>
+    <th>Support Material</th>
+    <th>Description</th>
+    <th>Video</th>
+    <th>Mobile</th>
+    <th>Event</th>
+    <th>Manikin</th>
+  </tr>
+  <% for scenario in @scenarios %>
+    <tr>
+      <td><%=h scenario.equipment %></td>
+      <td><%=h scenario.staff_support %></td>
+      <td><%=h scenario.moulage %></td>
+      <td><%=h scenario.notes %></td>
+      <td><%=h scenario.support_material %></td>
+      <td><%=h scenario.description %></td>
+      <td><%=h scenario.video %></td>
+      <td><%=h scenario.mobile %></td>
+      <td><%=h scenario.event_id %></td>
+      <td><%=h scenario.manikin_id %></td>
+      <td><%= link_to "Show", scenario %></td>
+      <td><%= link_to "Edit", edit_scenario_path(scenario) %></td>
+      <td><%= link_to "Destroy", scenario, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Scenario", new_scenario_path %></p>

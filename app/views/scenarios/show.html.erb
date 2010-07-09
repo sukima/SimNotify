@@ -1,0 +1,48 @@
+<% title "Scenario" %>
+
+<p>
+  <strong>Equipment:</strong>
+  <%=h @scenario.equipment %>
+</p>
+<p>
+  <strong>Staff Support:</strong>
+  <%=h @scenario.staff_support %>
+</p>
+<p>
+  <strong>Moulage:</strong>
+  <%=h @scenario.moulage %>
+</p>
+<p>
+  <strong>Notes:</strong>
+  <%=h @scenario.notes %>
+</p>
+<p>
+  <strong>Support Material:</strong>
+  <%=h @scenario.support_material %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @scenario.description %>
+</p>
+<p>
+  <strong>Video:</strong>
+  <%=h @scenario.video %>
+</p>
+<p>
+  <strong>Mobile:</strong>
+  <%=h @scenario.mobile %>
+</p>
+<p>
+  <strong>Event:</strong>
+  <%=h @scenario.event_id %>
+</p>
+<p>
+  <strong>Manikin:</strong>
+  <%=h @scenario.manikin_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_scenario_path(@scenario) %> |
+  <%= link_to "Destroy", @scenario, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", scenarios_path %>
+</p>

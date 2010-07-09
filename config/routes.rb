@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :events
+  map.resources :scenarios
+  map.resources :events, :has_many => :scenarios
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
   map.logout 'logout', :controller => 'instructor_sessions', :action => 'destroy'
