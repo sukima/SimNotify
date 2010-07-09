@@ -4,5 +4,20 @@
 
 <div id="container">
   <p>Welcome back <strong><%= @current_instructor.name %>.</strong> (Not you? <%= link_to "log out", logout_path %>).</p>
+  <p>You have the following classes in queue:</p>
+  <p><ol>
+    <% for e in @current_instructor.events %>
+      <li>
+      <%= link_to e.title, e %> -
+      <% if e.live_in? %>
+        Live in
+      <% else %>
+        <%= distance_of_time_in_words(e.start_time, e.end_time) %> long
+      <% end %> -
+      <%=h e.location %> - <%=h e.start_time.to_s(:long) %>
+      (<%= distance_of_time_in_words_to_now(e.start_time) %> from now)
+      </li>
+    <% end %>
+  </ol></p>
   <p><%= link_to "Enter a new class", new_event_path %></p>
 </div>

@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Title</th>
     <th>Location</th>
     <th>Benefit</th>
     <th>Notes</th>
@@ -12,6 +13,7 @@
   </tr>
   <% for event in @events %>
     <tr>
+      <td><%=h event.title %></td>
       <td><%=h event.location %></td>
       <td><%=h event.benefit %></td>
       <td><%=h event.notes %></td>
@@ -27,3 +29,4 @@
 </table>
 
 <p><%= link_to "New Event", new_event_path %></p>
+<p><%= link_to "Return", root_path %></p>

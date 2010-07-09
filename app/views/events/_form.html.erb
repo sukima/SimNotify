@@ -1,6 +1,10 @@
 <% form_for @event do |f| %>
   <%= f.error_messages %>
   <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
     <%= f.label :location %><br />
     <%= f.text_field :location %>
   </p>
