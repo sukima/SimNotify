@@ -41,6 +41,14 @@ module Authentication
       redirect_to login_url
     end
   end
+
+  def login_admin
+    unless logged_in? && current_instructor.admin?
+      flash[:error] = "You must be an administrator to access that page"
+      store_target_location
+      redirect_to root_url
+    end
+  end
   
   def redirect_to_target_or_default(default)
     redirect_to(session[:return_to] || default)
