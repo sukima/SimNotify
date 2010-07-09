@@ -26,9 +26,20 @@
 </p>
 <p>
   <strong>Instructor:</strong>
-  <%=h @event.instructor_id %>
+  <%=h @event.instructor.name %>
+</p>
+<p>
+  <strong>Created at:</strong>
+  <%=h @event.created_at %>
+</p>
+<p>
+  <strong>Last Updated:</strong>
+  <%=h @event.updated_at %>
 </p>
 
+<p>
+  LINK: Add a scenario
+</p>
 <p>
   <%= link_to "Edit", edit_event_path(@event) %> |
   <%= link_to "Destroy", @event, :confirm => 'Are you sure?', :method => :delete %> |

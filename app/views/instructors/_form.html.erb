@@ -1,0 +1,40 @@
+<% form_for @instructor do |f| %>
+  <%= f.error_messages %>
+  <p class="value-entry">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+    <div class="value-description">
+      Please provide your full name. Examples:
+      <span class="value-example">John Smith</span> or
+      <span class="value-example">Smith, John</span>.
+      Do not put titles or
+    </div>
+  </p>
+  <p class="value-entry">
+    <%= f.label :email, "Email Address" %><br />
+    <%= f.text_field :email %>
+    <div class="value-description">
+    </div>
+  </p>
+  <p class="value-entry">
+    <%= f.label :office %><br />
+    <%= f.text_field :office %>
+    <div class="value-description">
+    </div>
+  </p>
+  <p class="value-entry">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+    <div class="value-description">
+    </div>
+  </p>
+  <p class="value-entry">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p class="value-entry">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <p><%= f.submit "Sign up" %></p>
+<% end %>
