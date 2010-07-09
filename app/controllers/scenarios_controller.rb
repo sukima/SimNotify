@@ -1,4 +1,6 @@
 class ScenariosController < ApplicationController
+  before_filter :login_required
+
   def index
     @scenarios = Scenario.all
   end

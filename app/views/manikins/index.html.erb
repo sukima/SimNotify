@@ -1,0 +1,24 @@
+<% title "Manikins" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Serial Number</th>
+    <th>Type</th>
+    <th>Oos</th>
+  </tr>
+  <% for manikin in @manikins %>
+    <tr>
+      <td><%=h manikin.name %></td>
+      <td><%=h manikin.serial_number %></td>
+      <td><%=h manikin.sim_type %></td>
+      <td><%=h manikin.oos %></td>
+      <td><%= link_to "Show", manikin %></td>
+      <td><%= link_to "Edit", edit_manikin_path(manikin) %></td>
+      <td><%= link_to "Destroy", manikin, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Manikin", new_manikin_path %></p>
+<p><%= link_to "Return", root_path %></p>

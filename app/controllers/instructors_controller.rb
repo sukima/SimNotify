@@ -1,6 +1,14 @@
 class InstructorsController < ApplicationController
+  before_filter :login_required, :except => [:new, :create]
+  before_filter :login_admin, :only => [:index, :destroy]
+
+  def index
+    @instructors = Instructor.all
+  end
+
   def new
     @instructor = Instructor.new
+    current_instructor
   end
   
   def create
@@ -11,5 +19,28 @@ class InstructorsController < ApplicationController
     else
       render :action => 'new'
     end
+  end
+
+  def edit
+    @instructor = Instructor.find(params[:id])
+    login_admin unless @instructor == @current_instructor
+  end
+
+  def update
+    @instructor = Instructor.find(params[:id])
+    login_admin unless @instructor == @current_instructor
+    if @instructor.update_attributes(params[:instructor])
+      flash[:notice] = "Successfully updated your profile."
+      redirect_to root_url
+    else
+      render :action => 'edit'
+    end
+  end
+
+  def destroy
+    @instructor = Instructor.find(params[:id])
+    @instructor.destroy
+    flash[:notice] = "Successfully destroyed instructor profile."
+    redirect_to :action => 'show'
   end
 end

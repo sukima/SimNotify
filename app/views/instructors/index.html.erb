@@ -1,0 +1,25 @@
+<% title "Instructors" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Office</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Admin</th>
+  </tr>
+  <% for instructor in @instructors %>
+    <tr>
+      <td><%=h instructor.name %></td>
+      <td><%=h instructor.office %></td>
+      <td><%=h instructor.email %></td>
+      <td><%=h instructor.phone %></td>
+      <td><%= instructor.admin ? "Yes" : "no" %></td>
+      <td><%= link_to "Edit", edit_instructor_path(instructor) %></td>
+      <td><%= link_to "Destroy", instructor, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New instructor", new_instructor_path %></p>
+<p><%= link_to "Return", root_path %></p>

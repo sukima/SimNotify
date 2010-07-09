@@ -36,5 +36,19 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation %>
   </p>
-  <p><%= f.submit "Sign up" %></p>
+  <% if @current_instructor && @current_instructor.admin? %>
+    <% if @instructor == @current_instructor %>
+      <p>You are an administrator.</p>
+    <% else %>
+      <p class="value-entry">
+        <%= f.label :admin, "Administrator:" %>
+        <%= f.check_box :admin %>
+      </p>
+    <% end %>
+  <% end %>
+  <p><% if logged_in? %>
+    <%= f.submit "Save" %>
+  <% else %>
+    <%= f.submit "Sign up" %>
+  <% end%></p>
 <% end %>

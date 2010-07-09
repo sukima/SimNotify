@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :manikins
+
   map.resources :scenarios
   map.resources :events, :has_many => :scenarios
 

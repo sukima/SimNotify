@@ -1,0 +1,7 @@
+<% title "Instructor" %>
+
+<% unless @instructor == @current_instructor %>
+  <p><strong>You are editing someone elses profile</strong></p>
+<% end %>
+
+<%= render :partial => 'form' %>

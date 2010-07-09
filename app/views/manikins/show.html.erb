@@ -1,0 +1,24 @@
+<% title "Manikin" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @manikin.name %>
+</p>
+<p>
+  <strong>Serial Number:</strong>
+  <%=h @manikin.serial_number %>
+</p>
+<p>
+  <strong>Type:</strong>
+  <%=h @manikin.sim_type %>
+</p>
+<p>
+  <strong>Oos:</strong>
+  <%=h @manikin.oos %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_manikin_path(@manikin) %> |
+  <%= link_to "Destroy", @manikin, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", manikins_path %>
+</p>

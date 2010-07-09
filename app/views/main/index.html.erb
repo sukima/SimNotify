@@ -1,9 +1,20 @@
 <% title "SYN:APSE Simulation Center" %>
 
-<p class="user_control"><%= link_to "Log Out", logout_path %></p>
+<p class="user_control">
+   <%= link_to "Log Out", logout_path %>
+  | <%= link_to "Edit Profile", edit_instructor_path(@current_instructor) %>
+  <% if @current_instructor.admin? %>
+    | <%= link_to "View Users", instructors_path %>
+    | <%= link_to "Edit Manikins", manikins_path %>
+  <% end %>
+</p>
 
-<div class="box">
-  <p>Welcome back <strong><%= @current_instructor.name %>.</strong> (Not you? <%= link_to "log out", logout_path %>).</p>
+<div class="box border">
+  <p>
+    Welcome back <strong><%= @current_instructor.name %>.</strong>
+    (Not you? <%= link_to "log out", logout_path %>).
+    [<%= link_to "Edit Profile", edit_instructor_path(@current_instructor) %>]
+  </p>
   <p>You have the following classes in queue:</p>
   <p><ol>
     <% for e in @current_instructor.events %>

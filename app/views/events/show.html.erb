@@ -44,11 +44,31 @@
   <% else %>
     <% @event.scenarios.each_with_index do |scenario, index| %>
       <div class="box border">
-        <p><%= index.odinalize %> scenario: [ <% link_to "Edit", edit_scenario_path(scenario) %></p>
-        <p><strong><%=h scenario.manikin.name %> (<%= scenario.manikin.type %>)</strong></p>
-        <p>
-        <%=h scenario.description %>
-        </p>
+        <p class="scenario-title"><span><%= (index+1).ordinalize %> scenario: [<%= link_to "Edit", edit_scenario_path(scenario) %>]</span></p>
+        <p class="scenario-description"><%=h scenario.description %></p>
+        <% unless scenario.manikin.nil? %>
+          <p><strong>Manikin:</strong> <%=h scenario.manikin.name_and_type %></p>
+        <% else %>
+          <p><strong>This scenario does not use any manikins.</strong></p>
+        <% end %>
+        <table class="scenario-options">
+          <tbody>
+            <tr>
+              <% if scenario.staff_support %>
+                <td>Needs Staff Support</td>
+              <% end %>
+              <% if scenario.moulage %>
+                <td>Needs Moulage</td>
+              <% end %>
+              <% if scenario.video %>
+                <td>Needs Video</td>
+              <% end %>
+              <% if scenario.mobile %>
+                <td>Needs Mobile Cart</td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
       </div>
     <% end %>
   <% end %>
