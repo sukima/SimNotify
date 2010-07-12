@@ -3,6 +3,9 @@
 <%= render :partial => 'form' %>
 
 <p>
-  <%= link_to "Show", @manikin %> |
-  <%= link_to "View All", manikins_path %>
+  <%= link_to "Show", @manikin %>
+  <% if @current_instructor.admin? -%>
+    | <%= link_to "View All Manikins", manikins_path %>
+  <% end -%>
+  | <%= link_to "Cancel", @manikin.event %>
 </p>

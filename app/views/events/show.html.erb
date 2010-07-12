@@ -51,24 +51,9 @@
         <% else %>
           <p><strong>This scenario does not use any manikins.</strong></p>
         <% end %>
-        <table class="scenario-options">
-          <tbody>
-            <tr>
-              <% if scenario.staff_support %>
-                <td>Needs Staff Support</td>
-              <% end %>
-              <% if scenario.moulage %>
-                <td>Needs Moulage</td>
-              <% end %>
-              <% if scenario.video %>
-                <td>Needs Video</td>
-              <% end %>
-              <% if scenario.mobile %>
-                <td>Needs Mobile Cart</td>
-              <% end %>
-            </tr>
-          </tbody>
-        </table>
+        <% unless scenario.flags_as_strings.empty? %>
+          <p class="flags-list"><strong>Support Needs:</strong> <%= scenario.flags_as_strings.to_sentence %></p>
+        <% end %>
       </div>
     <% end %>
   <% end %>
@@ -76,7 +61,10 @@
 </div>
 
 <p>
-  <%= link_to "Edit", edit_event_path(@event) %> |
-  <%= link_to "Destroy", @event, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", events_path %>
+  <%= link_to "Edit", edit_event_path(@event) %>
+  | <%= link_to "Delete", @event, :confirm => 'Are you sure?', :method => :delete %>
+  <% if @current_instructor.admin? -%>
+    | <%= link_to "View All", events_path %>
+  <% end -%>
+  | <%= link_to "Home", root_url %>
 </p>

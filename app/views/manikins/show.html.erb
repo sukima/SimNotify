@@ -18,7 +18,10 @@
 </p>
 
 <p>
-  <%= link_to "Edit", edit_manikin_path(@manikin) %> |
-  <%= link_to "Destroy", @manikin, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", manikins_path %>
+  <%= link_to "Edit", edit_manikin_path(@manikin) %>
+  | <%= link_to "Delete", @manikin, :confirm => 'Are you sure?', :method => :delete %>
+  <% if @current_instructor.admin? -%>
+    | <%= link_to "View All", manikins_path %>
+  <% end -%>
+  | <%= link_to "Home", root_url %>
 </p>
