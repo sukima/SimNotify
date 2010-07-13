@@ -22,6 +22,7 @@
   | <%= link_to "Delete", @manikin, :confirm => 'Are you sure?', :method => :delete %>
   <% if @current_instructor.admin? -%>
     | <%= link_to "View All", manikins_path %>
+    | <%= link_to "Add New", new_manikin_path %>
   <% end -%>
   | <%= link_to "Home", root_url %>
 </p>
