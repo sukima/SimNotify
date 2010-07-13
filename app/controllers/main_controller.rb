@@ -1,6 +1,7 @@
 class MainController < ApplicationController
-  before_filter :login_required
-
   def index
+    unless logged_in?
+      redirect_to login_url
+    end
   end
 end
