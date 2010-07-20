@@ -1,0 +1,14 @@
+TODO Items
+==========
+
+* Additional instructors to live in events.
+* Scenario attachments for files (docs, xrays, etc.)
+* Add field descriptions
+* label Office to Department
+* label location to "location of sim"
+* label benefit to "benefit to system"
+* label event to session
+* add a title for the scenario
+* add tech and educator booleans to event
+* Change manikin select to adult/child/infant
+* Integrate scenario and event templateing
