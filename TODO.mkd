@@ -10,12 +10,17 @@ Labeling
 * Add field descriptions
 * add a title for the scenario
 * add tech and educator booleans to event
-* Change manikin select to adult/child/infant
 
 Templating
 ----------
 
 * Integrate scenario and event templateing
+
+Integration
+-----------
+
+* Email notifications
+* Calendar view
 
 Done
 ----
@@ -24,3 +29,4 @@ Done
 * - label Office to Department
 * - label event to session
 * - label location to "location of sim"
+* - Change manikin select to adult/child/infant
