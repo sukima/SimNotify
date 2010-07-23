@@ -27,8 +27,7 @@
           in one line (without break line and space) it will
           be destroyed by Internet Explorer.
           Use add_nav_link healper for this. -->
-          <%- add_nav_link "Home", root_url -%>
-          <%= yield :nav_list %>
+          <li><%= link_to "Home", root_url -%></li><%= yield :nav_list %>
         </ul>
       </div>
       <%- end -%>
