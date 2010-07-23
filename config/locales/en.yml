@@ -2,4 +2,11 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      event: "Session"
+    attributes:
+      manikin:
+        manikin_req_type_id: "Manikin needs"
+        sim_type: "Manikin Type"
+        oos: "Out of Service"

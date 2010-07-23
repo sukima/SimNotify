@@ -9,8 +9,12 @@
     <%= f.text_field :serial_number %>
   </p>
   <p>
-    <%= f.label :sim_type, "Type" %><br />
+    <%= f.label :sim_type %><br />
     <%= f.text_field :sim_type %>
+  </p>
+  <p>
+    <%= f.label :manikin_req_type_id %><br />
+    <%= f.select :manikin_req_type_id, ManikinReqType.all.collect {|p| [p.req_type, p.id] }, :prompt => "Please choose a need type" %>
   </p>
   <p>
     <%= f.label :oos %><br />
