@@ -34,7 +34,7 @@
     <%= f.check_box :mobile %>
   </p>
   <p>
-    <%= f.label :manikin_req_type_id, "Requested manikin type" %><br />
+    <%= f.label :manikin_req_type_id %><br />
     <%= f.select :manikin_req_type_id, ManikinReqType.all.collect {|p| [p.req_type, p.id] }, :prompt => "Please choose a type" %>
   </p>
   <% if @current_instructor.admin? -%>

@@ -33,8 +33,12 @@
   <%=h @scenario.mobile %>
 </p>
 <p>
+  <strong>Manikin needs requested:</strong>
+  <%=h @scenario.manikin_req_type.req_type %>
+</p>
+<p>
   <strong>Manikin:</strong>
-  <%= (@scenario.manikin.nil?) ? "None" : h(@scenario.manikin.name_and_type) %>
+  <%= (@scenario.manikin.nil?) ? "Not Assigned" : h(@scenario.manikin.name_and_type) %>
 </p>
 
 <p>
