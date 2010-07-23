@@ -177,3 +177,9 @@ input:focus, textarea:focus {
   color: #fff;
   text-decoration: underline;
 }
+
+/* fixes for RoR specific elements that get buggered by this theme */
+
+#errorExplanation h2 {
+  margin: 0 0 0.3em 0;
+}
