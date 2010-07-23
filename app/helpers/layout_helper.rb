@@ -19,4 +19,14 @@ module LayoutHelper
   def javascript(*args)
     content_for(:head) { javascript_include_tag(*args) }
   end
+
+  # See app/views/layouts/application.html.erb comments for why we are using
+  # this helper method.
+  def add_nav_link(*args)
+    content_for(:nav_list) do
+      rtn = "<li>"
+      rtn += link_to *args
+      rtn += "</li>"
+    end
+  end
 end

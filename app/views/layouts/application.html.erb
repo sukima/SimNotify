@@ -25,8 +25,10 @@
           <!-- Please don't remove this important notice :
           If you don't keep all the definition of the menu
           in one line (without break line and space) it will
-          be destroyed by Internet Explorer -->
-          <li><a href="#">Oswd</a></li><li><a href="#">OpenWebDesign</a></li><li><a href="#">Liste</a></li><li><a href="#">Public Domain</a></li><li><a href="#">Blue style</a></li><li><a href="#">Green tea</a></li><li><a href="#">Sober design</a></li><li><a href="#">Great menu</a></li><li><a href="#">Links</a></li><li><a href="#">Contact</a></li>
+          be destroyed by Internet Explorer.
+          Use add_nav_link healper for this. -->
+          <%- add_nav_link "Home", root_url -%>
+          <%= yield :nav_list %>
         </ul>
       </div>
       <%- end -%>
