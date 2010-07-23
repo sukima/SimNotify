@@ -54,21 +54,22 @@ Data Model
     .  | moulage?            |      | name              |
     .  | notes               |      `-------------------'
     .  | support_material    |
-    .  | description         |      ,---------------.
-    .  | video?              |  ,-->| manikin       |
-    .  | mobile?             |  |   |---------------|
-    .  | manikin             |--'   | name          |
-    .  `---------------------'      | serial_number |
-    .                               | type          |
-    .  ,-------------------.        | oos?          |
-    ...| scenario_template |        `---------------'
-       |-------------------|
-       | title             |
-       | equipment         |
-       | staff_support?    |
-       | moulage?          |
-       | notes             |
-       | support_material  |
+    .  | description         |       ,------------------.
+    .  | video?              |    ,--| manikin_req_type |
+    .  | mobile?             |    |  |------------------|
+    .  | manikin_req_type    |<---+  | type             |
+    .  | manikin             |<-. |  `------------------'
+    .  `---------------------'  | |
+    .                           | |
+    .  ,-------------------.    | |  ,------------------.
+    ...| scenario_template |    `----| manikin          |
+       |-------------------|      |  |------------------|
+       | title             |      |  | name             |
+       | equipment         |      |  | serial_number    |
+       | staff_support?    |      |  | type             |
+       | moulage?          |      |  | oos?             |
+       | notes             |      `->| manikin_req_type |
+       | support_material  |         `------------------'
        | description       |
        | video?            |
        | mobile?           |
