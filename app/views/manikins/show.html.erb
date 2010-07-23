@@ -16,10 +16,11 @@
   <strong>Type:</strong>
   <%=h @manikin.sim_type %>
 </p>
+<% if @manikin.oos %>
 <p>
-  <strong>Oos:</strong>
-  <%=h @manikin.oos %>
+  <strong>This manikin is Out Of Service</strong>
 </p>
+<% end %>
 
 <p>
   <%= link_to "Edit", edit_manikin_path(@manikin) %>
