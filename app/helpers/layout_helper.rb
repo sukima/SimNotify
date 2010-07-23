@@ -29,4 +29,22 @@ module LayoutHelper
       rtn += "</li>"
     end
   end
+
+  # builds a link that is dynamic for confirmation or not
+  def link_to_confirm(title, path)
+    if @confirm_exit.nil? || !@confirm_exit
+      return link_to title, path
+    else
+      return link_to title, path, :confirm => t(:cancel_confirm)
+    end
+  end
+
+  def link_to_home(title = nil)
+    title = t(:home) if title.nil?
+    link_to_confirm title, root_url
+  end
+
+  def confirm_on_exit
+    @confirm_exit = true
+  end
 end
