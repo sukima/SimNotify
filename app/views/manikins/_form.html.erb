@@ -13,6 +13,10 @@
     <%= f.text_field :sim_type %>
   </p>
   <p>
+    <%= f.label :manikin_req_type_id, "Requested manikin type" %><br />
+    <%= f.select :manikin_req_type_id, ManikinReqType.all.collect {|p| [p.req_type, p.id] }, :prompt => "Please choose a type" %>
+  </p>
+  <p>
     <%= f.label :oos %><br />
     <%= f.check_box :oos %>
   </p>

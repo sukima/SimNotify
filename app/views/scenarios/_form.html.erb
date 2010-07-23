@@ -34,8 +34,14 @@
     <%= f.check_box :mobile %>
   </p>
   <p>
-    <%= f.label :manikin_id, "Manikin to use" %><br />
-    <%= f.select :manikin_id, Manikin.all.collect {|p| [p.name_and_type, p.id] }, :include_blank => "None", :prompt => "Please choose a manikin" %>
+    <%= f.label :manikin_req_type_id, "Requested manikin type" %><br />
+    <%= f.select :manikin_req_type_id, ManikinReqType.all.collect {|p| [p.req_type, p.id] }, :prompt => "Please choose a type" %>
   </p>
+  <% if @current_instructor.admin? -%>
+    <p>
+      <%= f.label :manikin_id, "Manikin to use" %><br />
+      <%= f.select :manikin_id, Manikin.all.collect {|p| [p.name_and_type, p.id] }, :include_blank => "None", :prompt => "Please choose a manikin" %>
+    </p>
+  <% end %>
   <p><%= f.submit %></p>
 <% end %>
