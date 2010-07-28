@@ -1,5 +1,11 @@
 <% title "Event" %>
 
+<% if @event.submitted? && !@event.approved? %>
+  <p class="info">This event has been submitted and is pending approval.</p>
+<% end %>
+<% if @event.approved? %>
+  <p class="info">This event has been approved.</p>
+<% end %>
 <p>
   <strong>Location:</strong>
   <%=h @event.location %>
@@ -66,5 +72,7 @@
   <% if @current_instructor.admin? -%>
     | <%= link_to "View All", events_path %>
   <% end -%>
-  | <%= link_to "Home", root_url %>
+  <% if !@event.submitted? %>
+    | <%= link_to "Submit for approval", submit_event_path(@event) %>
+  <% end %>
 </p>

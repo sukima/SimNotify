@@ -35,19 +35,20 @@ Phase 2
 Data Model
 ==========
                                     ,------------.
-       ,---------------------.      | event      |
-       | instructor          |<--.  |------------|
-       |---------------------|   |  | title      |
-       | name                |   |  | location   |
-       | email               |   |  | benefit    |
-       | office              |   |  | notes      |
-       | phone               |   |  | start_time |
-       | admin?              |   |  | end_time   |
-       | (acts_as_authentic) |   |  | live_in    |
-       `---------------------'   `--| instructor |
-                                 ,--| scenarios  |
-       ,---------------------.   |  `------------'
-    ...| scenario            |<<-'
+                                    | event      |
+       ,---------------------.      |------------|
+       | instructor          |<--.  | title      |
+       |---------------------|   |  | location   |
+       | name                |   |  | benefit    |
+       | email               |   |  | notes      |
+       | office              |   |  | start_time |
+       | phone               |   |  | end_time   |
+       | admin?              |   |  | live_in    |
+       | (acts_as_authentic) |   `--| instructor |
+       `---------------------'   ,--| scenarios  |
+                                 |  | submitted? |
+       ,---------------------.   |  | approved?  |
+    ...| scenario            |<<-'  `------------'
     .  |---------------------|      ,-------------------.
     .  | equipment           |......| equipment_suggest |
     .  | staff_support?      |      |-------------------|

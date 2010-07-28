@@ -10,3 +10,4 @@ en:
         manikin_req_type_id: "Manikin needs"
         sim_type: "Manikin Type"
         oos: "Out of Service"
+  event_frozen: "cannot be changed after event has been submitted"
