@@ -66,5 +66,5 @@
   <% if @current_instructor.admin? -%>
     | <%= link_to "View All", events_path %>
   <% end -%>
-  | <%= link_to "Home", root_url %>
+  <%= link_to "Submit for approval", submit_event_path(@event) %>
 </p>

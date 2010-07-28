@@ -28,6 +28,7 @@
       <%=h e.location %>
       - <%=h e.start_time.to_s(:long) %> (<%= distance_of_time_in_words_to_now(e.start_time) %> from now)
       - <%= (e.scenarios.nil?) ? "(No scenarios)" : pluralize(e.scenarios.count, 'scenario') %>
+      <span class="queue-list"><%= link_to "Submit", submit_event_path(e) %></span>
       </li>
     <% end %>
   </ol></p>

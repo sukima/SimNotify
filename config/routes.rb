@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :manikins
 
   map.resources :scenarios
-  map.resources :events, :has_many => :scenarios
+  map.resources :events, :has_many => :scenarios, :member => { :submit => [ :get, :put ] }
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
   map.logout 'logout', :controller => 'instructor_sessions', :action => 'destroy'
@@ -50,6 +50,6 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end
