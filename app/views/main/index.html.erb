@@ -9,28 +9,40 @@
   <% end %>
 </p>
 
-<div class="box border">
+<div>
   <p>
     Welcome back <strong><%= @current_instructor.name %>.</strong>
     (Not you? <%= link_to "log out", logout_path %>).
     [<%= link_to "Edit Profile", edit_instructor_path(@current_instructor) %>]
   </p>
-  <p>You have the following classes in queue:</p>
-  <p><ol>
-    <% for e in @current_instructor.events %>
-      <li>
-      <%= link_to e.title, e %> -
-      <% if e.live_in? %>
-        Live in
-      <% else %>
-        <%= distance_of_time_in_words(e.start_time, e.end_time) %> long
-      <% end %> -
-      <%=h e.location %>
-      - <%=h e.start_time.to_s(:long) %> (<%= distance_of_time_in_words_to_now(e.start_time) %> from now)
-      - <%= (e.scenarios.nil?) ? "(No scenarios)" : pluralize(e.scenarios.count, 'scenario') %>
-      <span class="queue-list"><%= link_to "Submit", submit_event_path(e) %></span>
-      </li>
-    <% end %>
-  </ol></p>
+</div>
+
+<div class="box border">
+  <% if @events_in_queue.empty? %>
+    <p>You do not have any sessions in queue yet.</p>
+  <% else %>
+    <p>You have the following sessions in queue:</p>
+    <p><ol>
+      <%= render :partial => 'event', :collection => @events_in_queue %>
+    </ol></p>
+  <% end %>
   <p><%= link_to "Enter a new class", new_event_path %></p>
 </div>
+
+<% if !@events_submitted.empty? %>
+<div class="box border">
+  <p>The following sessions are pending approval:</p>
+  <p><ol>
+    <%= render :partial => 'event', :collection => @events_submitted %>
+  </ol></p>
+</div>
+<% end %>
+
+<% if !@events_approved.empty? %>
+<div class="box border">
+  <p>The following sessions have been approved:</p>
+  <p><ol>
+    <%= render :partial => 'event', :collection => @events_approved %>
+  </ol></p>
+</div>
+<% end %>
