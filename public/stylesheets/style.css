@@ -62,7 +62,6 @@ p {
 
 #navigation li a {
   display: block;
-  width: 17em;
   padding: 0 0.6em;
   font-size: 0.8em;
   font-weight: normal;
@@ -83,7 +82,7 @@ p {
 }
 
 #content {
-  float: left;
+  float: none;
   font-size: 0.9em;
   margin-right: 190px; /* plus the full width of #navigation */
   margin-bottom: 0.5em; /* pushed #footer down some */

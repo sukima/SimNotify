@@ -13,8 +13,6 @@
 <div>
   <p>
     Welcome back <strong><%= @current_instructor.name %>.</strong>
-    (Not you? <%= link_to "log out", logout_path %>).
-    [<%= link_to "Edit Profile", edit_instructor_path(@current_instructor) %>]
   </p>
 </div>
 
@@ -27,7 +25,7 @@
       <%= render :partial => 'event', :collection => @events_in_queue %>
     </ol></p>
   <% end %>
-  <p><%= link_to "Enter a new class", new_event_path %></p>
+  <p><%= link_to "Enter a new session", new_event_path %></p>
 </div>
 
 <% if !@events_submitted.empty? %>
