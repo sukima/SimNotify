@@ -3,8 +3,8 @@
 <%= render :partial => 'form' %>
 
 <p>
-  <%= link_to "Cancel", root_url %>
+  <%= link_to_confirm "Cancel", root_url %>
   <% if @current_instructor.admin? -%>
-    | <%= link_to "View All scenarios", scenarios_path %>
+    | <%= link_to_confirm "View All scenarios", scenarios_path %>
   <% end -%>
 </p>

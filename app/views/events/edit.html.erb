@@ -3,8 +3,8 @@
 <%= render :partial => 'form' %>
 
 <p>
-  <%= link_to "Cancel", @event %>
+  <%= link_to_confirm "Cancel", @event %>
   <% if @current_instructor.admin? -%>
-    | <%= link_to "View All events", events_path %>
+    | <%= link_to_confirm "View All events", events_path %>
   <% end -%>
 </p>

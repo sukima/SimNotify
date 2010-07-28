@@ -10,4 +10,6 @@ en:
         manikin_req_type_id: "Manikin needs"
         sim_type: "Manikin Type"
         oos: "Out of Service"
+  home: "Home"
+  cancel_confirm: "This form has not been saved. Are you sure you want to continue?"
   event_frozen: "cannot be changed after event has been submitted"

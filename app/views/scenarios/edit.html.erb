@@ -3,9 +3,9 @@
 <%= render :partial => 'form' %>
 
 <p>
-  <%= link_to "Show", @scenario %>
+  <%= link_to_confirm "Show", @scenario %>
   <% if @current_instructor.admin? -%>
-    | <%= link_to "View All Scenarios", scenarios_path %>
+    | <%= link_to_confirm "View All Scenarios", scenarios_path %>
   <% end -%>
-  | <%= link_to "Cancel", @scenario.event %>
+  | <%= link_to_confirm "Cancel", @scenario.event %>
 </p>

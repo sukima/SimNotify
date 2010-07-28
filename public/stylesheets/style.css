@@ -16,20 +16,20 @@ p {
 }
 
 #container {
+  width: 800px;
   background: #fff;
   border: 0.1em solid #777;
   color: #323232;
   margin: 2em auto;
   text-align: left;
-  width: 65em;
 }
 
 #header {
-  width: 63.8em;
   background: #336699;
   color: #fff;
   border: 0.1em solid #2F4A6C;
-  margin: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; /* pushes #content and #navigation down some */
   padding: 1.2em;
 }
 
@@ -44,12 +44,14 @@ p {
 #navigation {
   float: right;
   display: block;
+  width: 184px;
   margin: 0px;
-  padding: 0px;
-  margin-left: 20px;
+  padding: 0 6px;
   line-height: 2.1em;
   color: #ccc;
-  margin-right: 0.5em;
+  margin-left: -190px; /* Minus the full width of this container */
+  margin-right: 0px;
+  margin-bottom: 0.5em; /* pushes #footer down some */
   white-space: nowrap;
 }
 
@@ -60,7 +62,6 @@ p {
 
 #navigation li a {
   display: block;
-  width: 17em;
   padding: 0 0.6em;
   font-size: 0.8em;
   font-weight: normal;
@@ -81,8 +82,10 @@ p {
 }
 
 #content {
+  float: none;
   font-size: 0.9em;
-  margin-right: 15em;
+  margin-right: 190px; /* plus the full width of #navigation */
+  margin-bottom: 0.5em; /* pushed #footer down some */
   padding: 1em 3em 3em;
 }
 
@@ -129,6 +132,7 @@ table th {
   border: 1px solid #2F4A6C;
   color: #fff;
   padding: 4px;
+  text-align: center;
 }
 
 table td {
@@ -156,13 +160,11 @@ input:focus, textarea:focus {
 
 #footer {
   clear: both;
-  width: 63.8;
-  margin-top: 1em;
   padding: 0.4em 0;
   font-size: 0.9em;
   color: #f0f0f0;
   background: #336699;
-  margin: 0.5em;
+  margin: 1.0em 0 0.5em 0;
   border: 0.1em solid #2F4A6C;
   text-align: center;
 }
