@@ -1,4 +1,4 @@
-<% title "Event" %>
+<% title "Session" %>
 
 <% if @event.submitted? && !@event.approved? %>
   <p class="info">This event has been submitted and is pending approval.</p>
@@ -70,7 +70,7 @@
   <%= link_to "Edit", edit_event_path(@event) %>
   | <%= link_to "Delete", @event, :confirm => 'Are you sure?', :method => :delete %>
   <% if @current_instructor.admin? -%>
-    | <%= link_to "View All", events_path %>
+    | <%= link_to "View All Sessions", events_path %>
   <% end -%>
   <% if !@event.submitted? %>
     | <%= link_to "Submit for approval", submit_event_path(@event) %>
