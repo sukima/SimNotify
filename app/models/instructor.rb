@@ -2,12 +2,16 @@ class Instructor < ActiveRecord::Base
   has_many :events
   acts_as_authentic
 
-  validates_presence_of :name
+  validates_presence_of :name, :email
   validates_uniqueness_of :name
   validates_each :name do |record, attr, value|
     hash = self.parse_name(value)
     record.errors.add attr, 'must have a first and last name' if
       ( hash[:first_name].nil? || hash[:last_name].nil? )
+  end
+
+  def name_hash
+    Instructor.parse_name(name)
   end
 
   # http://gist.github.com/491187

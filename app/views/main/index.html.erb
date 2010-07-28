@@ -1,5 +1,6 @@
 <% title "SYN:APSE Simulation Center" %>
 <% add_nav_link "Start new session", new_event_path %>
+<% name = @current_instructor.name_hash %>
 
 <p class="user_control">
    <%= link_to "Log Out", logout_path %>
@@ -12,7 +13,7 @@
 
 <div>
   <p>
-    Welcome back <strong><%= @current_instructor.name %>.</strong>
+    Welcome back <strong><%= name[:prefix] %> <%= name[:first_name] %>.</strong>
   </p>
 </div>
 
