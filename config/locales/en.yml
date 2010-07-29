@@ -19,12 +19,20 @@ en:
       instructors:
         office: "Department"
         admin: "Is an administrator?"
+      event:
+        title: "Title of session"
+        location: "Location of the simulation"
+        benefit: "Benefit to the system"
+        live_in: "Extended stay"
     hints:
       instructor:
         name: "Enter your first and last name. Examples: John Doe; Doe, Jane; Dr John Doe; Dr John Middle Doe III"
         email: "Please provide a valid email. All notifications and approvals will be sent with this address."
         office: "This is the department you work with. For example: PICU, Pedi ED, CTICU, etc."
         phone: "A phone number to reach you if you have questions. Ex (203) 688-4781"
+      event:
+        benefit: "What is the benefit to the system, staff / patient saftey, etc?"
+        live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."
     actions:
       save: "Save"
       sign_up: "Sign up"
