@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   belongs_to :instructor
   has_many :scenarios
 
-  validates_presence_of :title, :location, :benefit
+  validates_presence_of :title, :location, :benefit, :start_time, :end_time
 
   validate :no_reverse_time_travel
 
@@ -13,7 +13,8 @@ class Event < ActiveRecord::Base
   protected
   # Make sure the end time is not before the start time
   def no_reverse_time_travel
-    if end_time < start_time
+    return false if end_time.nil? && start_time.nil?
+    if end_time <= start_time
       errors.add :end_time, I18n.translate(:no_reverse_time_travel)
       return false
     end
