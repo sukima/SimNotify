@@ -1,5 +1,7 @@
 <% title "Edit Manikin" %>
-<% confirm_exit %>
+<% if @current_instructor.admin? -%>
+  <% add_nav_link "View All manikins", manikins_path %>
+<% end -%>
 
 <%= render :partial => 'form' %>
 

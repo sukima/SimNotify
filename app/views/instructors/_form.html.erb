@@ -1,55 +1,25 @@
 <% confirm_on_exit %>
-<% form_for @instructor do |f| %>
-  <%= f.error_messages %>
-  <p class="value-entry">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-    <div class="value-description">
-      Please provide your full name. Examples:
-      <span class="value-example">John Smith</span> or
-      <span class="value-example">Smith, John</span>.
-      Do not put titles or
-    </div>
-  </p>
-  <p class="value-entry">
-    <%= f.label :email, "Email Address" %><br />
-    <%= f.text_field :email %>
-    <div class="value-description">
-    </div>
-  </p>
-  <p class="value-entry">
-    <%= f.label :office, "Department" %><br />
-    <%= f.text_field :office %>
-    <div class="value-description">
-    </div>
-  </p>
-  <p class="value-entry">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-    <div class="value-description">
-    </div>
-  </p>
-  <p class="value-entry">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p class="value-entry">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
-  <% if @current_instructor && @current_instructor.admin? %>
-    <% if @instructor == @current_instructor %>
-      <p>You are an administrator.</p>
-    <% else %>
-      <p class="value-entry">
-        <%= f.label :admin, "Administrator:" %>
-        <%= f.check_box :admin %>
-      </p>
+<% semantic_form_for @instructor do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :email %>
+    <%= f.input :office %>
+    <%= f.input :phone %>
+    <%= f.input :password, :as => :password %>
+    <%= f.input :password_confirmation, :as => :password %>
+    <% if @current_instructor && @current_instructor.admin? %>
+      <% if @instructor == @current_instructor %>
+        <p>You are an administrator.</p>
+      <% else %>
+        <%= f.input :admin %>
+      <% end %>
     <% end %>
   <% end %>
-  <p><% if logged_in? %>
-    <%= f.submit "Save" %>
-  <% else %>
-    <%= f.submit "Sign up" %>
-  <% end%></p>
+  <% f.buttons do %>
+    <% if logged_in? %>
+      <%= f.commit_button :save %>
+    <% else %>
+      <%= f.commit_button :sign_up %>
+    <% end%>
+  <% end %>
 <% end %>

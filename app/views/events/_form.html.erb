@@ -1,33 +1,13 @@
 <% confirm_on_exit %>
-<% form_for @event do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :location, "Location of Sim" %><br />
-    <%= f.text_field :location %>
-  </p>
-  <p>
-    <%= f.label :benefit, "Benefit to the system" %><br />
-    <%= f.text_area :benefit %>
-  </p>
-  <p>
-    <%= f.label :notes %><br />
-    <%= f.text_area :notes %>
-  </p>
-  <p>
-    <%= f.label :start_time %><br />
-    <%= f.datetime_select :start_time %>
-  </p>
-  <p>
-    <%= f.label :end_time %><br />
-    <%= f.datetime_select :end_time %>
-  </p>
-  <p>
-    <%= f.label :live_in %><br />
-    <%= f.check_box :live_in %>
-  </p>
-  <p><%= f.submit %></p>
+<% semantic_form_for @event do |f| %>
+  <% f.inputs do %>
+    <%= f.input :title %>
+    <%= f.input :location %>
+    <%= f.input :benefit %>
+    <%= f.input :notes %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time %>
+    <%= f.input :live_in %>
+  <% end %>
+  <%= f.buttons %>
 <% end %>
