@@ -13,3 +13,4 @@ en:
   home: "Home"
   cancel_confirm: "This form has not been saved. Are you sure you want to continue?"
   event_frozen: "cannot be changed after event has been submitted"
+  no_reverse_time_travel: "The session can not end before it starts"
