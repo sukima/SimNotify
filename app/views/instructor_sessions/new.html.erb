@@ -2,15 +2,9 @@
 
 <p>Don't have an account? <%= link_to "Sign up!", signup_path %></p>
 
-<% form_for @instructor_session do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p><%= f.submit "Next" %></p>
+<% semantic_form_for @instructor_session do |f| %>
+  <%= f.inputs :email, :password %>
+  <% f.buttons do %>
+    <%= f.commit_button :login %>
+  <% end %>
 <% end %>

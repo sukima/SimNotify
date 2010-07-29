@@ -16,7 +16,7 @@ en:
   no_reverse_time_travel: "The session can not end before it starts"
   formtastic:
     labels:
-      instructors:
+      instructor:
         office: "Department"
         admin: "Is an administrator?"
       event:
@@ -34,5 +34,6 @@ en:
         benefit: "What is the benefit to the system, staff / patient saftey, etc?"
         live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."
     actions:
+      login: "Login"
       save: "Save"
       sign_up: "Sign up"
