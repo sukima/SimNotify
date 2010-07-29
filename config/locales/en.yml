@@ -26,6 +26,12 @@ en:
         location: "Location of the simulation"
         benefit: "Benefit to the system"
         live_in: "Extended stay"
+      scenario:
+        mobile: "Needs mobile cart"
+        staff_support: "Needs staff support"
+        moulage: "Needs moulage"
+        support_material: "Needs support material"
+        video: "Needs video recording"
     hints:
       instructor:
         name: "Enter your first and last name. Examples: John Doe; Doe, Jane; Dr John Doe; Dr John Middle Doe III"
@@ -35,6 +41,14 @@ en:
       event:
         benefit: "What is the benefit to the system, staff / patient saftey, etc?"
         live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."
+      scenario:
+        description: "Describe the overall picture of the scenario. What do you want to happen to the patient?"
+        equipment: "Describe the kind of equipment you might need or describe the needs your scenario has. (Code Cart, BVM, Airway, etc.)"
+        mobile: "If you need to use a mobile cart for scenarios that can not be done in a standard simulation room"
+        staff_support: "If you need support from the SYN:APSE staff to be there. (this can include help with teaching, introduction to the manikin, Running the software, or acting) <strong>Describe in notes</strong>"
+        moulage: "Will there be wounds / makeup (wigs, special procedures, wounds, blood, etc.) <strong>Describe in notes</strong>"
+        support_material: "Are there support materials such as x-rays, labs, etc.? <strong>Describe in notes</strong>"
+        manikin_req_type: "What kind of manikin will you need?"
     actions:
       login: "Login"
       save: "Save"
