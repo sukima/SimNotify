@@ -7,7 +7,7 @@ en:
       event: "Session"
     attributes:
       manikin:
-        manikin_req_type_id: "Manikin needs"
+        manikin_req_type: "Manikin category"
         sim_type: "Manikin Type"
         oos: "Out of Service"
   home: "Home"
