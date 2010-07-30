@@ -9,7 +9,7 @@ class Event < ActiveRecord::Base
   validate :no_reverse_time_travel
 
   before_update :check_change_status
-  
+
   protected
   # Make sure the end time is not before the start time
   def no_reverse_time_travel
@@ -35,5 +35,42 @@ class Event < ActiveRecord::Base
       end
     end
     return ret_val
+  end
+
+  public
+  def self.in_queue(instructor)
+    conditions = [ "submitted = 'f' AND approved = 'f' AND start_time > ?", Time.new ]
+    if instructor == :all
+      return Event.find(:all, :conditions => conditions)
+    else
+      return instructor.events.find(:all, :conditions => conditions)
+    end
+  end
+
+  def self.submitted(instructor)
+    conditions = [ "submitted = 't' AND approved = 'f' AND start_time > ?", Time.new ]
+    if instructor == :all
+      return Event.find(:all, :conditions => conditions)
+    else
+      return instructor.events.find(:all, :conditions => conditions)
+    end
+  end
+
+  def self.approved(instructor)
+    conditions = [ "approved = 't' AND start_time > ?", Time.new ]
+    if instructor == :all
+      return Event.find(:all, :conditions => conditions)
+    else
+      return instructor.events.find(:all, :conditions => conditions)
+    end
+  end
+
+  def self.outdated(instructor)
+    conditions = [ "start_time => ?", Time.new ]
+    if instructor == :all
+      return Event.find(:all, :conditions => conditions)
+    else
+      return instructor.events.find(:all, :conditions => conditions)
+    end
   end
 end
