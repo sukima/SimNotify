@@ -20,6 +20,10 @@ module LayoutHelper
     content_for(:head) { javascript_include_tag(*args) }
   end
 
+  def stylesheet_link_jquery
+    stylesheet_link_tag "smoothness/jquery-ui-1.8.2.custom.css"
+  end
+
   def javascript_include_jquery
     ret = ""
     if APP_CONFIG['use_google_api']
