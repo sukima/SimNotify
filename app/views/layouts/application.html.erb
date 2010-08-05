@@ -7,8 +7,11 @@
     <meta name="generator" content="SimNotify by Devin Weaver suki (at) tritarget.org" />
     <%= stylesheet_link_tag 'application' %>
     <%= formtastic_stylesheet_link_tag %>
+    <%= stylesheet_link_jquery %>
     <%= stylesheet_link_tag 'style' %>
     <%= stylesheet_link_tag 'site' %>
+    <%= javascript_include_jquery %>
+    <%= javascript_include_tag 'application' %>
     <%= yield(:head) %>
   </head>
   <body>

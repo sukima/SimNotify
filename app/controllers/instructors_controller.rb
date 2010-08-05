@@ -1,5 +1,5 @@
 class InstructorsController < ApplicationController
-  before_filter :login_required, :except => [:new, :create]
+  before_filter :login_required, :except => [:new, :create, :emails]
   before_filter :login_admin, :only => [:index, :destroy]
 
   def index
@@ -42,5 +42,14 @@ class InstructorsController < ApplicationController
     @instructor.destroy
     flash[:notice] = "Successfully destroyed instructor profile."
     redirect_to :action => 'show'
+  end
+
+  def emails
+    @emails = Instructor.all.map { |i| i.email }
+
+    respond_to do |format|
+      format.js { render :json => @emails.to_json }
+      format.any { render :text => "Invalid format", :status => 406 }
+    end
   end
 end

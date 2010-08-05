@@ -3,7 +3,10 @@
 <p>Don't have an account? <%= link_to "Sign up!", signup_path %></p>
 
 <% semantic_form_for @instructor_session do |f| %>
-  <%= f.inputs :email, :password %>
+  <% f.inputs do %>
+    <%= f.input :email, :as => :autocomplete %>
+    <%= f.input :password %>
+  <% end %>
   <% f.buttons do %>
     <%= f.commit_button :login %>
   <% end %>
