@@ -6,8 +6,12 @@
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-15" />
     <meta name="generator" content="SimNotify by Devin Weaver suki (at) tritarget.org" />
     <%= stylesheet_link_tag 'application' %>
+    <%= formtastic_stylesheet_link_tag %>
+    <%= stylesheet_link_jquery %>
     <%= stylesheet_link_tag 'style' %>
     <%= stylesheet_link_tag 'site' %>
+    <%= javascript_include_jquery %>
+    <%= javascript_include_tag 'application' %>
     <%= yield(:head) %>
   </head>
   <body>
@@ -25,8 +29,9 @@
           <!-- Please don't remove this important notice :
           If you don't keep all the definition of the menu
           in one line (without break line and space) it will
-          be destroyed by Internet Explorer -->
-          <li><a href="#">Oswd</a></li><li><a href="#">OpenWebDesign</a></li><li><a href="#">Liste</a></li><li><a href="#">Public Domain</a></li><li><a href="#">Blue style</a></li><li><a href="#">Green tea</a></li><li><a href="#">Sober design</a></li><li><a href="#">Great menu</a></li><li><a href="#">Links</a></li><li><a href="#">Contact</a></li>
+          be destroyed by Internet Explorer.
+          Use add_nav_link helper for this. -->
+          <li><%= link_to_home -%></li><%= yield :nav_list %>
         </ul>
       </div>
       <%- end -%>

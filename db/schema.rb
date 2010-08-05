@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100710184143) do
+ActiveRecord::Schema.define(:version => 20100728001759) do
 
   create_table "equipment_suggestions", :force => true do |t|
     t.string "title"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20100710184143) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.boolean  "submitted",     :default => false
+    t.boolean  "approved",      :default => false
   end
 
   create_table "instructors", :force => true do |t|
@@ -42,11 +44,16 @@ ActiveRecord::Schema.define(:version => 20100710184143) do
     t.string   "password_salt"
   end
 
+  create_table "manikin_req_types", :force => true do |t|
+    t.string "req_type", :null => false
+  end
+
   create_table "manikins", :force => true do |t|
     t.string  "name"
     t.string  "serial_number"
     t.string  "sim_type"
     t.boolean "oos"
+    t.integer "manikin_req_type_id"
   end
 
   create_table "scenario_templates", :force => true do |t|
@@ -75,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20100710184143) do
     t.boolean "mobile"
     t.integer "event_id"
     t.integer "manikin_id"
+    t.integer "manikin_req_type_id"
   end
 
 end

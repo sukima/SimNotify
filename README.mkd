@@ -34,41 +34,43 @@ Phase 2
 
 Data Model
 ==========
-
-       ,---------------------.      ,------------.
-       | instructor          |<--.  | event      |
-       |---------------------|   |  |------------|
-       | name                |   |  | location   |
-       | email               |   |  | benefit    |
-       | office              |   |  | notes      |
-       | phone               |   |  | start_time |
-       | admin?              |   |  | end_time   |
-       | (acts_as_authentic) |   |  | live_in    |
-       `---------------------'   `--| instructor |
-                                 ,--| scenarios  |
-       ,---------------------.   |  `------------'
-    ...| scenario            |<<-'
+                                    ,------------.
+                                    | event      |
+       ,---------------------.      |------------|
+       | instructor          |<--.  | title      |
+       |---------------------|   |  | location   |
+       | name                |   |  | benefit    |
+       | email               |   |  | notes      |
+       | office              |   |  | start_time |
+       | phone               |   |  | end_time   |
+       | admin?              |   |  | live_in    |
+       | (acts_as_authentic) |   `--| instructor |
+       `---------------------'   ,--| scenarios  |
+                                 |  | submitted? |
+       ,---------------------.   |  | approved?  |
+    ...| scenario            |<<-'  `------------'
     .  |---------------------|      ,-------------------.
     .  | equipment           |......| equipment_suggest |
     .  | staff_support?      |      |-------------------|
     .  | moulage?            |      | name              |
     .  | notes               |      `-------------------'
     .  | support_material    |
-    .  | description         |      ,---------------.
-    .  | video?              |  ,-->| manikin       |
-    .  | mobile?             |  |   |---------------|
-    .  | manikin             |--'   | name          |
-    .  `---------------------'      | serial_number |
-    .                               | type          |
-    .  ,-------------------.        | oos?          |
-    ...| scenario_template |        `---------------'
-       |-------------------|
-       | title             |
-       | equipment         |
-       | staff_support?    |
-       | moulage?          |
-       | notes             |
-       | support_material  |
+    .  | description         |       ,------------------.
+    .  | video?              |    ,--| manikin_req_type |
+    .  | mobile?             |    |  |------------------|
+    .  | manikin_req_type    |<---+  | type             |
+    .  | manikin             |<-. |  `------------------'
+    .  `---------------------'  | |
+    .                           | |
+    .  ,-------------------.    | |  ,------------------.
+    ...| scenario_template |    `----| manikin          |
+       |-------------------|      |  |------------------|
+       | title             |      |  | name             |
+       | equipment         |      |  | serial_number    |
+       | staff_support?    |      |  | type             |
+       | moulage?          |      |  | oos?             |
+       | notes             |      `->| manikin_req_type |
+       | support_material  |         `------------------'
        | description       |
        | video?            |
        | mobile?           |

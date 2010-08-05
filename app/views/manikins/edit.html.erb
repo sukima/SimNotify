@@ -1,10 +1,13 @@
 <% title "Edit Manikin" %>
+<% if @current_instructor.admin? -%>
+  <% add_nav_link "View All manikins", manikins_path %>
+<% end -%>
 
 <%= render :partial => 'form' %>
 
 <p>
-  <%= link_to "Cancel", @manikin %>
+  <%= link_to_confirm "Cancel", @manikin %>
   <% if @current_instructor.admin? -%>
-    | <%= link_to "View All Manikins", manikins_path %>
+    | <%= link_to_confirm "View All Manikins", manikins_path %>
   <% end -%>
 </p>

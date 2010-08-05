@@ -1,0 +1,16 @@
+<% title "Submit a session" %>
+<% confirm_on_exit %>
+
+<% form_for @event, :url => submit_event_path(@event) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :submit_note %><br />
+    <%= f.text_area :submit_note %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
+
+<p>
+  <%= link_to_home "Cancle" %>
+  | <%= link_to_confirm "Edit", edit_event_path(@event) %>
+</p>

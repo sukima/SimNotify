@@ -45,4 +45,21 @@ class EventsController < ApplicationController
     flash[:notice] = "Successfully destroyed event."
     redirect_to events_url
   end
+
+  def submit
+    @event = Event.find(params[:id])
+    if @event.instructor != @current_instructor && !@current_instructor.admin?
+      flash[:notice] = "You do not have permission to do that"
+      redirect_to root_url
+    end
+    if params[:event] && params[:event][:submit_note] &&
+      @event.update_attributes({
+        :submit_note => params[:event][:submit_note],
+        :submitted => true
+      })
+      # TODO: Submit event here
+      flash[:notice] = "Psudo-Submission complete"
+      redirect_to root_url
+    end
+  end
 end

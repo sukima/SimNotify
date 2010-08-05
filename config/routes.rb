@@ -2,14 +2,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :manikins
 
   map.resources :scenarios
-  map.resources :events, :has_many => :scenarios
+  map.resources :events, :has_many => :scenarios, :member => { :submit => [ :get, :put ] }
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
   map.logout 'logout', :controller => 'instructor_sessions', :action => 'destroy'
   map.login 'login', :controller => 'instructor_sessions', :action => 'new'
   map.resources :instructor_sessions
 
-  map.resources :instructors
+  map.resources :instructors, :collection => { :emails => [ :get ] }
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -45,11 +45,14 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "main"
 
+  map.autoconnect_map "main/autocomplete_map", :controller => "main", :action => "autocomplete_map"
+  map.connect "main/autocomplete_map.:format", :controller => "main", :action => "autocomplete_map"
+
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 end

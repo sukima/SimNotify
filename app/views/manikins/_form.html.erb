@@ -1,20 +1,12 @@
-<% form_for @manikin do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :serial_number %><br />
-    <%= f.text_field :serial_number %>
-  </p>
-  <p>
-    <%= f.label :sim_type, "Type" %><br />
-    <%= f.text_field :sim_type %>
-  </p>
-  <p>
-    <%= f.label :oos %><br />
-    <%= f.check_box :oos %>
-  </p>
-  <p><%= f.submit %></p>
+<% confirm_on_exit %>
+
+<% semantic_form_for @manikin do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :serial_number %>
+    <%= f.input :sim_type %>
+    <%= f.input :manikin_req_type, :required => true, :label_method => 'req_type' %>
+    <%= f.input :oos %>
+  <% end %>
+  <%= f.buttons %>
 <% end %>

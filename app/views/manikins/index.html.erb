@@ -5,14 +5,15 @@
     <th>Name</th>
     <th>Serial Number</th>
     <th>Type</th>
-    <th>Oos</th>
+    <th>Out Of Service</th>
+    <th colspan="3">Actions</th>
   </tr>
   <% for manikin in @manikins %>
     <tr>
       <td><%=h manikin.name %></td>
       <td><%=h manikin.serial_number %></td>
       <td><%=h manikin.sim_type %></td>
-      <td><%=h manikin.oos %></td>
+      <td><%= manikin.oos ? "Yes" : "No" %></td>
       <td><%= link_to "Show", manikin %></td>
       <td><%= link_to "Edit", edit_manikin_path(manikin) %></td>
       <td><%= link_to "Destroy", manikin, :confirm => 'Are you sure?', :method => :delete %></td>
