@@ -1,9 +1,14 @@
-development:
-  use_google_api: false
+application_name: "SimNotify"
+environment:
+  development:
+    use_google_api: false
+    system_email_address: "System Administrator <suki@localhost>"
 
-test:
-  use_google_api: false
+  test:
+    use_google_api: false
+    system_email_address: "System Administrator <suki@localhost>"
 
-production:
-  google_api_key: "INSERT-YOUR-KEY"
-  use_google_api: true
+  production:
+    google_api_key: "INSERT-YOUR-KEY"
+    use_google_api: true
+    system_email_address: "System Administrator <devin.weaver@ynhh.org>"
