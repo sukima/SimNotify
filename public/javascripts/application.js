@@ -28,6 +28,46 @@ $(document).ready(function() {
             $(this).autocomplete({ source: APP.autocomplete_map[$(this).attr('id')] });
         });
     });
+
+    // Define the dateFormat for the datepicker
+    $.datepicker._defaults.dateFormat = 'M dd yy';
+
+    /**
+     * Replaces the date or datetime field with jquey-ui datepicker
+     */
+    $('.date, .datetime').each(function(i, el) {
+        var input = document.createElement('input');
+        $(input).attr({'type': 'text', 'class': 'ui-date-text'});
+        // Insert the input:text before the first select
+        $(el).find("select:first").before(input);
+        $(el).find("select:lt(3)").hide();
+        // Set the input with the value of the selects
+        var values = [];
+        $(el).find("select:lt(3)").each(function(i, el) {
+            var val = $(el).val();
+            if(val != '')
+                values.push(val);
+        });
+        if( values.length > 1) {
+            d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
+            $(input).val( $.datepicker.formatDate($.datepicker._defaults.dateFormat, d) );
+        }
+
+        $(input).datepicker();
+    });
+
+    /**
+     * Sets the date for each select with the date selected with datepicker
+     */
+    $('input.ui-date-text').live("change", function() {
+        var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
+        var d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
+
+        $(sels[0]).val(d.getFullYear());
+        $(sels[1]).val(d.getMonth() + 1);
+        $(sels[2]).val(d.getDate());
+    });
+
 });
 // }}}1
 
