@@ -54,6 +54,28 @@ $(document).ready(function() {
         }
 
         $(input).datepicker();
+
+
+        input = document.createElement('input');
+        $(input).attr({'type': 'text', 'class': 'ui-time-text'});
+        $(el).find("select:last").after(input);
+        $(el).find("select:gt(2)").hide();
+
+        values = [];
+        $(el).find("select:gt(2)").each(function(i, el) {
+            var val = $(el).val();
+            if(val != '')
+                values.push(val);
+        });
+        if( values.length > 1) {
+            $(input).val( values[0] + ":" + values[1] );
+        }
+
+        $(input).timePicker({
+          show24Hours: true,
+          separator: ':',
+          step: 15
+        });
     });
 
     /**
@@ -66,6 +88,14 @@ $(document).ready(function() {
         $(sels[0]).val(d.getFullYear());
         $(sels[1]).val(d.getMonth() + 1);
         $(sels[2]).val(d.getDate());
+    });
+
+    $('input.ui-time-text').live("change", function() {
+        var sels = $(this).closest('.date, .datetime').find("select:gt(2)");
+        var t = $(this).val().split(":");
+
+        $(sels[0]).val(t[0]);
+        $(sels[1]).val(t[1]);
     });
 
 });
