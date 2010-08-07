@@ -34,6 +34,8 @@ module LayoutHelper
       ret += javascript_include_tag "jquery"
       ret += javascript_include_tag "jquery-ui"
     end
+    ret += javascript_include_tag "jquery.timePicker"
+    ret += stylesheet_link_tag "timePicker"
     return ret
   end
 
