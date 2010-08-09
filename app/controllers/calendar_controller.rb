@@ -3,6 +3,7 @@ class CalendarController < ApplicationController
   before_filter :login_admin
 
   def index
+    @is_calendar = true
     respond_to do |format|
       format.html
     end

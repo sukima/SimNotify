@@ -16,8 +16,11 @@
 #   before_filter :login_required, :except => [:index, :show]
 module Authentication
   def self.included(controller)
-    controller.send :helper_method, :current_instructor, :logged_in?, :redirect_to_target_or_default
+    controller.send :helper_method, :current_instructor, :logged_in?, :is_admin?, :redirect_to_target_or_default
+
+    # Scrub sensitive parameters from your log
     controller.filter_parameter_logging :password
+    controller.filter_parameter_logging :password_confirmation
   end
   
   def current_instructor_session
@@ -32,6 +35,10 @@ module Authentication
   
   def logged_in?
     current_instructor
+  end
+
+  def is_admin?
+    logged_in? && current_instructor.admin?
   end
   
   def login_required

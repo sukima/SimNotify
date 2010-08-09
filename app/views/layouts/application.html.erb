@@ -33,7 +33,7 @@
           in one line (without break line and space) it will
           be destroyed by Internet Explorer.
           Use add_nav_link helper for this. -->
-          <li><%= link_to_home -%></li><%= yield :nav_list %>
+          <li><%= link_to_home -%></li><%= nav_link_to_calendar if (is_admin? && !@is_calendar) -%><%= yield :nav_list %>
         </ul>
       </div>
       <%- end -%>

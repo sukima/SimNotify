@@ -41,12 +41,21 @@ module LayoutHelper
 
   # See app/views/layouts/application.html.erb comments for why we are using
   # this helper method.
+  def nav_link_to(*args)
+    rtn = "<li>"
+    rtn += link_to_confirm *args
+    rtn += "</li>"
+    return rtn
+  end
+
   def add_nav_link(*args)
     content_for(:nav_list) do
-      rtn = "<li>"
-      rtn += link_to *args
-      rtn += "</li>"
+      nav_link_to *args
     end
+  end
+
+  def nav_link_to_calendar
+    nav_link_to "Calendar", calendar_path
   end
 
   # builds a link that is dynamic for confirmation or not
