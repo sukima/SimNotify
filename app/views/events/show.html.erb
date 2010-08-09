@@ -6,6 +6,7 @@
 <% if @event.approved? %>
   <p class="info">This event has been approved.</p>
 <% end %>
+<h2>Session: <%=h @event.title %></h2>
 <p>
   <strong>Location:</strong>
   <%=h @event.location %>
@@ -44,7 +45,7 @@
 </p>
 
 <div id="scenarios">
-  <h2>Scenarios</h2>
+  <h3>Scenarios</h3>
   <% if @event.scenarios.empty? %>
     <div class="box">No scenarios defined yet!</div>
   <% else %>
