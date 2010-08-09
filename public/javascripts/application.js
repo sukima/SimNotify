@@ -98,6 +98,7 @@ $(document).ready(function() {
 
     $("#calendar").fullCalendar({
         firstDay: 1, // Monday
+        events: '/calendar/events',
         header: {
             left: 'prev,next today',
             center: 'title',
