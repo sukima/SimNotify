@@ -48,6 +48,8 @@ ActionController::Routing::Routes.draw do |map|
   map.autoconnect_map "main/autocomplete_map", :controller => "main", :action => "autocomplete_map"
   map.connect "main/autocomplete_map.:format", :controller => "main", :action => "autocomplete_map"
 
+  map.connect 'calendar/:action', :controller => 'calendar'
+
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
