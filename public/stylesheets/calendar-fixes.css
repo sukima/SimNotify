@@ -1,0 +1,45 @@
+#content {
+  width: 740px;
+}
+
+#calendar {
+  clear: both;
+}
+
+#calendar a,
+#calendar a:link,
+#calendar a:hover,
+#calender a:visited {
+  font-weight: bold;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+#calendar a:active {
+  font-weight: bold;
+  color: #FF0000;
+  text-decoration: underline;
+}
+
+#calendar .fc-header-left,
+#calendar .fc-header-left table,
+#calendar .fc-header-left td,
+#calendar .fc-header-center,
+#calendar .fc-header-center table,
+#calendar .fc-header-center td,
+#calendar .fc-header-right,
+#calendar .fc-header-right table,
+#calendar .fc-header-right td,
+#calendar .fc-header,
+#calendar .fc-header table,
+#calendar .fc-header td,
+#calendar .fc-header th {
+  border: none;
+}
+
+#calendar .fc-header-left a,
+#calendar .fc-header-center a,
+#calendar .fc-header-right a,
+#calendar .fc-header a {
+  color: #000000;
+}

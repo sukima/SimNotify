@@ -8,9 +8,11 @@
     <%= stylesheet_link_tag 'application' %>
     <%= formtastic_stylesheet_link_tag %>
     <%= stylesheet_link_jquery %>
+    <%= stylesheet_link_tag 'fullcalendar' %>
     <%= stylesheet_link_tag 'style' %>
     <%= stylesheet_link_tag 'site' %>
     <%= javascript_include_jquery %>
+    <%= javascript_include_tag (APP_CONFIG['use_minified_js'] ? 'fullcalendar.min' : 'fullcalendar') %>
     <%= javascript_include_tag 'application' %>
     <%= yield(:head) %>
   </head>
@@ -31,7 +33,7 @@
           in one line (without break line and space) it will
           be destroyed by Internet Explorer.
           Use add_nav_link helper for this. -->
-          <li><%= link_to_home -%></li><%= yield :nav_list %>
+          <li><%= link_to_home -%></li><%= nav_link_to_calendar if (is_admin? && !@is_calendar) -%><%= yield :nav_list %>
         </ul>
       </div>
       <%- end -%>

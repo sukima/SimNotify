@@ -45,10 +45,9 @@ $(document).ready(function() {
         var values = [];
         $(el).find("select:lt(3)").each(function(i, el) {
             var val = $(el).val();
-            if(val != '')
-                values.push(val);
+            if(val != '') values.push(val);
         });
-        if( values.length > 1) {
+        if( values.length > 1 ) {
             d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
             $(input).val( $.datepicker.formatDate($.datepicker._defaults.dateFormat, d) );
         }
@@ -64,17 +63,16 @@ $(document).ready(function() {
         values = [];
         $(el).find("select:gt(2)").each(function(i, el) {
             var val = $(el).val();
-            if(val != '')
-                values.push(val);
+            if(val != '') values.push(val);
         });
         if( values.length > 1) {
             $(input).val( values[0] + ":" + values[1] );
         }
 
         $(input).timePicker({
-          show24Hours: true,
-          separator: ':',
-          step: 15
+            show24Hours: true,
+            separator: ':',
+            step: 15
         });
     });
 
@@ -98,6 +96,15 @@ $(document).ready(function() {
         $(sels[1]).val(t[1]);
     });
 
+    $("#calendar").fullCalendar({
+        firstDay: 1, // Monday
+        events: '/calendar/events',
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        }
+    });
 });
 // }}}1
 
