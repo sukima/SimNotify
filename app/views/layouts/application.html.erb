@@ -18,7 +18,7 @@
     <div id="container">
       <div id="logo-container"><%= image_tag "logo.png" %></div>
       <div id="header">
-        <span id="title">Your Site</span>
+        <span id="title"><%= APP_CONFIG['company_name'] %></span>
         <%- if show_title? -%>
           <br /><span id="subtitle"><%=h yield(:title) %></span>
         <%- end -%>
@@ -45,7 +45,10 @@
       </div>
 
       <div id="footer">
-        &copy; 2010 <a href="#">Your Site</a> | Design by <a href="http://nicolas.freezee.org" target="_BLANK">Nicolas Fafchamps</a>
+        &copy; 2010 <a href="#"><%= APP_CONFIG['company_name'] %></a>
+        <% if APP_CONFIG['include_designer_credit'] %>
+          | Design by <a href="http://nicolas.freezee.org" target="_BLANK">Nicolas Fafchamps</a>
+        <% end %>
       </div>
 
     </div>

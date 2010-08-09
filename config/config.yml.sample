@@ -1,4 +1,6 @@
+company_name: "Your Site"
 application_name: "SimNotify"
+include_designer_credit: true
 environment:
   development:
     use_google_api: false
