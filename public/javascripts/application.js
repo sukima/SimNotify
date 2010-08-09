@@ -98,6 +98,11 @@ $(document).ready(function() {
 
     $("#calendar").fullCalendar({
         firstDay: 1, // Monday
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        }
     });
 });
 // }}}1
