@@ -31,7 +31,15 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    if @event.update_attributes(params[:event])
+    if params[:event] && params[:event][:submit_note] &&
+      @event.update_attributes({
+        :submit_note => params[:event][:submit_note],
+        :submitted => true
+      })
+      # TODO: Submit event here
+      flash[:notice] = "Psudo-Submission complete"
+      redirect_to root_url
+    elsif @event.update_attributes(params[:event])
       flash[:notice] = "Successfully updated event."
       redirect_to @event
     else
@@ -50,15 +58,6 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if @event.instructor != @current_instructor && !@current_instructor.admin?
       flash[:notice] = "You do not have permission to do that"
-      redirect_to root_url
-    end
-    if params[:event] && params[:event][:submit_note] &&
-      @event.update_attributes({
-        :submit_note => params[:event][:submit_note],
-        :submitted => true
-      })
-      # TODO: Submit event here
-      flash[:notice] = "Psudo-Submission complete"
       redirect_to root_url
     end
   end
