@@ -1,0 +1,11 @@
+- title "Location Suggestions"
+%table
+  %tr
+    %th Location
+    %th{:colspan => "2"} Actions
+  - for location_suggestion in @location_suggestions
+    %tr
+      %td= h location_suggestion.location
+      %td= link_to "Edit", edit_location_suggestion_path(location_suggestion)
+      %td= link_to "Destroy", location_suggestion, :confirm => 'Are you sure?', :method => :delete
+%p= link_to "New Location Suggestion", new_location_suggestion_path
