@@ -10,7 +10,10 @@ class MainController < ApplicationController
   end
 
   def autocomplete_map
-    @map = { :instructor_session_email => emails_instructors_path }
+    @map = {
+      :instructor_session_email => emails_instructors_path,
+      :event_location => location_suggestions_path
+    }
 
     respond_to do |format|
       format.json { render :json => @map.to_json }

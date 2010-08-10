@@ -45,7 +45,7 @@ class InstructorsController < ApplicationController
   end
 
   def emails
-    @emails = Instructor.all.map { |i| i.email }
+    @emails = Instructor.all.map(&:email)
 
     respond_to do |format|
       format.json { render :json => @emails.to_json }

@@ -4,6 +4,11 @@ class LocationSuggestionsController < ApplicationController
 
   def index
     @location_suggestions = LocationSuggestion.all
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @location_suggestions.map(&:location) }
+    end
   end
 
   def show
