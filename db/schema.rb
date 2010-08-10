@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100728001759) do
+ActiveRecord::Schema.define(:version => 20100810161952) do
 
   create_table "equipment_suggestions", :force => true do |t|
     t.string "title"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(:version => 20100728001759) do
     t.datetime "updated_at"
     t.string   "crypted_password"
     t.string   "password_salt"
+  end
+
+  create_table "location_suggestions", :force => true do |t|
+    t.string "location", :null => false
   end
 
   create_table "manikin_req_types", :force => true do |t|

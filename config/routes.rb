@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :location_suggestions
+
   map.resources :manikins
 
   map.resources :scenarios
