@@ -22,3 +22,6 @@
   padding: 0px 5px 10px 5px;
   border-bottom: solid thin black;
 }
+
+/* Fix for IE that renders the nav bar incorrectly. */
+li { height: 1%; }

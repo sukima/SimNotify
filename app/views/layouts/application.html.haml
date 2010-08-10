@@ -25,12 +25,6 @@
       - if logged_in?
         #navigation
           %ul
-            /
-              Please don't remove this important notice :
-              If you don't keep all the definition of the menu
-              in one line (without break line and space) it will
-              be destroyed by Internet Explorer.
-              Use add_nav_link helper for this.
             %li= link_to_home
             = nav_link_to_calendar if (is_admin? && !@is_calendar)
             = yield :nav_list
