@@ -45,7 +45,12 @@ class InstructorsController < ApplicationController
   end
 
   def emails
-    @emails = Instructor.all.map(&:email)
+    if params[:term]
+      @emails = Instructor.find(:all, :conditions =>
+        ["email LIKE ?", params[:term]+'%']).map(&:email)
+    else
+      @emails = Instructor.all.map(&:email)
+    end
 
     respond_to do |format|
       format.json { render :json => @emails.to_json }
