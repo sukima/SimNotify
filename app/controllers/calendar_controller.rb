@@ -16,16 +16,17 @@ class CalendarController < ApplicationController
       @events = Event.find(
         :all,
         :conditions => [
-          "start_time >= ? AND end_time <= ?",
-          start_time, end_time ]
+          "start_time >= ? AND end_time <= ? AND submitted = ?",
+          start_time, end_time, true ]
       )
       json_events = []
       @events.each do |e|
         json_event = {
-          :title => e.title,
+          :title => e.title, # add submitted specials
           :start => e.start_time,
           :end => e.end_time,
-          :url => event_path(e)
+          :url => event_path(e),
+          :className => e.approved ? "approved" : "waiting-approval"
         }
         json_events << json_event
       end

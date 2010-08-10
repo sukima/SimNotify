@@ -43,3 +43,20 @@
 #calendar .fc-header a {
   color: #000000;
 }
+
+/*
+.approved,
+.fc-agenda .approved .fc-event-time,
+.approved a {
+  background-color: green;
+  border-color: green;
+}
+*/
+
+.waiting-approval,
+.fc-agenda .waiting-approval .fc-event-time,
+.waiting-approval a {
+  background-color: green;
+  border-color: green;
+}
+
