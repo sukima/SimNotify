@@ -49,7 +49,7 @@ p {
   padding: 0 6px;
   line-height: 2.1em;
   color: #ccc;
-  margin-left: -190px; /* Minus the full width of this container */
+  margin-left: 0px;
   margin-right: 0px;
   margin-bottom: 0.5em; /* pushes #footer down some */
   white-space: nowrap;
@@ -82,9 +82,10 @@ p {
 }
 
 #content {
-  float: none;
+  float: left;
+  width: 535px;
   font-size: 0.9em;
-  margin-right: 190px; /* plus the full width of #navigation */
+  margin-right: 0px;
   margin-bottom: 0.5em; /* pushed #footer down some */
   padding: 1em 3em 3em;
 }
@@ -159,7 +160,6 @@ input:focus, textarea:focus {
 }
 
 #footer {
-  clear: both;
   padding: 0.4em 0;
   font-size: 0.9em;
   color: #f0f0f0;
@@ -168,6 +168,8 @@ input:focus, textarea:focus {
   border: 0.1em solid #2F4A6C;
   text-align: center;
 }
+
+#clear { clear: both; }
 
 #footer a {
   color: #f0f0f0;
