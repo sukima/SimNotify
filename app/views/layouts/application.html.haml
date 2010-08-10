@@ -27,6 +27,10 @@
           %ul
             %li= link_to_home
             = nav_link_to_calendar if (is_admin? && !@is_calendar)
+            - if is_admin?
+              = nav_link_to "Edit Instructors", instructors_path
+              = nav_link_to "Edit Manikins", manikins_path
+              = nav_link_to "Start new session", new_event_path
             = yield :nav_list
       #content
         - flash.each do |name, msg|
