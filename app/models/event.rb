@@ -73,4 +73,29 @@ class Event < ActiveRecord::Base
       return instructor.events.find(:all, :conditions => conditions)
     end
   end
+
+  def collective_need_flags
+    needs_hash = {
+      :staff_support => false,
+      :moulage => false,
+      :video => false,
+      :mobile => false
+    }
+    scenarios.each do |s|
+      needs_hash[:staff_support] = true if s.staff_support
+      needs_hash[:moulage] = true if s.moulage
+      needs_hash[:video] = true if s.video
+      needs_hash[:mobile] = true if s.mobile
+    end
+    return needs_hash
+  end
+
+  def collective_has_needs
+    scenarios.each do |s|
+      if s.staff_support || s.moulage || s.video || mobile
+        return true
+      end
+    end
+    return false
+  end
 end

@@ -1,13 +1,22 @@
 <% title "Submit a session" %>
 <% confirm_on_exit %>
 
-<% form_for @event, :url => submit_event_path(@event) do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :submit_note %><br />
-    <%= f.text_area :submit_note %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
+<p>Submitting session: <strong><%=h @event.title %></strong></p>
+<p>
+  <%=h @event.start_time %>
+  (<%= distance_of_time_in_words(@event.start_time, @event.end_time) -%>)
+  - <%= pluralize(@event.scenarios.count, "senario") %>
+  <% if @event.collective_has_needs %>
+    - <%=h need_flags_as_words(@event) %>
+  <% end %>
+</p>
+<% semantic_form_for @event do |f| %>
+  <% f.inputs do %>
+    <%= f.input :submit_note, :as => :text %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button :submit_event %>
+  <% end %>
 <% end %>
 
 <p>
