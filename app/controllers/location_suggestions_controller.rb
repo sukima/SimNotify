@@ -1,12 +1,12 @@
 class LocationSuggestionsController < ApplicationController
   before_filter :login_required
-  before_filter :login_admin
+  before_filter :login_admin, :except => :index
 
   def index
     @location_suggestions = LocationSuggestion.all
 
     respond_to do |format|
-      format.html
+      format.html { login_admin }
       format.json { render :json => @location_suggestions.map(&:location) }
     end
   end
