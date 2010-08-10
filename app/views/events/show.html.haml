@@ -1,0 +1,65 @@
+- title "Session"
+- if @event.submitted? && !@event.approved?
+  %p.info This event has been submitted and is pending approval.
+- if @event.approved?
+  %p.info This event has been approved.
+%h2
+  Session: #{h @event.title}
+%p
+  %strong Location:
+  = h @event.location
+%p
+  %strong Benefit:
+  = h @event.benefit
+%p
+  %strong Notes:
+  = h @event.notes
+%p
+  %strong Start Time:
+  = h @event.start_time
+%p
+  %strong End Time:
+  = h @event.end_time
+%p
+  %strong Live In:
+  = h @event.live_in
+%p
+  %strong Instructor:
+  = h @event.instructor.name
+%p
+  %strong Created at:
+  = h @event.created_at
+%p
+  %strong Last Updated:
+  = h @event.updated_at
+#scenarios
+  %h3 Scenarios
+  - if @event.scenarios.empty?
+    .box No scenarios defined yet!
+  - else
+    - @event.scenarios.each_with_index do |scenario, index|
+      .box.border
+        %p.scenario-title
+          %span
+            = (index+1).ordinalize
+            scenario: [#{link_to "Edit", edit_scenario_path(scenario)}]
+        %p.scenario-description= h scenario.description
+        - unless scenario.manikin.nil?
+          %p
+            %strong Manikin:
+            = h scenario.manikin.name_and_type
+        - else
+          %p
+            %strong This scenario does not use any manikins.
+        - unless scenario.flags_as_strings.empty?
+          %p.flags-list
+            %strong Support Needs:
+            = scenario.flags_as_strings.to_sentence
+  .box= link_to "Add a scenario", new_event_scenario_path(@event)
+%p
+  = link_to "Edit", edit_event_path(@event)
+  | #{link_to "Delete", @event, :confirm => 'Are you sure?', :method => :delete}
+  - if @current_instructor.admin?
+    | #{link_to "View All Sessions", events_path}
+  - if !@event.submitted?
+    | #{link_to "Submit for approval", submit_event_path(@event)}
