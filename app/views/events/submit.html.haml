@@ -1,0 +1,19 @@
+- title "Submit a session"
+- confirm_on_exit
+%p
+  Submitting session:
+  %strong= h @event.title
+%p
+  = h @event.start_time
+  (#{distance_of_time_in_words(@event.start_time, @event.end_time)})
+  \- #{pluralize(@event.scenarios.count, "senario")}
+  - if @event.collective_has_needs
+    \- #{h need_flags_as_words(@event)}
+- semantic_form_for @event do |f|
+  - f.inputs do
+    = f.input :submit_note, :as => :text
+  - f.buttons do
+    = f.commit_button :submit_event
+%p
+  = link_to_home "Cancle"
+  | #{link_to_confirm "Edit", edit_event_path(@event)}

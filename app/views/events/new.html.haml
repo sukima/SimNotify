@@ -1,0 +1,6 @@
+- title "New Session"
+= render :partial => 'form'
+%p
+  = link_to_home "Cancel"
+  - if @current_instructor.admin?
+    | #{link_to_confirm "View All Sessions", events_path}

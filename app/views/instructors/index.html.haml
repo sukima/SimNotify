@@ -1,0 +1,20 @@
+- title "Instructors"
+%table
+  %tr
+    %th Name
+    %th Department
+    %th Email
+    %th Phone
+    %th Admin
+    %th{:colspan => "2"} Actions
+  - for instructor in @instructors
+    %tr
+      %td= h instructor.name
+      %td= h instructor.office
+      %td= h instructor.email
+      %td= h instructor.phone
+      %td= instructor.admin ? "Yes" : "no"
+      %td= link_to "Edit", edit_instructor_path(instructor)
+      %td= link_to "Destroy", instructor, :confirm => 'Are you sure?', :method => :delete
+%p= link_to "New instructor", new_instructor_path
+%p= link_to "Return", root_path

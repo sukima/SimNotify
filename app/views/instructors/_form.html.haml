@@ -1,0 +1,19 @@
+- confirm_on_exit
+- semantic_form_for @instructor do |f|
+  - f.inputs do
+    = f.input :name
+    = f.input :email
+    = f.input :office
+    = f.input :phone
+    = f.input :password, :as => :password
+    = f.input :password_confirmation, :as => :password
+    - if @current_instructor && @current_instructor.admin?
+      - if @instructor == @current_instructor
+        %p You are an administrator.
+      - else
+        = f.input :admin
+  - f.buttons do
+    - if logged_in?
+      = f.commit_button :save
+    - else
+      = f.commit_button :sign_up

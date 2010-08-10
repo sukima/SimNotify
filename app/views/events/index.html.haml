@@ -1,0 +1,27 @@
+- title "Sessions"
+%table
+  %tr
+    %th Title
+    %th Location
+    %th Benefit
+    %th Notes
+    %th Start Time
+    %th End Time
+    %th Live In
+    %th Instructor
+    %th{:colspan => "3"} Actions
+  - for event in @events
+    %tr
+      %td= h event.title
+      %td= h event.location
+      %td= h event.benefit
+      %td= h event.notes
+      %td= h event.start_time
+      %td= h event.end_time
+      %td= h event.live_in
+      %td= h event.instructor.name
+      %td= link_to "Show", event
+      %td= link_to "Edit", edit_event_path(event)
+      %td= link_to "Destroy", event, :confirm => 'Are you sure?', :method => :delete
+%p= link_to_confirm "New Session", new_event_path
+%p= link_to_confirm "Return", root_path

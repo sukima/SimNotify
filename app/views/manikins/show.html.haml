@@ -1,0 +1,23 @@
+- title "Manikin"
+%p
+  %strong Name:
+  = h @manikin.name
+%p
+  %strong Serial Number:
+  = h @manikin.serial_number
+%p
+  %strong Request type:
+  = h @manikin.manikin_req_type.req_type
+%p
+  %strong Type:
+  = h @manikin.sim_type
+- if @manikin.oos
+  %p
+    %strong This manikin is Out Of Service
+%p
+  = link_to "Edit", edit_manikin_path(@manikin)
+  | #{link_to "Delete", @manikin, :confirm => 'Are you sure?', :method => :delete}
+  - if @current_instructor.admin?
+    | #{link_to "View All", manikins_path}
+    | #{link_to "Add New", new_manikin_path}
+  | #{link_to "Home", root_url}

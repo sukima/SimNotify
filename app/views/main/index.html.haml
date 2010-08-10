@@ -1,0 +1,37 @@
+- title "SYN:APSE Simulation Center"
+- add_nav_link "Start new session", new_event_path
+- name = @current_instructor.name_hash
+%p.user_control
+  = link_to "Log Out", logout_path
+  | #{link_to "Edit Profile", edit_instructor_path(@current_instructor)}
+  - if @current_instructor.admin?
+    | #{link_to "View Users", instructors_path}
+    | #{link_to "Edit Manikins", manikins_path}
+%div
+  %p
+    Welcome back
+    %strong
+      = name[:prefix]
+      = name[:first_name]
+      \.
+.box.border
+  - if @events_in_queue.empty?
+    %p You do not have any sessions in queue yet.
+  - else
+    %p You have the following sessions in queue:
+    %p
+      %ol
+        = render :partial => 'event', :collection => @events_in_queue
+  %p= link_to "Enter a new session", new_event_path
+- if !@events_submitted.empty?
+  .box.border
+    %p The following sessions are pending approval:
+    %p
+      %ol
+        = render :partial => 'event', :collection => @events_submitted
+- if !@events_approved.empty?
+  .box.border
+    %p The following sessions have been approved:
+    %p
+      %ol
+        = render :partial => 'event', :collection => @events_approved

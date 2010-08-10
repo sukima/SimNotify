@@ -1,0 +1,9 @@
+- confirm_on_exit
+- semantic_form_for @manikin do |f|
+  - f.inputs do
+    = f.input :name
+    = f.input :serial_number
+    = f.input :sim_type
+    = f.input :manikin_req_type, :required => true, :label_method => 'req_type'
+    = f.input :oos
+  = f.buttons

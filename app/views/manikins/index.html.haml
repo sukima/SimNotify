@@ -1,0 +1,19 @@
+- title "Manikins"
+%table
+  %tr
+    %th Name
+    %th Serial Number
+    %th Type
+    %th Out Of Service
+    %th{:colspan => "3"} Actions
+  - for manikin in @manikins
+    %tr
+      %td= h manikin.name
+      %td= h manikin.serial_number
+      %td= h manikin.sim_type
+      %td= manikin.oos ? "Yes" : "No"
+      %td= link_to "Show", manikin
+      %td= link_to "Edit", edit_manikin_path(manikin)
+      %td= link_to "Destroy", manikin, :confirm => 'Are you sure?', :method => :delete
+%p= link_to "New Manikin", new_manikin_path
+%p= link_to "Return", root_path

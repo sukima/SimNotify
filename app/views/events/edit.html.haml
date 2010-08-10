@@ -1,0 +1,6 @@
+- title "Edit Session"
+= render :partial => 'form'
+%p
+  = link_to_confirm "Cancel", @event
+  - if @current_instructor.admin?
+    | #{link_to_confirm "View All Sessions", events_path}
