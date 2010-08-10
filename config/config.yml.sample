@@ -1,18 +1,20 @@
 company_name: "Your Site"
 application_name: "SimNotify"
-include_designer_credit: true
 environment:
   development:
+    include_designer_credit: true
     use_google_api: false
     use_minified_js: false
     system_email_address: "System Administrator <suki@localhost>"
 
   test:
+    include_designer_credit: true
     use_google_api: false
     use_minified_js: false
     system_email_address: "System Administrator <suki@localhost>"
 
   production:
+    include_designer_credit: false
     google_api_key: "INSERT-YOUR-KEY"
     use_google_api: true
     use_minified_js: true
