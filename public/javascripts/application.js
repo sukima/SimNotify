@@ -3,7 +3,7 @@
 
 // Configure jQuery {{{1
 jQuery.ajaxSetup({
-    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "application/json")}
 });
 
 // jQuery Custom Functions {{{1
@@ -22,7 +22,7 @@ var APP = {};
 // Document Ready {{{1
 $(document).ready(function() {
     // Async requests
-    jQuery.getJSON('/main/autocomplete_map', function(data) {
+    $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
             $(this).autocomplete({ source: APP.autocomplete_map[$(this).attr('id')] });

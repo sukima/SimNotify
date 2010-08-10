@@ -13,7 +13,7 @@ class MainController < ApplicationController
     @map = { :instructor_session_email => emails_instructors_path }
 
     respond_to do |format|
-      format.js { render :json => @map.to_json }
+      format.json { render :json => @map.to_json }
       format.any { render :text => "Invalid format", :status => 406 }
     end
   end

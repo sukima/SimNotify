@@ -48,7 +48,7 @@ class InstructorsController < ApplicationController
     @emails = Instructor.all.map { |i| i.email }
 
     respond_to do |format|
-      format.js { render :json => @emails.to_json }
+      format.json { render :json => @emails.to_json }
       format.any { render :text => "Invalid format", :status => 406 }
     end
   end

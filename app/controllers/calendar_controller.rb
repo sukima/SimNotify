@@ -36,7 +36,7 @@ class CalendarController < ApplicationController
     end
 
     respond_to do |format|
-      format.js { render :json => json_events.to_json }
+      format.json { render :json => json_events.to_json }
       format.any { render :text => "Invalid format", :status => 406 }
     end
   end
