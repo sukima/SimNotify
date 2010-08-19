@@ -1,14 +1,26 @@
 TODO Items
 ==========
 
+@inbox 8/18/2010
+----------------
+
+* Calendar view for non admin users
+* Recurring sims
+* non-sim events
+* Drop down arrow for locations
+* template for scenarios
+* validate note if a need is checked in scenarios
+* Adding a scenario shoud redirect to session home
+* Allow admins to make sessions for other instructors
+* Approval button for admins
+* Calendar event shows with time and not all day
+
 * Additional instructors to live in events.
 * Scenario attachments for files (docs, xrays, etc.)
 
 Labeling
 --------
 
-* Add field descriptions
-* add a title for the scenario
 * add tech and educator booleans to event
 
 Templating
@@ -23,10 +35,12 @@ Integration
 * Calendar view
 
 Done
-----
+====
 
 * - label benefit to "benefit to system"
 * - label Office to Department
 * - label event to session
 * - label location to "location of sim"
 * - Change manikin select to adult/child/infant
+* - Add field descriptions
+* - add a title for the scenario
