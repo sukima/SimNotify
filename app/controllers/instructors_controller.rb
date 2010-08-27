@@ -13,6 +13,10 @@ class InstructorsController < ApplicationController
   
   def create
     @instructor = Instructor.new(params[:instructor])
+
+    # When a user is created we can't allow them to self promote to admin.
+    @instructor.admin = false unless is_admin?
+
     if @instructor.save
       flash[:notice] = "Thank you for signing up! You are now logged in."
       redirect_to root_url
@@ -29,6 +33,10 @@ class InstructorsController < ApplicationController
   def update
     @instructor = Instructor.find(params[:id])
     login_admin unless @instructor == @current_instructor
+
+    # Prevent self promotion to admin.
+    @instructor.admin = false unless is_admin?
+
     if @instructor.update_attributes(params[:instructor])
       flash[:notice] = "Successfully updated your profile."
       redirect_to root_url
