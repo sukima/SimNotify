@@ -21,6 +21,7 @@ en:
       instructor:
         office: "Department"
         admin: "Is an administrator?"
+        notify_recipient: "Recive session submission emails."
       event:
         title: "Title of session"
         location: "Location of the simulation"
@@ -39,6 +40,7 @@ en:
         email: "Please provide a valid email. All notifications and approvals will be sent with this address."
         office: "This is the department you work with. For example: PICU, Pedi ED, CTICU, etc."
         phone: "A phone number to reach you if you have questions. Ex (203) 688-4781"
+        notify_recipient: "Check this if you wish to be emailed whenever someone submits a session or there is a change to one. This is meant for the administrators who recive the notifications."
       event:
         benefit: "What is the benefit to the system, staff / patient saftey, etc?"
         live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."

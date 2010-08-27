@@ -40,18 +40,18 @@ Data Model
                            | location            |...
                            `---------------------'  .
                                                     .
-                                    ,------------.  .
-                                    | event      |  .
-       ,---------------------.      |------------|  .
-       | instructor          |<--.  | title      |  .
-       |---------------------|   |  | location   |...
-       | name                |   |  | benefit    |
-       | email               |   |  | notes      |
-       | office              |   |  | start_time |
-       | phone               |   |  | end_time   |
-       | admin?              |   |  | live_in    |
-       | (acts_as_authentic) |   `--| instructor |
-       `---------------------'   ,--| scenarios  |
+       ,---------------------.      ,------------.  .
+       | instructor          |<--.  | event      |  .
+       |---------------------|   |  |------------|  .
+       | name                |   |  | title      |  .
+       | email               |   |  | location   |...
+       | office              |   |  | benefit    |
+       | phone               |   |  | notes      |
+       | admin?              |   |  | start_time |
+       | notify_recipient?   |   |  | end_time   |
+       | (acts_as_authentic) |   |  | live_in    |
+       `---------------------'   `--| instructor |
+                                 ,--| scenarios  |
                                  |  | submitted? |
        ,---------------------.   |  | approved?  |
     ...| scenario            |<<-'  `------------'
