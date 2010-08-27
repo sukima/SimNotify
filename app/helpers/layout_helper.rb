@@ -75,4 +75,12 @@ module LayoutHelper
   def confirm_on_exit
     @confirm_exit = true
   end
+
+  def wide_content(val = true)
+    @wide_content = val
+  end
+
+  def wide_content?
+    @wide_content
+  end
 end

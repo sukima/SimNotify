@@ -33,6 +33,8 @@
               = nav_link_to "Edit Location Suggestions", location_suggestions_path
             = nav_link_to "Start new session", new_event_path
             = yield :nav_list
+      - if wide_content?
+        .clear
       #content
         - flash.each do |name, msg|
           = content_tag :div, msg, :id => "flash_#{name}"
