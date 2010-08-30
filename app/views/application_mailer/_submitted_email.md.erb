@@ -1,0 +1,32 @@
+Dear <%=h APP_CONFIG['company_name'] %> team:
+
+<%=h @event.instructor.name %> has submitted a new session for your approval.
+
+<%- if (@event.end_time - @event.start_time) < 172800 # 2 days, 60*60*24*2 -%>
+**PRIORITY REQUEST** This session is only <%=h distance_of_time_in_words_to_now(@event.start_time) %> away!
+<%- end -%>
+
+## <%=h @event.title %> ##
+
+Requested for *<%=h @event.start_time.strftime("%A, %b %d") %>*.
+Lasting about <%=h distance_of_time_in_words(@event.start_time, @event.end_time) %>.
+Located at __<%=h @event.location %>__.
+<%- if @event.live_in? -%>For a long term stay<%- end -%>
+
+There are <%=h pluralize(@event.scenarios.count, "scenario") %> for this session.
+<%- if @event.collective_has_needs -%>
+Which will need <%=h @event.need_flags_as_words %>.
+<%- end -%>
+
+The benifit to the system is:  
+<%=h @event.benefit %>
+
+<%=h @event.notes %>
+
+<%=h @event.submit_note %>
+
+#### Actions ####
+
+* [View this action](<%= event_url @event %>)
+* [Approve this session](<%= approve_event_url @event %>)
+* [Contact requestor for more information](mailto:<%= @event.instructor.email %>)

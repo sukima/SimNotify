@@ -5,4 +5,8 @@ public/cache/**/*
 doc/api
 doc/app
 config/database.yml
+config/config.yml
+config/email.yml
 db/*.sqlite3
+app/views/**_mailer/*.text.html.erb
+app/views/**_mailer/*.text.plain.erb

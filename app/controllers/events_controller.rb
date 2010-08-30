@@ -36,11 +36,11 @@ class EventsController < ApplicationController
         :submit_note => params[:event][:submit_note],
         :submitted => true
       })
-      # TODO: Submit event here
-      flash[:notice] = "Psudo-Submission complete"
+      ApplicationMailer.deliver_submitted_email(@event)
+      flash[:notice] = "Session has been submitted for approval. Thank you."
       redirect_to root_url
     elsif @event.update_attributes(params[:event])
-      flash[:notice] = "Successfully updated event."
+      flash[:notice] = "Successfully updated session"
       redirect_to @event
     else
       render :action => 'edit'
@@ -56,9 +56,23 @@ class EventsController < ApplicationController
 
   def submit
     @event = Event.find(params[:id])
-    if @event.instructor != @current_instructor && !@current_instructor.admin?
-      flash[:notice] = "You do not have permission to do that"
+    if @event.instructor != @current_instructor && !is_admin?
+      flash[:error] = "You do not have permission to do that"
       redirect_to root_url
     end
+  end
+
+  def approve
+    if !is_admin?
+      flash[:error] = "You do not have permission to do that"
+      redirect_to root_url
+      return
+    end
+    @event = Event.find(params[:id])
+    @event.approved = true
+    if @event.save
+      flash[:notice] = "Successfully approved event"
+    end
+    redirect_to @event
   end
 end

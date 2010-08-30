@@ -4,7 +4,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :manikins
 
   map.resources :scenarios
-  map.resources :events, :has_many => :scenarios, :member => { :submit => [ :get, :put ] }
+  map.resources :events, :has_many => :scenarios, :member => {
+    :submit => [ :get, :put ],
+    :approve => [ :put ]
+  }
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
   map.logout 'logout', :controller => 'instructor_sessions', :action => 'destroy'
@@ -12,7 +15,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :instructor_sessions
 
   map.resources :instructors, :collection => { :emails => [ :get ] }
-
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

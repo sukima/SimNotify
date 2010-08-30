@@ -40,18 +40,18 @@ Data Model
                            | location            |...
                            `---------------------'  .
                                                     .
-                                    ,------------.  .
-                                    | event      |  .
-       ,---------------------.      |------------|  .
-       | instructor          |<--.  | title      |  .
-       |---------------------|   |  | location   |...
-       | name                |   |  | benefit    |
-       | email               |   |  | notes      |
-       | office              |   |  | start_time |
-       | phone               |   |  | end_time   |
-       | admin?              |   |  | live_in    |
-       | (acts_as_authentic) |   `--| instructor |
-       `---------------------'   ,--| scenarios  |
+       ,---------------------.      ,------------.  .
+       | instructor          |<--.  | event      |  .
+       |---------------------|   |  |------------|  .
+       | name                |   |  | title      |  .
+       | email               |   |  | location   |...
+       | office              |   |  | benefit    |
+       | phone               |   |  | notes      |
+       | admin?              |   |  | start_time |
+       | notify_recipient?   |   |  | end_time   |
+       | (acts_as_authentic) |   |  | live_in    |
+       `---------------------'   `--| instructor |
+                                 ,--| scenarios  |
                                  |  | submitted? |
        ,---------------------.   |  | approved?  |
     ...| scenario            |<<-'  `------------'
@@ -89,3 +89,15 @@ Notes
 What we are looking at is a simple data entry form with a basic relational
 data model. The interface is not the concern yet. Just the ability to enter
 data. Data management is for later.
+
+Building
+========
+
+The following setup procedures are required with a fresh build.
+
+1. `rake gems:install` - Installs needed gems.
+2. `rake init:config` - Copyies over the sample config to the real config.
+   Provides defaults. _Please edit the files for your purpose_
+3. `rake mailer:views` - Builds the views needed to send mail. You can
+   clean the genrated files with `rake mailer:clean`
+4. `rake db:schema:load` - Loads the database.

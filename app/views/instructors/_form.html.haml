@@ -5,13 +5,14 @@
     = f.input :email
     = f.input :office
     = f.input :phone
-    = f.input :password, :as => :password
-    = f.input :password_confirmation, :as => :password
+    = f.input :password, :as => :password, :required => true
+    = f.input :password_confirmation, :as => :password, :required => true
     - if @current_instructor && @current_instructor.admin?
       - if @instructor == @current_instructor
         %p You are an administrator.
       - else
         = f.input :admin
+      = f.input :notify_recipient
   - f.buttons do
     - if logged_in?
       = f.commit_button :save

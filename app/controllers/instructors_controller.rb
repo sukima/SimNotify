@@ -16,8 +16,10 @@ class InstructorsController < ApplicationController
 
     # When a user is created we can't allow them to self promote to admin.
     @instructor.admin = false unless is_admin?
+    @instructor.notify_recipient = false unless is_admin?
 
     if @instructor.save
+      ApplicationMailer.deliver_welcome_email(@instructor)
       flash[:notice] = "Thank you for signing up! You are now logged in."
       redirect_to root_url
     else

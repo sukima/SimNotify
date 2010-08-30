@@ -50,4 +50,7 @@ class Instructor < ActiveRecord::Base
     return hash
   end
 
+  def self.notify_emails()
+    Instructor.find(:all, :conditions => { :notify_recipient => true }).map {|i| i.email}
+  end
 end
