@@ -25,7 +25,10 @@
   = h @scenario.mobile
 %p
   %strong Manikin needs requested:
-  = h @scenario.manikin_req_type.req_type
+  - if @scenario.manikin_req_type
+    = h @scenario.manikin_req_type.req_type
+  - else
+    None
 %p
   %strong Manikin:
   = (@scenario.manikin.nil?) ? "Not Assigned" : h(@scenario.manikin.name_and_type)
