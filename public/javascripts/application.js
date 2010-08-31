@@ -112,6 +112,9 @@ $(document).ready(function() {
     // Accordions {{{2
     $(".accordion").accordion({header: '.accordion-header'});
 
+    // Buttons {{{2
+    $("a.nav-link").button();
+
     // }}}2
 });
 // }}}1

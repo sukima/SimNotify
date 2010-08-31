@@ -61,9 +61,9 @@ module LayoutHelper
   # builds a link that is dynamic for confirmation or not
   def link_to_confirm(title, path)
     if @confirm_exit.nil? || !@confirm_exit
-      return link_to title, path
+      return link_to title, path, :class => 'nav-link'
     else
-      return link_to title, path, :confirm => t(:cancel_confirm)
+      return link_to title, path, :confirm => t(:cancel_confirm), :class => 'nav-link'
     end
   end
 
