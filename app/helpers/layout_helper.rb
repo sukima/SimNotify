@@ -26,8 +26,8 @@ module LayoutHelper
 
   def javascript_include_jquery
     ret = ""
-    if APP_CONFIG['use_google_api']
-      ret += javascript_include_tag "http://www.google.com/jsapi?key=#{APP_CONFIG['google_api_key']}"
+    if APP_CONFIG[:use_google_api]
+      ret += javascript_include_tag "http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}"
       ret += javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
       ret += javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"
     else

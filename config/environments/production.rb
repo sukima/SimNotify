@@ -22,7 +22,8 @@ config.action_view.cache_template_loading            = true
 # config.action_controller.asset_host = "http://assets.example.com"
 
 # Disable delivery errors, bad email addresses will be ignored
-# config.action_mailer.raise_delivery_errors = false
+config.action_mailer.raise_delivery_errors = false
+config.action_mailer.default_url_options = { :host => "YOUR_SITE.com", :port => 4000 }
 
 # Enable threaded mode
 # config.threadsafe!
