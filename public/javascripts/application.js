@@ -21,7 +21,7 @@ var APP = {};
 
 // Document Ready {{{1
 $(document).ready(function() {
-    // Async requests
+    // Async requests {{{2
     $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
@@ -29,6 +29,7 @@ $(document).ready(function() {
         });
     });
 
+    // Datepicker / Timepicker {{{2
     // Define the dateFormat for the datepicker
     $.datepicker._defaults.dateFormat = 'M dd yy';
 
@@ -96,6 +97,8 @@ $(document).ready(function() {
         $(sels[1]).val(t[1]);
     });
 
+
+    // Calendar {{{2
     $("#calendar").fullCalendar({
         firstDay: 1, // Monday
         events: '/calendar/events',
@@ -105,6 +108,11 @@ $(document).ready(function() {
             right: 'month,agendaWeek,agendaDay'
         }
     });
+
+    // Accordions {{{2
+    $(".accordion").accordion({header: '.accordion-header'});
+
+    // }}}2
 });
 // }}}1
 
