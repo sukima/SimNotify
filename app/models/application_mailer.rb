@@ -10,8 +10,9 @@ class ApplicationMailer < ActionMailer::Base
   def submitted_email(event)
     recipients  Instructor.notify_emails()
     cc          event.instructor.email
+    reply_to    event.instructor.email
     from        APP_CONFIG[:system_email_address]
-    subject     "New session requested: #{event.title}"
+    subject     "[#{APP_CONFIG[:application_name]}] New session requested: #{event.title}"
     sent_on     Time.now
     body        :event => event
   end
