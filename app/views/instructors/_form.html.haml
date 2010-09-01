@@ -13,6 +13,7 @@
       - else
         = f.input :admin
       = f.input :notify_recipient
+    = f.input :gui_theme, :as => :radio, :collection => APP_CONFIG[:gui_themes]
   - f.buttons do
     - if logged_in?
       = f.commit_button :save

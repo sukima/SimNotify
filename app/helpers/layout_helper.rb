@@ -21,8 +21,9 @@ module LayoutHelper
   end
 
   def stylesheet_link_jquery
-    #stylesheet_link_tag "themes/smoothness/jquery-ui-1.8.4.custom.css"
-    stylesheet_link_tag "themes/redmond/jquery-ui-1.8.4.custom.css"
+    theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
+      @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
+    stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
   end
 
   def javascript_include_jquery

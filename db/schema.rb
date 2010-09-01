@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100824144932) do
+ActiveRecord::Schema.define(:version => 20100901212455) do
 
   create_table "equipment_suggestions", :force => true do |t|
     t.string "title"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20100824144932) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.boolean  "notify_recipient",  :default => false
+    t.string   "gui_theme"
   end
 
   create_table "location_suggestions", :force => true do |t|

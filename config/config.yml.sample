@@ -1,5 +1,8 @@
 company_name: "Your Site"
 application_name: "SimNotify"
+gui_themes:
+  - redmond
+  - smoothness
 environment:
   development:
     include_designer_credit: true
