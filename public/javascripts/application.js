@@ -36,8 +36,11 @@ $(document).ready(function() {
     /**
      * Replaces the date or datetime field with jquey-ui datepicker
      */
+    // initialize rails datetime picker to jquery inputs {{{3
     $('.date, .datetime').each(function(i, el) {
         var input = document.createElement('input');
+
+        // datepicker field
         $(input).attr({'type': 'text', 'class': 'ui-date-text'});
         // Insert the input:text before the first select
         $(el).find("select:first").before(input);
@@ -59,7 +62,7 @@ $(document).ready(function() {
 
         $(input).datepicker();
 
-
+        // timepicker field
         input = document.createElement('input');
         $(input).attr({'type': 'text', 'class': 'ui-time-text'});
         $(el).find("select:last").after(input);
@@ -78,16 +81,17 @@ $(document).ready(function() {
             $(input).val('Pick a time...');
         }
 
-        $(input).timePicker({
-            show24Hours: true,
-            separator: ':',
-            step: 15
+        $(input).timepickr({
+            convention: 24,
+            width: 260
         });
     });
+    // }}}3
 
     /**
      * Sets the date for each select with the date selected with datepicker
      */
+    // jquery to rails datetime picker autoupdater {{{3
     $('input.ui-date-text').live("change", function() {
         var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
         var d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
@@ -104,6 +108,7 @@ $(document).ready(function() {
         $(sels[0]).val(t[0]);
         $(sels[1]).val(t[1]);
     });
+    // }}}3
 
 
     // Calendar {{{2

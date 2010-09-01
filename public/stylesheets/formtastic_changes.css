@@ -16,3 +16,12 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 form.formtastic fieldset > ol > li.boolean label {
   float: none;
 }
+
+form.formtastic fieldset ol li fieldset div.ui-timepickr ol {
+  width: 300px;
+  padding: 3px;
+}
+
+form.formtastic fieldset ol li fieldset div.ui-timepickr ol li {
+  padding: 3px;
+}
