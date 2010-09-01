@@ -113,7 +113,33 @@ $(document).ready(function() {
     $(".accordion").accordion({header: '.accordion-header'});
 
     // Buttons {{{2
-    $("a.nav-link").button();
+    $("#navigation a, input.create, input.update").button();
+
+    // Override confirm() {{{2
+    // This is a bit of a hack to override the :confirm option in link_to but
+    // it degrades nicely.
+    $("a[confirm_message]").each(function () {
+        $(this).removeAttr('onclick');
+        $(this).unbind('click', false);
+        $(this).click(function (e) {
+            var anchor = this;
+            $("<div>" + $(this).attr('confirm_message') + "</div>").dialog({
+                resizable: false,
+                height:160,
+                modal: true,
+                buttons: {
+                    Ok: function() {
+                        window.location.href = $(anchor).attr('href');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                        $(this).remove();
+                    }
+                }
+            });
+            return false;
+        });
+    });
 
     // }}}2
 });
