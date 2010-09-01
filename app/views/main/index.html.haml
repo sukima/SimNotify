@@ -13,24 +13,36 @@
       = name[:prefix]
       = name[:first_name]
       \.
-.box.border
-  - if @events_in_queue.empty?
-    %p You do not have any sessions in queue yet.
-  - else
-    %p You have the following sessions in queue:
-    %p
+%h2 Sessions:
+.accordion
+  .accordion-header
+    %a
+      = "Waiting to be submitted (#{pluralize @events_in_queue.count, 'session'})"
+  .accordion-content
+    - if @events_in_queue.empty?
+      You do not have any sessions in queue yet.
+    - else
+      You have the following sessions in queue:
       %ol
         = render :partial => 'event', :collection => @events_in_queue
-  %p= link_to "Enter a new session", new_event_path
-- if !@events_submitted.empty?
-  .box.border
-    %p The following sessions are pending approval:
-    %p
+    %p= link_to "Enter a new session", new_event_path
+  .accordion-header
+    %a
+      = "Pending Approval (#{pluralize @events_submitted.count, 'session'})"
+  .accordion-content
+    - if @events_submitted.empty?
+      There are no session pending approval yet. Submit your sessions for approval first.
+    - else
+      The following sessions are pending approval:
       %ol
         = render :partial => 'event', :collection => @events_submitted
-- if !@events_approved.empty?
-  .box.border
-    %p The following sessions have been approved:
-    %p
+  .accordion-header
+    %a
+      = "Approved (#{pluralize @events_approved.count, 'session'})"
+  .accordion-content
+    - if @events_approved.empty?
+      No sessions approved yet.
+    - else
+      The following sessions have been approved:
       %ol
         = render :partial => 'event', :collection => @events_approved

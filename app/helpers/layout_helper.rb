@@ -21,21 +21,23 @@ module LayoutHelper
   end
 
   def stylesheet_link_jquery
-    stylesheet_link_tag "smoothness/jquery-ui-1.8.2.custom.css"
+    theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
+      @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
+    stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
   end
 
   def javascript_include_jquery
     ret = ""
     if APP_CONFIG[:use_google_api]
-      ret += javascript_include_tag "http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}"
-      ret += javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-      ret += javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"
+      ret += javascript_include_tag("http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}").sub('.js', '')
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").sub('.js', '')
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js").sub('.js', '')
     else
       ret += javascript_include_tag "jquery"
       ret += javascript_include_tag "jquery-ui"
     end
-    ret += javascript_include_tag "jquery.timePicker"
-    ret += stylesheet_link_tag "timePicker"
+    ret += javascript_include_tag "jquery.timepickr"
+    #ret += stylesheet_link_tag "ui.timepickr"
     return ret
   end
 
@@ -63,7 +65,8 @@ module LayoutHelper
     if @confirm_exit.nil? || !@confirm_exit
       return link_to title, path
     else
-      return link_to title, path, :confirm => t(:cancel_confirm)
+      return link_to title, path, :confirm => t(:cancel_confirm),
+        :confirm_message => t(:cancel_confirm)
     end
   end
 

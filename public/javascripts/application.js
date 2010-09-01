@@ -21,7 +21,7 @@ var APP = {};
 
 // Document Ready {{{1
 $(document).ready(function() {
-    // Async requests
+    // Async requests {{{2
     $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
@@ -29,14 +29,18 @@ $(document).ready(function() {
         });
     });
 
+    // Datepicker / Timepicker {{{2
     // Define the dateFormat for the datepicker
     $.datepicker._defaults.dateFormat = 'M dd yy';
 
     /**
      * Replaces the date or datetime field with jquey-ui datepicker
      */
+    // initialize rails datetime picker to jquery inputs {{{3
     $('.date, .datetime').each(function(i, el) {
         var input = document.createElement('input');
+
+        // datepicker field
         $(input).attr({'type': 'text', 'class': 'ui-date-text'});
         // Insert the input:text before the first select
         $(el).find("select:first").before(input);
@@ -51,10 +55,14 @@ $(document).ready(function() {
             d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
             $(input).val( $.datepicker.formatDate($.datepicker._defaults.dateFormat, d) );
         }
+        else
+        {
+            $(input).val('Pick a date...');
+        }
 
         $(input).datepicker();
 
-
+        // timepicker field
         input = document.createElement('input');
         $(input).attr({'type': 'text', 'class': 'ui-time-text'});
         $(el).find("select:last").after(input);
@@ -68,17 +76,22 @@ $(document).ready(function() {
         if( values.length > 1) {
             $(input).val( values[0] + ":" + values[1] );
         }
+        else
+        {
+            $(input).val('Pick a time...');
+        }
 
-        $(input).timePicker({
-            show24Hours: true,
-            separator: ':',
-            step: 15
+        $(input).timepickr({
+            convention: 24,
+            width: 260
         });
     });
+    // }}}3
 
     /**
      * Sets the date for each select with the date selected with datepicker
      */
+    // jquery to rails datetime picker autoupdater {{{3
     $('input.ui-date-text').live("change", function() {
         var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
         var d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
@@ -95,7 +108,10 @@ $(document).ready(function() {
         $(sels[0]).val(t[0]);
         $(sels[1]).val(t[1]);
     });
+    // }}}3
 
+
+    // Calendar {{{2
     $("#calendar").fullCalendar({
         firstDay: 1, // Monday
         events: '/calendar/events',
@@ -105,6 +121,40 @@ $(document).ready(function() {
             right: 'month,agendaWeek,agendaDay'
         }
     });
+
+    // Accordions {{{2
+    $(".accordion").accordion({header: '.accordion-header'});
+
+    // Buttons {{{2
+    $("#navigation a, input.create, input.update").button();
+
+    // Override confirm() {{{2
+    // This is a bit of a hack to override the :confirm option in link_to but
+    // it degrades nicely.
+    $("a[confirm_message]").each(function () {
+        $(this).removeAttr('onclick');
+        $(this).unbind('click', false);
+        $(this).click(function (e) {
+            var anchor = this;
+            $("<div>" + $(this).attr('confirm_message') + "</div>").dialog({
+                resizable: false,
+                height:160,
+                modal: true,
+                buttons: {
+                    Ok: function() {
+                        window.location.href = $(anchor).attr('href');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                        $(this).remove();
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
+    // }}}2
 });
 // }}}1
 
