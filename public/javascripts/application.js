@@ -52,6 +52,10 @@ $(document).ready(function() {
             d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
             $(input).val( $.datepicker.formatDate($.datepicker._defaults.dateFormat, d) );
         }
+        else
+        {
+            $(input).val('Pick a date...');
+        }
 
         $(input).datepicker();
 
@@ -68,6 +72,10 @@ $(document).ready(function() {
         });
         if( values.length > 1) {
             $(input).val( values[0] + ":" + values[1] );
+        }
+        else
+        {
+            $(input).val('Pick a time...');
         }
 
         $(input).timePicker({
