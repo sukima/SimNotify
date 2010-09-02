@@ -62,7 +62,7 @@ module LayoutHelper
 
   # builds a link that is dynamic for confirmation or not
   def link_to_confirm(title, path, message=nil)
-    if @confirm_exit.nil? || !@confirm_exit
+    if message.nil? && (@confirm_exit.nil? || !@confirm_exit)
       return link_to title, path
     else
       message = t(:cancel_confirm) if message.nil?
