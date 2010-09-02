@@ -17,6 +17,26 @@ jQuery.fn.submitWithAjax = function() {
 
 // Application object {{{1
 var APP = {};
+
+// Function: saveDateValues() {{{2
+APP.saveDateValues = function () {
+    var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
+    var d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
+
+    $(sels[0]).val(d.getFullYear());
+    $(sels[1]).val(d.getMonth() + 1);
+    $(sels[2]).val(d.getDate());
+};
+
+// Function: saveTimeValues() {{{2
+APP.saveTimeValues = function () {
+    var sels = $(this).closest('.date, .datetime').find("select:gt(2)");
+    var t = $(this).val().split(":");
+
+    $(sels[0]).val(t[0]);
+    $(sels[1]).val(t[1]);
+};
+
 // }}}1
 
 // Document Ready {{{1
@@ -83,6 +103,7 @@ $(document).ready(function() {
 
         $(input).timepickr({
             convention: 24,
+            select: APP.saveTimeValues,
             width: 260
         });
     });
@@ -92,22 +113,9 @@ $(document).ready(function() {
      * Sets the date for each select with the date selected with datepicker
      */
     // jquery to rails datetime picker autoupdater {{{3
-    $('input.ui-date-text').live("change", function() {
-        var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
-        var d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
+    $('input.ui-date-text').live("change", APP.saveDateValues);
 
-        $(sels[0]).val(d.getFullYear());
-        $(sels[1]).val(d.getMonth() + 1);
-        $(sels[2]).val(d.getDate());
-    });
-
-    $('input.ui-time-text').live("change", function() {
-        var sels = $(this).closest('.date, .datetime').find("select:gt(2)");
-        var t = $(this).val().split(":");
-
-        $(sels[0]).val(t[0]);
-        $(sels[1]).val(t[1]);
-    });
+    $('input.ui-time-text').live("change", APP.saveTimeValues);
     // }}}3
 
 
