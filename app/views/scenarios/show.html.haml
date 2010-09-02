@@ -34,7 +34,7 @@
   = (@scenario.manikin.nil?) ? "Not Assigned" : h(@scenario.manikin.name_and_type)
 %p
   = link_to "Edit", edit_scenario_path(@scenario)
-  | #{link_to "Destroy", @scenario, :confirm => 'Are you sure?', :method => :delete}
-  | #{link_to "Home", root_url}
+  | #{link_to_confirm "Destroy", @scenario, :confirm => 'Are you sure?', :method => :delete}
+  | #{link_to_confirm "Home", root_url}
   - if @current_instructor.admin?
-    | #{link_to "View All", scenarios_path}
+    | #{link_to_confirm "View All", scenarios_path}
