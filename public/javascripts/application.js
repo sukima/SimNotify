@@ -53,9 +53,9 @@ APP.syncStartEndDates = function (el) {
     {
         var end_date = $("#event_end_time_input .ui-date-text");
         if (end_date.val() == APP.locale.pick_date)
-            end_date.val($(el).val);
+            end_date.val($(el).val()).effect('highlight');
+        end_date.effect('highlight');
     }
-    return true;
 };
 
 // Function: syncStartEndTimes() {{{2
@@ -63,10 +63,10 @@ APP.syncStartEndTimes = function (el) {
     if ($(el).data().input_id == "event_start_time_input")
     {
         var end_time = $("#event_end_time_input .ui-time-text");
-        if (end_time.val() == APP.locale.pick_date)
-            end_time.val($(el).val);
+        if (end_time.val() == APP.locale.pick_time)
+            end_time.val($(el).val());
+        end_time.effect('highlight');
     }
-    return true;
 };
 
 // }}}1
