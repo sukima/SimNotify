@@ -188,7 +188,6 @@ $(document).ready(function() {
             var anchor = this;
             $("<div>" + $(this).attr('confirm_message') + "</div>").dialog({
                 resizable: false,
-                height:160,
                 modal: true,
                 buttons: {
                     Ok: function() {

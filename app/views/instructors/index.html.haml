@@ -14,7 +14,7 @@
       %td= h instructor.email
       %td= h instructor.phone
       %td= instructor.admin ? "Yes" : "no"
-      %td= link_to "Edit", edit_instructor_path(instructor)
-      %td= link_to "Destroy", instructor, :confirm => 'Are you sure?', :method => :delete
-%p= link_to "New instructor", new_instructor_path
-%p= link_to "Return", root_path
+      %td= link_to_confirm "Edit", edit_instructor_path(instructor)
+      %td= link_to_confirm "Destroy", instructor, :confirm => 'Are you sure?', :method => :delete
+%p= link_to_confirm "New instructor", new_instructor_path
+%p= link_to_confirm "Return", root_path

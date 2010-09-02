@@ -9,5 +9,7 @@
   \- #{h event.location}
   \- #{h event.start_time.to_s(:long)} (#{distance_of_time_in_words_to_now(event.start_time)} from now)
   \- #{(event.scenarios.nil?) ? "(No scenarios)" : pluralize(event.scenarios.count, 'scenario')}
-  - if !event.submitted?
-    %span.queue-list= link_to "Submit", submit_event_path(event)
+  - if !event.submitted? && !event.approved?
+    %span.queue-list= link_to_confirm "Submit", submit_event_path(event), :confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])
+  - elsif event.submitted? || event.approved?
+    %span.queue-list= link_to_confirm "Revoke", revoke_event_path(event), :confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])
