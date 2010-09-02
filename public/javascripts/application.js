@@ -26,6 +26,8 @@ APP.saveDateValues = function () {
     $(sels[0]).val(d.getFullYear());
     $(sels[1]).val(d.getMonth() + 1);
     $(sels[2]).val(d.getDate());
+
+    APP.syncStartEndDates(this);
 };
 
 // Function: saveTimeValues() {{{2
@@ -35,6 +37,40 @@ APP.saveTimeValues = function () {
 
     $(sels[0]).val(t[0]);
     $(sels[1]).val(t[1]);
+
+    APP.syncStartEndTimes(this);
+};
+
+// Locale text {{{3
+APP.locale = {
+    pick_date: "Pick a date...",
+    pick_time: "Pick a time..."
+};
+
+// Function: syncStartEndDates() {{{2
+APP.syncStartEndDates = function (el) {
+    if ($(el).data().input_id == "event_start_time_input")
+    {
+        var end_date = $("#event_end_time_input .ui-date-text");
+        var d1 = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(el).val());
+        var d2 = (end_date.val() == APP.locale.pick_date) ?
+            0 : $.datepicker.parseDate($.datepicker._defaults.dateFormat, end_date.val());
+        if  (d2 < d1)
+            end_date.val($(el).val()).effect('highlight');
+    }
+};
+
+// Function: syncStartEndTimes() {{{2
+APP.syncStartEndTimes = function (el) {
+    if ($(el).data().input_id == "event_start_time_input")
+    {
+        var end_time = $("#event_end_time_input .ui-time-text");
+        var t1 = $(el).val().replace(/[^\d]/g, '');
+        var t2 = (end_time.val() == APP.locale.pick_time) ?
+            0 : end_time.val().replace(/[^\d]/g, '');
+        if (t2 < t1)
+            end_time.val($(el).val()).effect('highlight');
+    }
 };
 
 // }}}1
@@ -56,9 +92,10 @@ $(document).ready(function() {
     /**
      * Replaces the date or datetime field with jquey-ui datepicker
      */
-    // initialize rails datetime picker to jquery inputs {{{3
+    // Date Picker Init {{{3
     $('.date, .datetime').each(function(i, el) {
         var input = document.createElement('input');
+        $(input).data('input_id', $(el).attr('id'));
 
         // datepicker field
         $(input).attr({'type': 'text', 'class': 'ui-date-text'});
@@ -77,13 +114,17 @@ $(document).ready(function() {
         }
         else
         {
-            $(input).val('Pick a date...');
+            $(input).val(APP.locale.pick_date);
         }
 
         $(input).datepicker();
+    });
 
-        // timepicker field
-        input = document.createElement('input');
+    // Time Picker Init {{{3
+    $('.time, .datetime').each(function(i, el) {
+        var input = document.createElement('input');
+        $(input).data('input_id', $(el).attr('id'));
+
         $(input).attr({'type': 'text', 'class': 'ui-time-text'});
         $(el).find("select:last").after(input);
         $(el).find("select:gt(2)").hide();
@@ -98,7 +139,7 @@ $(document).ready(function() {
         }
         else
         {
-            $(input).val('Pick a time...');
+            $(input).val(APP.locale.pick_time);
         }
 
         $(input).timepickr({
@@ -116,6 +157,7 @@ $(document).ready(function() {
     $('input.ui-date-text').live("change", APP.saveDateValues);
 
     $('input.ui-time-text').live("change", APP.saveTimeValues);
+
     // }}}3
 
 
