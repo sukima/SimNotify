@@ -62,6 +62,20 @@ class EventsController < ApplicationController
     end
   end
 
+  def revoke
+    @event = Event.find(params[:id])
+    if @event.instructor != @current_instructor && !is_admin?
+      flash[:error] = "You do not have permission to do that"
+      redirect_to root_url
+      return
+    end
+    @event.approved = @event.submitted = false
+    if @event.save
+      flash[:notice] = "Successfully revoked event"
+    end
+    redirect_to @event
+  end
+
   def approve
     if !is_admin?
       flash[:error] = "You do not have permission to do that"
