@@ -26,6 +26,7 @@ class CalendarController < ApplicationController
           :start => e.start_time,
           :end => e.end_time,
           :url => event_path(e),
+          :allDay => e.live_in?,
           :className => e.approved ? "approved" : "waiting-approval"
         }
         json_events << json_event
