@@ -21,11 +21,15 @@ var APP = {};
 // Function: saveDateValues() {{{2
 APP.saveDateValues = function () {
     var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
-    var d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
-
-    $(sels[0]).val(d.getFullYear());
-    $(sels[1]).val(d.getMonth() + 1);
-    $(sels[2]).val(d.getDate());
+    var d = null;
+    try {
+        d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
+        $(sels[0]).val(d.getFullYear());
+        $(sels[1]).val(d.getMonth() + 1);
+        $(sels[2]).val(d.getDate());
+    } catch (e) {
+        $(this).val('');
+    }
 };
 
 // Function: saveTimeValues() {{{2
@@ -56,11 +60,13 @@ APP.syncStartEndDates = function () {
 // Function: syncStartEndTimes() {{{2
 APP.syncStartEndTimes = function () {
     var end_time = $("#event_end_time_input .ui-time-text");
-    var t1 = $(this).val().replace(/[^\d]/g, '');
+    var t = $(this).val().split(":");
     var t2 = (end_time.val() == APP.locale.pick_time) ?
         0 : end_time.val().replace(/[^\d]/g, '');
-    if (t2 < t1)
-        end_time.val($(this).val()).trigger('change').effect('highlight');
+    if (t2 < t.join("")) {
+        t[0] = (t[0] * 1) + (1 * (t[0] < 23) ? 1 : 0);
+        end_time.val(t.join(":")).trigger('change').effect('highlight');
+    }
 };
 
 // }}}1
@@ -149,9 +155,9 @@ $(document).ready(function() {
      * Sets the date for each select with the date selected with datepicker
      */
     // Input change events {{{3
-    $('input.ui-date-text').live("change", APP.saveDateValues);
+    $('input.ui-date-text').live('change', APP.saveDateValues);
 
-    $('input.ui-time-text').live("change", APP.saveTimeValues);
+    $('input.ui-time-text').live('change', APP.saveTimeValues);
 
     // }}}3
 
