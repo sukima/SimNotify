@@ -62,6 +62,6 @@
   - if @current_instructor.admin?
     | #{link_to "View All Sessions", events_path}
   - if !@event.submitted?
-    | #{link_to "Submit for approval", submit_event_path(@event)}
+    | #{link_to_event_submit "Submit for approval", @event}
   - else
     | #{link_to_confirm "Revoke", revoke_event_path(@event), :confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}

@@ -77,6 +77,14 @@ module LayoutHelper
     link_to_confirm title, root_url
   end
 
+  def link_to_event_submit(title, event)
+    link_to_confirm title, submit_event_path(event), :confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])
+  end
+
+  def link_to_event_revoke(title, event)
+    link_to_confirm title, revoke_event_path(event), :confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])
+  end
+
   def confirm_on_exit
     @confirm_exit = true
   end
