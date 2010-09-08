@@ -108,4 +108,8 @@ class Event < ActiveRecord::Base
     needs << "mobile" if needs_hash[:mobile]
     return needs.to_sentence
   end
+
+  def priority_request?
+    (start_time - Time.now) < 172800 # 2 days, 60*60*24*2
+  end
 end

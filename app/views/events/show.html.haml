@@ -1,8 +1,8 @@
 - title "Session"
 - if @event.submitted? && !@event.approved?
-  %p.info This event has been submitted and is pending approval.
+  %p.notification This event has been submitted and is pending approval.
 - if @event.approved?
-  %p.info This event has been approved.
+  %p.notification This event has been approved.
 %h2
   Session: #{h @event.title}
 %p
@@ -17,6 +17,8 @@
 %p
   %strong Start Time:
   = h @event.start_time
+- if @event.priority_request?
+  %p.warning WARNING: Session is only #{distance_of_time_in_words_to_now(@event.start_time)} from now!
 %p
   %strong End Time:
   = h @event.end_time

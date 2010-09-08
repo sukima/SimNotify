@@ -1,4 +1,7 @@
 %li
+  - if !event.approved? && event.priority_request?
+    %span.priority
+      PRIORITY!
   = link_to event.title, event
   \-
   - if event.live_in?

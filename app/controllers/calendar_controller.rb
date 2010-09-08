@@ -1,6 +1,5 @@
 class CalendarController < ApplicationController
   before_filter :login_required
-  before_filter :login_admin
 
   def index
     @is_calendar = true
@@ -13,12 +12,12 @@ class CalendarController < ApplicationController
     if params[:start] && params[:end]
       start_time = Time.at(params[:start].to_i)
       end_time = Time.at(params[:end].to_i)
-      @events = Event.find(
-        :all,
-        :conditions => [
-          "start_time >= ? AND end_time <= ? AND submitted = ?",
-          start_time, end_time, true ]
-      )
+      conditions = { :start_time => (start_time .. end_time), :submitted => true }
+      if (is_admin?)
+        @events = Event.find(:all, :conditions => conditions)
+      else
+        @events = @current_instructor.events.find(:all, :conditions => conditions)
+      end
       json_events = []
       @events.each do |e|
         json_event = {

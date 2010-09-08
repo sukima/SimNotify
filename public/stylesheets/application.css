@@ -79,3 +79,21 @@ a {
   font-size: 12px;
   list-style: disc;
 }
+
+.priority {
+  color: red;
+}
+
+/* jQuery fixns' */
+.ui-state-highlight,
+.ui-state-error {
+  padding: 0.5em;
+  float: left;
+}
+
+#flash_notice .ui-icon,
+.notification .ui-icon,
+.warning .ui-icon {
+  float: left;
+  margin-right: 0.3em;
+}
