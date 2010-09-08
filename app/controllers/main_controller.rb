@@ -9,6 +9,13 @@ class MainController < ApplicationController
     @events_approved = Event.approved(@current_instructor)
   end
 
+  def help
+    @is_help = true
+    if params[:partial]
+      render :partial => "help"
+    end
+  end
+
   def autocomplete_map
     @map = {
       :instructor_session_email => emails_instructors_path,

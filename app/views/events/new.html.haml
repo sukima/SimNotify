@@ -1,4 +1,5 @@
 - title "New Session"
+- force_display_help if @current_instructor.new_user?
 = render :partial => 'form'
 %p
   = link_to_home "Cancel"

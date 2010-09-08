@@ -97,3 +97,8 @@ a {
   float: left;
   margin-right: 0.3em;
 }
+
+.help-next {
+  clear: both;
+  float: right;
+}

@@ -72,6 +72,14 @@ module LayoutHelper
     end
   end
 
+  def nav_link_to_help(title = nil)
+    title = t(:help) if title.nil?
+    rtn = "<li>"
+    rtn += link_to title, help_path, {:id => 'nav_help_link'}
+    rtn += "</li>"
+    return rtn
+  end
+
   def link_to_home(title = nil)
     title = t(:home) if title.nil?
     link_to_confirm title, root_url
@@ -95,5 +103,13 @@ module LayoutHelper
 
   def wide_content?
     @wide_content
+  end
+
+  def force_display_help(val = true)
+    @force_display_help = val
+  end
+
+  def force_display_help?
+    @force_display_help
   end
 end
