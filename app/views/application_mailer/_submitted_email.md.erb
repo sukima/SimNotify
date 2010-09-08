@@ -2,7 +2,7 @@ Dear <%=h APP_CONFIG[:company_name] %> team:
 
 <%=h @event.instructor.name %> has submitted a new session for your approval.
 
-<%- if (@event.end_time - @event.start_time) < 172800 # 2 days, 60*60*24*2 -%>
+<%- if @event.priority_request? -%>
 **PRIORITY REQUEST** This session is only <%=h distance_of_time_in_words_to_now(@event.start_time) %> away!
 <%- end -%>
 

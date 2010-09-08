@@ -183,6 +183,22 @@ $(document).ready(function() {
     // Buttons {{{2
     $("#navigation a, input.create, input.update").button();
 
+    // Notifications {{{2
+    $(".notification").wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-state-highlight ui-corner-all ui-helper-clearfix").
+        prepend("<span class=\"ui-icon ui-icon-info\" />");
+
+    $(".warning").wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-state-error ui-corner-all").
+        prepend("<span class=\"ui-icon ui-icon-alert\" />");
+
+    $("#flash_notice").wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-corner-all").
+        prepend("<span class=\"ui-icon ui-icon-alert\" />");
+
     // Override confirm() {{{2
     // This is a bit of a hack to override the :confirm option in link_to but
     // it degrades nicely.
