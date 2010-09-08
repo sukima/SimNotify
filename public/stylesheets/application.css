@@ -102,3 +102,13 @@ a {
   clear: both;
   float: right;
 }
+
+tr.waiting-approval,
+tr.waiting-approval td {
+  background-color: #CCFFCC;
+}
+
+tr.approved,
+tr.approved td {
+  background-color: #99CCFF;
+}

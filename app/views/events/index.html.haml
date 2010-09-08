@@ -3,25 +3,28 @@
 %table
   %tr
     %th Title
+    - if is_admin?
+      %th Instructor
     %th Location
-    %th Benefit
-    %th Notes
+    %th Has Notes
+    %th Live In
     %th Start Time
     %th End Time
-    %th Live In
-    %th Instructor
-    %th{:colspan => "3"} Actions
+    %th{:colspan => "2"} Actions
   - for event in @events
-    %tr
-      %td= h event.title
+    %tr{:class => event.status_as_class}
+      %td= link_to_confirm h(event.title), event
+      - if is_admin?
+        %td= link_to_confirm h(event.instructor.name), e.instructor
       %td= h event.location
-      %td= h event.benefit
-      %td= h event.notes
+      %td
+        - if !event.notes.empty?
+          %span.ui-icon.ui-icon-check Yes
+      %td
+        - if event.live_in
+          %span.ui-icon.ui-icon-check Yes
       %td= h event.start_time
       %td= h event.end_time
-      %td= h event.live_in
-      %td= h event.instructor.name
-      %td= link_to_confirm "Show", event
       %td= link_to_confirm "Edit", edit_event_path(event)
       %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
 %p= link_to_confirm "New Session", new_event_path
