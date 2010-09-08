@@ -60,3 +60,13 @@
   border-color: green;
 }
 
+#calendar-legend {
+  float: right;
+  border: solid thin black;
+  padding: 5px 0;
+}
+
+#calendar-legend span {
+  padding: 2px 5px;
+  margin: 0 5px;
+}

@@ -173,6 +173,9 @@ $(document).ready(function() {
         }
     });
 
+    $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
+        addClass("ui-corner-all ui-helper-clearfix");
+
     // Accordions {{{2
     $(".accordion").accordion({
       header: '.accordion-header',
