@@ -23,6 +23,6 @@
       %td= h event.instructor.name
       %td= link_to_confirm "Show", event
       %td= link_to_confirm "Edit", edit_event_path(event)
-      %td= link_to_confirm "Destroy", event, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
 %p= link_to_confirm "New Session", new_event_path
 %p= link_to_confirm "Return", root_path

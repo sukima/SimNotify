@@ -18,6 +18,8 @@ en:
   revoke_confirm: "You are about to revoke this session. The {{company_name}} team will be notified and you will need to resubmit again. Are you sure you wish to continue?"
   event_frozen: "cannot be changed after event has been submitted"
   no_reverse_time_travel: "The session can not end before it starts"
+  destroy: "Delete"
+  destroy_confirm: "Are you sure?"
   formtastic:
     labels:
       instructor:

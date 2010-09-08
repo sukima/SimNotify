@@ -14,6 +14,6 @@
       %td= manikin.oos ? "Yes" : "No"
       %td= link_to_confirm "Show", manikin
       %td= link_to_confirm "Edit", edit_manikin_path(manikin)
-      %td= link_to_confirm "Destroy", manikin, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to_confirm t(:destroy), manikin, :confirm => t(:destroy_confirm), :method => :delete
 %p= link_to_confirm "New Manikin", new_manikin_path
 %p= link_to_confirm "Return", root_path
