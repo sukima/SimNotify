@@ -88,6 +88,7 @@ a {
 .ui-state-highlight,
 .ui-state-error {
   padding: 0.5em;
+  margin-bottom: 0.5em;
   float: left;
 }
 
@@ -98,7 +99,11 @@ a {
   margin-right: 0.3em;
 }
 
-.help-next {
+#help {
+  text-align: left;
+}
+
+.help-buttons {
   clear: both;
   float: right;
 }

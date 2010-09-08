@@ -69,10 +69,31 @@ APP.syncStartEndTimes = function () {
     }
 };
 
+// Function: initNotifications() {{{2
+APP.initNotifications = function (scope) {
+    scope = (scope === undefined) ? null : scope;
+
+    $(".notification", scope).wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-state-highlight ui-corner-all ui-helper-clearfix").
+        prepend("<span class=\"ui-icon ui-icon-info\" />");
+
+    $(".warning", scope).wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-state-error ui-corner-all").
+        prepend("<span class=\"ui-icon ui-icon-alert\" />");
+
+    $("#flash_notice", scope).wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-corner-all").
+        prepend("<span class=\"ui-icon ui-icon-alert\" />");
+};
+
 // Function: initHelpTabs() {{{2
 APP.initHelpTabs = function () {
     $("#help").tabs();
-    $(".help-next").wrap("<div class=\"next-button ui-helper-clearfix\" />").button().click(function (e) {
+    $(".help-buttons").addClass("ui-widget").wrap("<div class=\"ui-helper-clearfix\" />");
+    $("a.help-button").button().click(function (e) {
         e.preventDefault();
         $("#help").tabs('select', $(this).attr('href'));
         return false;
@@ -200,20 +221,7 @@ $(document).ready(function() {
     $("#navigation a, input.create, input.update").button();
 
     // Notifications {{{2
-    $(".notification").wrap("<div class=\"ui-widget\" />").
-        after("<div class=\"clear\" />").
-        addClass("ui-state-highlight ui-corner-all ui-helper-clearfix").
-        prepend("<span class=\"ui-icon ui-icon-info\" />");
-
-    $(".warning").wrap("<div class=\"ui-widget\" />").
-        after("<div class=\"clear\" />").
-        addClass("ui-state-error ui-corner-all").
-        prepend("<span class=\"ui-icon ui-icon-alert\" />");
-
-    $("#flash_notice").wrap("<div class=\"ui-widget\" />").
-        after("<div class=\"clear\" />").
-        addClass("ui-corner-all").
-        prepend("<span class=\"ui-icon ui-icon-alert\" />");
+    APP.initNotifications();
 
     // Override confirm() {{{2
     // This is a bit of a hack to override the :confirm option in link_to but
@@ -251,12 +259,14 @@ $(document).ready(function() {
         var help_dialog = $("<div />").append($loading.clone());
         var help_link = $(this).one('click', function (e) {
             e.preventDefault();
-            help_dialog.
-                load(help_href, APP.initHelpTabs).dialog({
-                    title: "Help",
-                    width: 500,
-                    height: 400
-                });
+            help_dialog.load(help_href, function () {
+                APP.initHelpTabs();
+                APP.initNotifications(this);
+            });
+            help_dialog.dialog({
+                title: "Help",
+                width: 550
+            });
             help_link.click(function () {
                 e.preventDefault();
                 help_dialog.dialog('open');

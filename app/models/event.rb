@@ -112,4 +112,14 @@ class Event < ActiveRecord::Base
   def priority_request?
     (start_time - Time.now) < 172800 # 2 days, 60*60*24*2
   end
+
+  def status_as_class
+    if submitted? && !approved?
+      return "waiting-approval"
+    elsif approved?
+      return "approved"
+    else
+      return nil
+    end
+  end
 end

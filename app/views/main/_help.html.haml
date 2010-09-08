@@ -1,11 +1,28 @@
+- if @current_instructor.new_user?
+  .notification This help screen is automatically displayed until you create your first session.
 #help
   %ul
     %li
-      %a{:href=>"#tab1"} Tab 1
+      %a{:href=>"#intro"} Intro
     %li
       %a{:href=>"#tab2"} Tab 2
-  #tab1
-    this is a test
-    %a.help-next{:href=>"#tab2"} Next
+  #intro
+    %h2 Introduction
+    %p
+      There is a process to entering a session. Because of the many parts
+      involved it is broken into several steps.
+    %ol
+      %li Create a session
+      %li Add scenarios to the session
+      %li Submit the session for approval
+      %li And final approval
+    .help-buttons
+      %a.help-button{:href=>"#tab2"}
+        %span.ui-icon.ui-icon-seek-next Next
   #tab2
     this is another test
+    .help-buttons
+      %a.help-button{:href=>"#intro"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#tab2"}
+        %span.ui-icon.ui-icon-seek-next Next

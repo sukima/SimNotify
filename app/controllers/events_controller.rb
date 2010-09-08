@@ -2,11 +2,16 @@ class EventsController < ApplicationController
   before_filter :login_required
 
   def index
-    @events = Event.all
+    if is_admin?
+      @events = Event.all
+    else
+      @events = @current_instructor.events
+    end
   end
 
   def show
     @event = Event.find(params[:id])
+    event_owned_or_admin_check
   end
 
   def new
@@ -18,6 +23,10 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.instructor = @current_instructor
     if @event.save
+      if @current_instructor.new_user?
+        @current_instructor.new_user = false
+        @current_instructor.save
+      end
       flash[:notice] = "Successfully created event."
       redirect_to @event
     else
@@ -31,6 +40,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
+    event_owned_or_admin_check
     if params[:event] && params[:event][:submit_note] &&
       @event.update_attributes({
         :submit_note => params[:event][:submit_note],
@@ -49,6 +59,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
+    event_owned_or_admin_check
     @event.destroy
     flash[:notice] = "Successfully destroyed event."
     redirect_to events_url
@@ -56,19 +67,12 @@ class EventsController < ApplicationController
 
   def submit
     @event = Event.find(params[:id])
-    if @event.instructor != @current_instructor && !is_admin?
-      flash[:error] = "You do not have permission to do that"
-      redirect_to root_url
-    end
+    event_owned_or_admin_check
   end
 
   def revoke
     @event = Event.find(params[:id])
-    if @event.instructor != @current_instructor && !is_admin?
-      flash[:error] = "You do not have permission to do that"
-      redirect_to root_url
-      return
-    end
+    event_owned_or_admin_check
     @event.approved = @event.submitted = false
     if @event.save
       flash[:notice] = "Successfully revoked event"
@@ -88,5 +92,13 @@ class EventsController < ApplicationController
       flash[:notice] = "Successfully approved event"
     end
     redirect_to @event
+  end
+
+  private
+  def event_owned_or_admin_check
+    if @event.instructor != @current_instructor && !is_admin?
+      flash[:error] = "You do not have permission to do that"
+      redirect_to root_url
+    end
   end
 end
