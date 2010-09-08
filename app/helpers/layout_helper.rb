@@ -64,7 +64,7 @@ module LayoutHelper
   def link_to_confirm(title, path, opts=nil)
     opts = {} if opts.nil?
     if opts[:confirm].nil? && (@confirm_exit.nil? || !@confirm_exit)
-      return link_to title, path
+      return link_to title, path, opts
     else
       opts[:confirm] = t(:cancel_confirm) if opts[:confirm].nil?
       opts[:confirm_message] = opts[:confirm]
@@ -78,11 +78,11 @@ module LayoutHelper
   end
 
   def link_to_event_submit(title, event)
-    link_to_confirm title, submit_event_path(event), :confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])
+    link_to_confirm title, submit_event_path(event), {:confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])}
   end
 
   def link_to_event_revoke(title, event)
-    link_to_confirm title, revoke_event_path(event), :confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])
+    link_to_confirm title, revoke_event_path(event), {:confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}
   end
 
   def confirm_on_exit

@@ -206,6 +206,8 @@ $(document).ready(function() {
     // This is a bit of a hack to override the :confirm option in link_to but
     // it degrades nicely.
     $("a[confirm_message]").each(function () {
+        // OPTIMIZE: Use this blog to optimize
+        // http://blog.nemikor.com/2009/04/08/basic-usage-of-the-jquery-ui-dialog/
         $(this).removeAttr('onclick');
         $(this).unbind('click', false);
         $(this).click(function (e) {

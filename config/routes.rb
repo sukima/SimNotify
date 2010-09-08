@@ -50,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "main"
 
-  map.autoconnect_map "main/autocomplete_map", :controller => "main", :action => "autocomplete_map"
+  map.autocomplete_map "main/autocomplete_map", :controller => "main", :action => "autocomplete_map"
   map.connect "main/autocomplete_map.:format", :controller => "main", :action => "autocomplete_map"
 
   map.calendar 'calendar', :controller => 'calendar'
