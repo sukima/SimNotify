@@ -25,9 +25,10 @@ class CalendarController < ApplicationController
           :start => e.start_time,
           :end => e.end_time,
           :url => event_path(e),
-          :allDay => e.live_in?,
-          :className => e.approved ? "approved" : "waiting-approval"
+          :allDay => e.live_in?
         }
+        className = e.status_as_class
+        json_event[:className] = className unless className.nil?
         json_events << json_event
       end
     else
