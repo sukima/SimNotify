@@ -1,11 +1,21 @@
 - if @current_instructor.new_user?
-  .notification This help screen is automatically displayed until you create your first session.
+  .notification
+    This help screen is automatically displayed until you create your first
+    session.
 #help
   %ul
     %li
       %a{:href=>"#intro"} Intro
     %li
-      %a{:href=>"#tab2"} Tab 2
+      %a{:href=>"#sessions"} Sessions
+    %li
+      %a{:href=>"#scenarios"} Scenarios
+    %li
+      %a{:href=>"#submitting"} Submitting
+    %li
+      %a{:href=>"#revoking"} Revoking
+    %li
+      %a{:href=>"#calendar"} Calendar
   #intro
     %h2 Introduction
     %p
@@ -17,12 +27,47 @@
       %li Submit the session for approval
       %li And final approval
     .help-buttons
-      %a.help-button{:href=>"#tab2"}
+      %a.help-button{:href=>"#sessions"}
         %span.ui-icon.ui-icon-seek-next Next
-  #tab2
-    this is another test
+  #sessions
+    %h2 Sessions
+    %p
+      Sessions are how we define a block of time. This includes classes, Mocks,
+      and long term stays.
+    %h4 Title
+    %h4 Location
+    %h4 Benifit
+    %h4 Notes
+    %h4 Times
+    %h4 Live in
     .help-buttons
       %a.help-button{:href=>"#intro"}
         %span.ui-icon.ui-icon-seek-prev Previous
-      %a.help-button{:href=>"#tab2"}
+      %a.help-button{:href=>"#scenarios"}
         %span.ui-icon.ui-icon-seek-next Next
+  #scenarios
+    %h2 Scenarios
+    .help-buttons
+      %a.help-button{:href=>"#sessions"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#submitting"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #submitting
+    %h2 Submiting Sessions
+    .help-buttons
+      %a.help-button{:href=>"#scenarios"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#revoking"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #revoking
+    %h2 Revoking Sessions
+    .help-buttons
+      %a.help-button{:href=>"#submiting"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#calendar"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #calendar
+    %h2 Calendar
+    .help-buttons
+      %a.help-button{:href=>"#revoking"}
+        %span.ui-icon.ui-icon-seek-prev Previous
