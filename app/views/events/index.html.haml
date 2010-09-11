@@ -1,5 +1,5 @@
 - title "Sessions"
-- wide_content
+-# wide_content
 - javascript "jquery.tablesorter"
 - stylesheet "tablesorter/style"
 - header_hash = (is_admin?) ?                                          |
@@ -12,6 +12,17 @@
       headers: { #{header_hash} }
     });
   });
+- if is_admin?
+  - if @listing_mod == "old"
+    .notification
+      You are viewing the past sessions.
+  - elsif @listing_mod != "all"
+    .notification
+      You are viewing only the submitted and approved listings.
+  .button-box
+    = link_to_confirm "View Pending", "#{events_path}?mod=pending", :class => "button"
+    = link_to_confirm "View Old", "#{events_path}?mod=old", :class => "button"
+    = link_to_confirm "View All", "#{events_path}?mod=all", :class => "button"
 %table#table_to_sort
   %thead
     %tr
@@ -30,7 +41,7 @@
         %td= link_to_confirm h(event.title), event
         %td= h event.location
         - if is_admin?
-          %td= link_to_confirm h(event.instructor.name), e.instructor
+          %td= link_to_confirm h(event.instructor.name), event.instructor
         %td
           - if !event.notes.empty?
             %span.ui-icon.ui-icon-check Yes
@@ -41,5 +52,8 @@
         %td= h event.end_time
         %td= link_to_confirm "Edit", edit_event_path(event)
         %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
+- if @events.length <= 0
+  .notification
+    No sessions
 %p= link_to_confirm "New Session", new_event_path
 %p= link_to_confirm "Return", root_path

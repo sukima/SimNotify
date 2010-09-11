@@ -2,8 +2,17 @@ class EventsController < ApplicationController
   before_filter :login_required
 
   def index
+    @listing_mod = params[:mod]
     if is_admin?
-      @events = Event.all
+      if @listing_mod == "all"
+        @events = Event.all
+      elsif @listing_mod == "old"
+        @events = Event.find(:all, :conditions => ["start_time < ?", Time.now])
+      else
+        @events = Event.find(:all, :conditions =>
+          ["start_time >= ? AND (submitted = ? OR approved = ?)",
+          Time.now, true, true])
+      end
     else
       @events = @current_instructor.events
     end

@@ -211,6 +211,10 @@ $(document).ready(function() {
     // Buttons {{{2
     $("#navigation a, input.create, input.update").button();
 
+    $(".button_box").addClass("ui-widget");
+
+    $(".button").button();
+
     // Notifications {{{2
     APP.initNotifications();
 
