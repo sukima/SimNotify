@@ -56,6 +56,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.calendar 'calendar', :controller => 'calendar'
   map.connect 'calendar/:action', :controller => 'calendar'
+  map.connect 'calendar/:action.:format', :controller => 'calendar'
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,6 +1,23 @@
 - title "Event Calendar"
+- javascript (APP_CONFIG[:use_minified_js] ? 'fullcalendar.min' : 'fullcalendar')
+- stylesheet 'fullcalendar'
 - stylesheet "calendar-fixes"
 - wide_content
+:javescript
+  $(document).ready(function () {
+    $("#calendar").fullCalendar({
+        firstDay: 1, // Monday
+        events: '/calendar/events',
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        }
+    });
+
+    $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
+        addClass("ui-corner-all ui-helper-clearfix");
+  });
 #calendar-header.calendar-home-link
 #calendar
 #calendar-footer.calendar-home-link

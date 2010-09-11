@@ -10,3 +10,4 @@ config/email.yml
 db/*.sqlite3
 app/views/**_mailer/*.text.html.erb
 app/views/**_mailer/*.text.plain.erb
+public/images/logo.png
