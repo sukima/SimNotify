@@ -1,31 +1,45 @@
 - title "Sessions"
 - wide_content
-%table
-  %tr
-    %th Title
-    - if is_admin?
-      %th Instructor
-    %th Location
-    %th Has Notes
-    %th Live In
-    %th Start Time
-    %th End Time
-    %th{:colspan => "2"} Actions
-  - for event in @events
-    %tr{:class => event.status_as_class}
-      %td= link_to_confirm h(event.title), event
+- javascript "jquery.tablesorter"
+- stylesheet "tablesorter/style"
+- header_hash = (is_admin?) ?                                          |
+  "3: { sorter: false }, 4: { sorter: false }, 7: { sorter: false }" : |
+  "2: { sorter: false }, 3: { sorter: false }, 6: { sorter: false }"   |
+:javascript
+  $(document).ready(function () {
+    $("#table_to_sort").addClass("tablesorter").tablesorter({
+      /* debug: true, */
+      headers: { #{header_hash} }
+    });
+  });
+%table#table_to_sort
+  %thead
+    %tr
+      %th Title
+      %th Location
       - if is_admin?
-        %td= link_to_confirm h(event.instructor.name), e.instructor
-      %td= h event.location
-      %td
-        - if !event.notes.empty?
-          %span.ui-icon.ui-icon-check Yes
-      %td
-        - if event.live_in
-          %span.ui-icon.ui-icon-check Yes
-      %td= h event.start_time
-      %td= h event.end_time
-      %td= link_to_confirm "Edit", edit_event_path(event)
-      %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
+        %th Instructor
+      %th Has&nbsp;Notes
+      %th Live&nbsp;In
+      %th Start&nbsp;Time
+      %th End&nbsp;Time
+      %th{:colspan => "2"} Actions
+  %tbody
+    - for event in @events
+      %tr{:class => event.status_as_class}
+        %td= link_to_confirm h(event.title), event
+        %td= h event.location
+        - if is_admin?
+          %td= link_to_confirm h(event.instructor.name), e.instructor
+        %td
+          - if !event.notes.empty?
+            %span.ui-icon.ui-icon-check Yes
+        %td
+          - if event.live_in
+            %span.ui-icon.ui-icon-check Yes
+        %td= h event.start_time
+        %td= h event.end_time
+        %td= link_to_confirm "Edit", edit_event_path(event)
+        %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
 %p= link_to_confirm "New Session", new_event_path
 %p= link_to_confirm "Return", root_path
