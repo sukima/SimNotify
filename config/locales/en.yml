@@ -33,7 +33,8 @@ en:
         location: "Location of the simulation"
         benefit: "Benefit to the system"
         live_in: "Extended stay"
-        submit_note: "Additional Notes"
+        submit_note: "Additional notes"
+        revoke_note: "Reason for revoking session"
       scenario:
         mobile: "Needs mobile cart"
         staff_support: "Needs staff support"
@@ -52,6 +53,7 @@ en:
         benefit: "What is the benefit to the system, staff / patient saftey, etc?"
         live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."
         submit_note: "Any additional information you may wish to tell the staff. (Optional)"
+        revoke_note: "Please discribe why this session is being revoked."
       scenario:
         description: "Describe the overall picture of the scenario. What do you want to happen to the patient?"
         equipment: "Describe the kind of equipment you might need or describe the needs your scenario has. (Code Cart, BVM, Airway, etc.)"
@@ -65,3 +67,4 @@ en:
       save: "Save"
       sign_up: "Sign up"
       submit_event: "Submit"
+      revoke_event: "Revoke"

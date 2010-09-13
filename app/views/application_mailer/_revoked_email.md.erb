@@ -1,0 +1,16 @@
+Dear <%=h APP_CONFIG[:company_name] %> team:
+
+The following session has been revoked:
+
+<%- if @event.priority_request? -%>
+This session was only <%=h distance_of_time_in_words_to_now(@event.start_time) %> away.
+<%- end -%>
+
+## <%=h @event.title %> ##
+
+Requested for *<%=h @event.start_time.strftime("%A, %b %d") %> - <%h @event.end_time.strftime("%A, %b %d") %>*.
+Located at __<%=h @event.location %>__.
+<%- if @event.live_in? -%>For a long term stay<%- end -%>
+
+#### Reason ####
+<%=h @event.revoke_note %>

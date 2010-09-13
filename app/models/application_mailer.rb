@@ -16,4 +16,14 @@ class ApplicationMailer < ActionMailer::Base
     sent_on     Time.now
     body        :event => event
   end
+
+  def revoked_email(event)
+    recipients  Instructor.notify_emails()
+    cc          event.instructor.email
+    reply_to    event.instructor.email
+    from        APP_CONFIG[:system_email_address]
+    subject     "[#{APP_CONFIG[:application_name]}] Session revoked: #{event.title}"
+    sent_on     Time.now
+    body        :event => event
+  end
 end
