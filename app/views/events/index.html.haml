@@ -34,7 +34,7 @@
       %th Live&nbsp;In
       %th Start&nbsp;Time
       %th End&nbsp;Time
-      %th{:colspan => "2"} Actions
+      %th{:colspan => "3"} Actions
   %tbody
     - for event in @events
       %tr{:class => event.status_as_class}
@@ -50,6 +50,10 @@
             %span.ui-icon.ui-icon-check Yes
         %td= h event.start_time
         %td= h event.end_time
+        - if event.submitted? || event.approved?
+          %td link_to_event_revoke t(:revoke), event
+        - else
+          %td &nbsp;
         %td= link_to_confirm "Edit", edit_event_path(event)
         %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
 - if @events.length <= 0
