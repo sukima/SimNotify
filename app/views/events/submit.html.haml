@@ -4,11 +4,7 @@
   Submitting session:
   %strong= h @event.title
 %p
-  = h @event.start_time
-  (#{distance_of_time_in_words(@event.start_time, @event.end_time)})
-  \- #{pluralize(@event.scenarios.count, "senario")}
-  - if @event.collective_has_needs
-    \- #{h @event.need_flags_as_words}
+  = session_description(@event)
 - semantic_form_for @event do |f|
   - f.inputs do
     = f.input :submit_note, :as => :text
