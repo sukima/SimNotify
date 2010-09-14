@@ -15,6 +15,6 @@
       %td= h instructor.phone
       %td= instructor.admin ? "Yes" : "no"
       %td= link_to_confirm "Edit", edit_instructor_path(instructor)
-      %td= link_to_confirm t(:destroy), instructor, :confirm => t(:destroy_confirm), :method => :delete
+      %td= link_to_confirm t(:destroy), delete_instructor_path(instructor), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New instructor", new_instructor_path
 %p= link_to_confirm "Return", root_path

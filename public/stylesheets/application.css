@@ -84,21 +84,6 @@ a {
   color: red;
 }
 
-/* jQuery fixns' */
-.ui-state-highlight,
-.ui-state-error {
-  padding: 0.5em;
-  margin-bottom: 0.5em;
-  float: left;
-}
-
-#flash_notice .ui-icon,
-.notification .ui-icon,
-.warning .ui-icon {
-  float: left;
-  margin-right: 0.3em;
-}
-
 #help {
   text-align: left;
 }
@@ -108,12 +93,40 @@ a {
   float: right;
 }
 
-tr.waiting-approval,
+.waiting-approval,
 tr.waiting-approval td {
   background-color: #CCFFCC;
 }
 
-tr.approved,
+.approved,
 tr.approved td {
   background-color: #99CCFF;
+}
+
+/* jQuery fixns' */
+#flash_error .ui-icon,
+#flash_notice .ui-icon,
+.notification .ui-icon,
+.warning .ui-icon {
+  float: left;
+  margin-right: 0.3em;
+}
+.ui-state-highlight,
+.ui-state-error {
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  float: left;
+}
+
+.ui-icon {
+  display: inline-block !important;
+}
+
+#event_legend {
+  width: 25%;
+  float: right;
+}
+
+#event_legend .ui-widget-content {
+  padding: 0 0.5em 0.5em;
 }

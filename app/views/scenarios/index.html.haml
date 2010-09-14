@@ -27,6 +27,6 @@
       %td= h scenario.manikin_id
       %td= link_to_confirm "Show", scenario
       %td= link_to_confirm "Edit", edit_scenario_path(scenario)
-      %td= link_to_confirm t(:destroy), scenario, :confirm => t(:destroy_confirm), :method => :delete
+      %td= link_to_confirm t(:destroy), delete_scenario_path(scenario), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New Scenario", new_scenario_path
 %p= link_to_confirm "Return", root_path

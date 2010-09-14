@@ -1,15 +1,15 @@
-- title "Submit a session"
+- title "Revoke a session"
 - confirm_on_exit
 %p
-  Submitting session:
+  Revoking session:
   %strong= h @event.title
 %p
   = session_description(@event)
 - semantic_form_for @event do |f|
   - f.inputs do
-    = f.input :submit_note, :as => :text
+    = f.input :revoke_note, :as => :text
   - f.buttons do
-    = f.commit_button :submit_event
+    = f.commit_button :revoke_event
 %p
   = link_to_home "Cancle"
   | #{link_to_confirm "Edit", edit_event_path(@event)}

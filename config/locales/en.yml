@@ -14,6 +14,9 @@ en:
         manikin_req_type: "Manikin needs"
   home: "Home"
   help: "Help"
+  submit: "Submit for approval"
+  revoke: "Revoke"
+  edit: "Edit"
   cancel_confirm: "This form has not been saved. Are you sure you want to continue?"
   submit_confirm: "By submitting this session to the {{company_name}} team you will NOT be able to change the time of the event. Are you sure you want to submit this for approval?"
   revoke_confirm: "You are about to revoke this session. The {{company_name}} team will be notified and you will need to resubmit again. Are you sure you wish to continue?"
@@ -21,6 +24,7 @@ en:
   no_reverse_time_travel: "The session can not end before it starts"
   destroy: "Delete"
   destroy_confirm: "Are you sure?"
+  cannot_destroy_event: "You cannot delete a session after it has been submitted and/or approved. You must revoke it first."
   formtastic:
     labels:
       instructor:
@@ -33,7 +37,8 @@ en:
         location: "Location of the simulation"
         benefit: "Benefit to the system"
         live_in: "Extended stay"
-        submit_note: "Additional Notes"
+        submit_note: "Additional notes"
+        revoke_note: "Reason for revoking session"
       scenario:
         mobile: "Needs mobile cart"
         staff_support: "Needs staff support"
@@ -52,6 +57,7 @@ en:
         benefit: "What is the benefit to the system, staff / patient saftey, etc?"
         live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."
         submit_note: "Any additional information you may wish to tell the staff. (Optional)"
+        revoke_note: "Please discribe why this session is being revoked."
       scenario:
         description: "Describe the overall picture of the scenario. What do you want to happen to the patient?"
         equipment: "Describe the kind of equipment you might need or describe the needs your scenario has. (Code Cart, BVM, Airway, etc.)"
@@ -65,3 +71,4 @@ en:
       save: "Save"
       sign_up: "Sign up"
       submit_event: "Submit"
+      revoke_event: "Revoke"

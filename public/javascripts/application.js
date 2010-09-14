@@ -75,7 +75,7 @@ APP.initNotifications = function (scope) {
 
     $(".notification", scope).wrap("<div class=\"ui-widget\" />").
         after("<div class=\"clear\" />").
-        addClass("ui-state-highlight ui-corner-all ui-helper-clearfix").
+        addClass("ui-state-highlight ui-corner-all").
         prepend("<span class=\"ui-icon ui-icon-info\" />");
 
     $(".warning", scope).wrap("<div class=\"ui-widget\" />").
@@ -84,6 +84,11 @@ APP.initNotifications = function (scope) {
         prepend("<span class=\"ui-icon ui-icon-alert\" />");
 
     $("#flash_notice", scope).wrap("<div class=\"ui-widget\" />").
+        after("<div class=\"clear\" />").
+        addClass("ui-corner-all").
+        prepend("<span class=\"ui-icon ui-icon-info\" />");
+
+    $("#flash_error", scope).wrap("<div class=\"ui-widget\" />").
         after("<div class=\"clear\" />").
         addClass("ui-corner-all").
         prepend("<span class=\"ui-icon ui-icon-alert\" />");
@@ -196,20 +201,6 @@ $(document).ready(function() {
     // }}}3
 
 
-    // Calendar {{{2
-    $("#calendar").fullCalendar({
-        firstDay: 1, // Monday
-        events: '/calendar/events',
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        }
-    });
-
-    $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
-        addClass("ui-corner-all ui-helper-clearfix");
-
     // Accordions {{{2
     $(".accordion").accordion({
       header: '.accordion-header',
@@ -219,6 +210,10 @@ $(document).ready(function() {
 
     // Buttons {{{2
     $("#navigation a, input.create, input.update").button();
+
+    $(".button_box").addClass("ui-widget");
+
+    $(".button").button();
 
     // Notifications {{{2
     APP.initNotifications();
@@ -236,6 +231,7 @@ $(document).ready(function() {
             $("<div>" + $(this).attr('confirm_message') + "</div>").dialog({
                 resizable: false,
                 modal: true,
+                title: $(this).text(),
                 buttons: {
                     Ok: function() {
                         window.location.href = $(anchor).attr('href');

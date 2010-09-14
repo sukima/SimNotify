@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessor :submit_note
+  attr_accessor :submit_note, :revoke_note
 
   belongs_to :instructor
   has_many :scenarios
