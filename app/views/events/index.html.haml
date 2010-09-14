@@ -57,13 +57,13 @@
               %span.ui-icon.ui-icon-check Yes
           %td= h event.start_time
           %td= h event.end_time
-          %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
           %td
             - if event.submitted? || event.approved?
               = link_to_event_revoke t(:revoke), event, true
             - else
               &nbsp;
             = link_icon_to "pencil", "Edit", edit_event_path(event)
+            = link_icon_to "trash", t(:destroy), delete_event_path(event), :confirm => t(:destroy_confirm)
   - if @events.length <= 0
     .notification No sessions
   - else

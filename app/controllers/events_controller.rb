@@ -20,7 +20,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    event_owned_or_admin_check
+    redirect_to root_url unless event_owned_or_admin_check
   end
 
   def new
@@ -49,56 +49,62 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    event_owned_or_admin_check
-    if params[:event][:submit_note]
-      if @event.update_attributes({
-          :submit_note => params[:event][:submit_note],
-          :submitted => true
-        })
-        ApplicationMailer.deliver_submitted_email(@event)
-        flash[:notice] = "Session has been submitted for approval. Thank you."
-        redirect_to root_url
-        return
-      end
-    elsif params[:event][:revoke_note]
-      if @event.update_attributes({
-          :revoke_note => params[:event][:revoke_note],
-          :approved => false,
-          :submitted => false
-        })
-        ApplicationMailer.deliver_revoked_email(@event)
-        flash[:notice] = "Session has been revoked. Notification email has been sent."
-        if is_admin?
-          redirect_to events_path
-        else
-          redirect_to @event
+    if event_owned_or_admin_check
+      if params[:event][:submit_note]
+        if @event.update_attributes({
+            :submit_note => params[:event][:submit_note],
+            :submitted => true
+          })
+          ApplicationMailer.deliver_submitted_email(@event)
+          flash[:notice] = "Session has been submitted for approval. Thank you."
+          redirect_to root_url
+          return
         end
+      elsif params[:event][:revoke_note]
+        if @event.update_attributes({
+            :revoke_note => params[:event][:revoke_note],
+            :approved => false,
+            :submitted => false
+          })
+          ApplicationMailer.deliver_revoked_email(@event)
+          flash[:notice] = "Session has been revoked. Notification email has been sent."
+          if is_admin?
+            redirect_to events_path
+          else
+            redirect_to @event
+          end
+          return
+        end
+      elsif @event.update_attributes(params[:event])
+        flash[:notice] = "Successfully updated session"
+        redirect_to @event
         return
       end
-    elsif @event.update_attributes(params[:event])
-      flash[:notice] = "Successfully updated session"
-      redirect_to @event
-      return
     end
     render :action => 'edit'
   end
 
   def destroy
     @event = Event.find(params[:id])
-    event_owned_or_admin_check
-    @event.destroy
-    flash[:notice] = "Successfully deleted event."
+    if event_owned_or_admin_check
+      if @event.submitted? || @event.approved?
+        flash[:error] = t(:cannot_destroy_event)
+      else
+        @event.destroy
+        flash[:notice] = "Successfully deleted event."
+      end
+    end
     redirect_to events_url
   end
 
   def submit
     @event = Event.find(params[:id])
-    event_owned_or_admin_check
+    redirect_to root_url unless event_owned_or_admin_check
   end
 
   def revoke
     @event = Event.find(params[:id])
-    event_owned_or_admin_check
+    redirect_to root_url unless event_owned_or_admin_check
   end
 
   def approve
@@ -128,7 +134,9 @@ class EventsController < ApplicationController
   def event_owned_or_admin_check
     if @event.instructor != @current_instructor && !is_admin?
       flash[:error] = "You do not have permission to do that"
-      redirect_to root_url
+      return false
+    else
+      return true
     end
   end
 end

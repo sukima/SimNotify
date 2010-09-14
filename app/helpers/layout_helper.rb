@@ -3,6 +3,7 @@
 # to do so you may need to add this line to your ApplicationController
 #   helper :layout
 module LayoutHelper
+  # Page information {{{1
   def title(page_title, show_title = true)
     @content_for_title = page_title.to_s
     @show_title = show_title
@@ -20,6 +21,7 @@ module LayoutHelper
     content_for(:head) { javascript_include_tag(*args) }
   end
 
+  # jQuery {{{1
   def stylesheet_link_jquery
     theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
       @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
@@ -41,6 +43,7 @@ module LayoutHelper
     return ret
   end
 
+  # Navigation buttons {{{1
   # See app/views/layouts/application.html.erb comments for why we are using
   # this helper method.
   def nav_link_to(*args)
@@ -60,6 +63,7 @@ module LayoutHelper
     nav_link_to "Calendar", calendar_path
   end
 
+  # Links {{{1
   # builds a link that is dynamic for confirmation or not
   def link_to_confirm(title, path, opts=nil)
     opts = {} if opts.nil?
@@ -70,6 +74,14 @@ module LayoutHelper
       opts[:confirm_message] = opts[:confirm]
       return link_to title, path, opts
     end
+  end
+
+  def link_icon_to(icon, title, path, opts=nil)
+    opts = {} if opts.nil?
+    opts[:class] = "" if opts[:class].nil?
+    opts[:class] = "ui-icon ui-icon-#{icon} #{opts[:class]}"
+    opts[:title] = title if opts[:title].nil?
+    return link_to_confirm title, path, opts
   end
 
   def nav_link_to_help(title = nil)
@@ -85,14 +97,23 @@ module LayoutHelper
     link_to_confirm title, root_url
   end
 
-  def link_to_event_submit(title, event)
-    link_to_confirm title, submit_event_path(event), {:confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])}
+  def link_to_event_submit(title, event, use_icon=false)
+    if use_icon
+      link_icon_to "calendar", title, submit_event_path(event), {:confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])}
+    else
+      link_to_confirm title, submit_event_path(event), {:confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])}
+    end
   end
 
-  def link_to_event_revoke(title, event)
-    link_to_confirm title, revoke_event_path(event), {:confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}
+  def link_to_event_revoke(title, event, use_icon=false)
+    if use_icon
+      link_icon_to "cancel", title, revoke_event_path(event), {:confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}
+    else
+      link_to_confirm title, revoke_event_path(event), {:confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}
+    end
   end
 
+  # Page variables {{{1
   def confirm_on_exit
     @confirm_exit = true
   end
@@ -112,4 +133,8 @@ module LayoutHelper
   def force_display_help?
     @force_display_help
   end
+
+  # }}}1
 end
+
+# vim:set et ts=2 sw=2 fdm=marker:
