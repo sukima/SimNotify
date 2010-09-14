@@ -12,27 +12,6 @@
       headers: { #{header_hash} }
     });
   });
-#event_legend.ui-widget
-  .legend-caption.ui-widget-header.ui-corner-top Legend
-  .ui-widget-content.ui-corner-bottom
-    %div
-      %span.ui-icon.ui-icon-cancel
-      = t(:revoke)
-    %div
-      %span.ui-icon.ui-icon-pencil
-      = t(:edit)
-    %div
-      %span.ui-icon.ui-icon-trash
-      = t(:destroy)
-    %div
-      %span.ui-icon.ui-icon-note
-      Has notes
-    %div
-      %span.ui-icon.ui-icon-home
-      Live in
-    .waiting-approval Waiting for approval
-    .approved Approved
-.clear
 - if is_admin?
   - if @listing_mod == "old"
     .notification
@@ -82,6 +61,26 @@
                 = link_to_event_revoke t(:revoke), event, true
               = link_icon_to "pencil", t(:edit), edit_event_path(event)
               = link_icon_to "trash", t(:destroy), delete_event_path(event), :confirm => t(:destroy_confirm)
+  #event_legend.ui-widget
+    .legend-caption.ui-widget-header.ui-corner-top Legend
+    .ui-widget-content.ui-corner-bottom
+      %div
+        %span.ui-icon.ui-icon-cancel
+        = t(:revoke)
+      %div
+        %span.ui-icon.ui-icon-pencil
+        = t(:edit)
+      %div
+        %span.ui-icon.ui-icon-trash
+        = t(:destroy)
+      %div
+        %span.ui-icon.ui-icon-note
+        Has notes
+      %div
+        %span.ui-icon.ui-icon-home
+        Live in
+      .waiting-approval Waiting for approval
+      .approved Approved
   - if @events.length <= 0
     .notification No sessions
   - else
