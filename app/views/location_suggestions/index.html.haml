@@ -7,5 +7,5 @@
     %tr
       %td= h location_suggestion.location
       %td= link_to_confirm "Edit", edit_location_suggestion_path(location_suggestion)
-      %td= link_to_confirm t(:destroy), location_suggestion, :confirm => t(:destroy_confirm), :method => :delete
+      %td= link_to_confirm t(:destroy), delete_location_suggestion_path(location_suggestion), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New Location Suggestion", new_location_suggestion_path

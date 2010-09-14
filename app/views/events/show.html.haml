@@ -60,10 +60,10 @@
   .box= link_to "Add a scenario", new_event_scenario_path(@event)
 %p
   = link_to "Edit", edit_event_path(@event)
-  | #{link_to_confirm "Delete", @event, :confirm => 'Are you sure?', :method => :delete}
+  | #{link_to_confirm t(:destroy), delete_event_path(@event), :confirm => 'Are you sure?}
   - if @current_instructor.admin?
     | #{link_to "View All Sessions", events_path}
   - if !@event.submitted?
     | #{link_to_event_submit t(:submit), @event}
   - else
-    | #{link_to_event_revoke t(:revoke), @event
+    | #{link_to_event_revoke t(:revoke), @event}

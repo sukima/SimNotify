@@ -1,5 +1,5 @@
 - title "Sessions"
--# wide_content
+- wide_content if is_admin?
 - javascript "jquery.tablesorter"
 - stylesheet "tablesorter/style"
 - header_hash = (is_admin?) ?                                                                |
@@ -16,9 +16,9 @@
   - if @listing_mod == "old"
     .notification
       You are viewing the past sessions.
-  - elsif @listing_mod != "all"
+  - elsif @listing_mod == "all"
     .notification
-      You are viewing only the submitted and approved listings.
+      You are viewing <strong>all</strong> sessions. Even those that have not been submitted.
   .button-box
     = link_to_confirm "View Pending", "#{events_path}?mod=pending", :class => "button"
     = link_to_confirm "View Old", "#{events_path}?mod=old", :class => "button"
@@ -37,7 +37,7 @@
         %th Live&nbsp;In
         %th Start&nbsp;Time
         %th End&nbsp;Time
-        %th{:colspan => "3"} Actions
+        %th Actions
     %tbody
       - for event in @events
         %tr{:class => event.status_as_class}
@@ -57,12 +57,13 @@
               %span.ui-icon.ui-icon-check Yes
           %td= h event.start_time
           %td= h event.end_time
-          - if event.submitted? || event.approved?
-            %td link_to_event_revoke t(:revoke), event
-          - else
-            %td &nbsp;
-          %td= link_to_confirm "Edit", edit_event_path(event)
           %td= link_to_confirm t(:destroy), event, :confirm => t(:destroy_confirm), :method => :delete
+          %td
+            - if event.submitted? || event.approved?
+              = link_to_event_revoke t(:revoke), event, true
+            - else
+              &nbsp;
+            = link_icon_to "pencil", "Edit", edit_event_path(event)
   - if @events.length <= 0
     .notification No sessions
   - else

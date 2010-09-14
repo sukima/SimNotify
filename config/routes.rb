@@ -1,14 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :location_suggestions
+  map.resources :location_suggestions, :member => { :delete => :get }
 
-  map.resources :manikins
+  map.resources :manikins, :member => { :delete => :get }
 
-  map.resources :scenarios
+  map.resources :scenarios, :member => { :delete => :get }
   map.resources :events, :has_many => :scenarios,
   :collection => {
     :approve => :put
   },
   :member => {
+    :delete => :get,
     :submit => :get,
     :revoke => :get,
     :approve => :put
@@ -19,7 +20,8 @@ ActionController::Routing::Routes.draw do |map|
   map.login 'login', :controller => 'instructor_sessions', :action => 'new'
   map.resources :instructor_sessions
 
-  map.resources :instructors, :collection => { :emails => [ :get ] }
+  map.resources :instructors, :collection => { :emails => [ :get ] },
+    :member => { :delete => :get }
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

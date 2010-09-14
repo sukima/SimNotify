@@ -19,7 +19,7 @@
     %strong This manikin is Out Of Service
 %p
   = link_to "Edit", edit_manikin_path(@manikin)
-  | #{link_to_confirm "Delete", @manikin, :confirm => 'Are you sure?', :method => :delete}
+  | #{link_to_confirm "Delete", delete_manikin_path(@manikin), :confirm => 'Are you sure?'}
   - if @current_instructor.admin?
     | #{link_to_confirm "View All", manikins_path}
     | #{link_to_confirm "Add New", new_manikin_path}
