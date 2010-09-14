@@ -107,12 +107,21 @@ class EventsController < ApplicationController
       redirect_to root_url
       return
     end
-    @event = Event.find(params[:id])
-    @event.approved = true
-    if @event.save
-      flash[:notice] = "Successfully approved event"
+    if params[:id]
+      @event = Event.find(params[:id])
+      @event.approved = true
+      if @event.save
+        flash[:notice] = "Successfully approved event"
+      end
+      redirect_to @event
+      return
     end
-    redirect_to @event
+    if params[:event_ids]
+      Event.update_all ["approved=?", true], :id => params[:event_ids]
+      flash[:notice] = "Sessions have been approved"
+      redirect_to events_path
+      return
+    end
   end
 
   private

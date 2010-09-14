@@ -4,10 +4,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :manikins
 
   map.resources :scenarios
-  map.resources :events, :has_many => :scenarios, :member => {
-    :submit => [ :get, :put ],
-    :revoke => [ :get ],
-    :approve => [ :get ]
+  map.resources :events, :has_many => :scenarios,
+  :collection => {
+    :approve => :put
+  },
+  :member => {
+    :submit => :get,
+    :revoke => :get,
+    :approve => :put
   }
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
