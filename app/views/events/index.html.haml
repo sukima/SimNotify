@@ -1,10 +1,10 @@
 - title "Sessions"
-- wide_content if is_admin?
+-# wide_content if is_admin?
 - javascript "jquery.tablesorter"
 - stylesheet "tablesorter/style"
-- header_hash = (is_admin?) ?                                                                |
-  "0: { sorter: false }, 4: { sorter: false }, 5: { sorter: false }, 8: { sorter: false }" : |
-  "2: { sorter: false }, 3: { sorter: false }, 6: { sorter: false }"                         |
+- header_hash = (is_admin?) ?                                          |
+  "0: { sorter: false }, 4: { sorter: false }, 7: { sorter: false }" : |
+  "2: { sorter: false }, 5: { sorter: false }"                         |
 :javascript
   $(document).ready(function () {
     $("#table_to_sort").addClass("tablesorter").tablesorter({
@@ -12,6 +12,27 @@
       headers: { #{header_hash} }
     });
   });
+#event_legend.ui-widget
+  .legend-caption.ui-widget-header.ui-corner-top Legend
+  .ui-widget-content.ui-corner-bottom
+    %div
+      %span.ui-icon.ui-icon-cancel
+      = t(:revoke)
+    %div
+      %span.ui-icon.ui-icon-pencil
+      = t(:edit)
+    %div
+      %span.ui-icon.ui-icon-trash
+      = t(:destroy)
+    %div
+      %span.ui-icon.ui-icon-note
+      Has notes
+    %div
+      %span.ui-icon.ui-icon-home
+      Live in
+    .waiting-approval Waiting for approval
+    .approved Approved
+.clear
 - if is_admin?
   - if @listing_mod == "old"
     .notification
@@ -33,8 +54,7 @@
         %th Location
         - if is_admin?
           %th Instructor
-        %th Has&nbsp;Notes
-        %th Live&nbsp;In
+        %th Info
         %th Start&nbsp;Time
         %th End&nbsp;Time
         %th Actions
@@ -51,19 +71,17 @@
             %td= link_to_confirm h(event.instructor.name), event.instructor
           %td
             - if !event.notes.empty?
-              %span.ui-icon.ui-icon-check Yes
-          %td
+              %span.ui-icon.ui-icon-home Has notes
             - if event.live_in
-              %span.ui-icon.ui-icon-check Yes
+              %span.ui-icon.ui-icon-home Live in
           %td= h event.start_time
           %td= h event.end_time
           %td
-            - if event.submitted? || event.approved?
-              = link_to_event_revoke t(:revoke), event, true
-            - else
-              &nbsp;
-            = link_icon_to "pencil", "Edit", edit_event_path(event)
-            = link_icon_to "trash", t(:destroy), delete_event_path(event), :confirm => t(:destroy_confirm)
+            %nobr
+              - if event.submitted? || event.approved?
+                = link_to_event_revoke t(:revoke), event, true
+              = link_icon_to "pencil", t(:edit), edit_event_path(event)
+              = link_icon_to "trash", t(:destroy), delete_event_path(event), :confirm => t(:destroy_confirm)
   - if @events.length <= 0
     .notification No sessions
   - else
