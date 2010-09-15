@@ -6,15 +6,20 @@
     %th Email
     %th Phone
     %th Admin
-    %th{:colspan => "2"} Actions
+    %th Actions
   - for instructor in @instructors
     %tr
       %td= h instructor.name
       %td= h instructor.office
       %td= h instructor.email
       %td= h instructor.phone
-      %td= instructor.admin ? "Yes" : "no"
-      %td= link_to_confirm "Edit", edit_instructor_path(instructor)
-      %td= link_to_confirm t(:destroy), delete_instructor_path(instructor), :confirm => t(:destroy_confirm)
+      %td
+        - if instructor.admin?
+          %span.ui-icon.ui-icon-check Yes
+        - else
+          &nbsp;
+      %td
+        = link_icon_to "pencil", t(:edit), edit_instructor_path(instructor)
+        = link_icon_to "trash", t(:destroy), delete_instructor_path(instructor), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New instructor", new_instructor_path
 %p= link_to_confirm "Return", root_path

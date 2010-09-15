@@ -25,6 +25,8 @@ en:
   destroy: "Delete"
   destroy_confirm: "Are you sure?"
   cannot_destroy_event: "You cannot delete a session after it has been submitted and/or approved. You must revoke it first."
+  permission_denied: "You do not have permission to access that action."
+  missing_parameters: "Missing key parameter information from the request. (Possible bug)"
   formtastic:
     labels:
       instructor:

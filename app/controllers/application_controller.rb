@@ -9,4 +9,13 @@ class ApplicationController < ActionController::Base
   def delete
     destroy
   end
+
+  def event_owned_or_admin_check(event)
+    if event.instructor != @current_instructor && !is_admin?
+      flash[:error] = t(:permission_denied)
+      return false
+    else
+      return true
+    end
+  end
 end

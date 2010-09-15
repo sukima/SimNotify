@@ -20,7 +20,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    redirect_to root_url unless event_owned_or_admin_check
+    redirect_to root_url unless event_owned_or_admin_check(@event)
   end
 
   def new
@@ -49,7 +49,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    if event_owned_or_admin_check
+    if event_owned_or_admin_check(@event)
       if params[:event][:submit_note]
         if @event.update_attributes({
             :submit_note => params[:event][:submit_note],
@@ -86,7 +86,7 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    if event_owned_or_admin_check
+    if event_owned_or_admin_check(@event)
       if @event.submitted? || @event.approved?
         flash[:error] = t(:cannot_destroy_event)
       else
@@ -99,12 +99,12 @@ class EventsController < ApplicationController
 
   def submit
     @event = Event.find(params[:id])
-    redirect_to root_url unless event_owned_or_admin_check
+    redirect_to root_url unless event_owned_or_admin_check(@event)
   end
 
   def revoke
     @event = Event.find(params[:id])
-    redirect_to root_url unless event_owned_or_admin_check
+    redirect_to root_url unless event_owned_or_admin_check(@event)
   end
 
   def approve
@@ -127,16 +127,6 @@ class EventsController < ApplicationController
       flash[:notice] = "Sessions have been approved"
       redirect_to events_path
       return
-    end
-  end
-
-  private
-  def event_owned_or_admin_check
-    if @event.instructor != @current_instructor && !is_admin?
-      flash[:error] = "You do not have permission to do that"
-      return false
-    else
-      return true
     end
   end
 end

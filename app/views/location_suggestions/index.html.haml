@@ -2,10 +2,11 @@
 %table
   %tr
     %th Location
-    %th{:colspan => "2"} Actions
+    %th Actions
   - for location_suggestion in @location_suggestions
     %tr
       %td= h location_suggestion.location
-      %td= link_to_confirm "Edit", edit_location_suggestion_path(location_suggestion)
-      %td= link_to_confirm t(:destroy), delete_location_suggestion_path(location_suggestion), :confirm => t(:destroy_confirm)
+      %td
+        = link_icon_to "pencil", t(:edit), edit_location_suggestion_path(location_suggestion)
+        = link_icon_to "trash", t(:destroy), delete_location_suggestion_path(location_suggestion), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New Location Suggestion", new_location_suggestion_path
