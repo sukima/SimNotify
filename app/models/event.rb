@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   attr_accessor :submit_note, :revoke_note
 
   belongs_to :instructor
+  has_and_belongs_to_many :instructors
   has_many :scenarios
 
   validates_presence_of :title, :location, :benefit, :start_time, :end_time
