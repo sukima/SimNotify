@@ -110,9 +110,9 @@ APP.initHelpTabs = function () {
 // Document Ready {{{1
 $(document).ready(function() {
     // Reusable Resources {{{2
-    var $loading = $("<img src=\"images/loading.gif\" alt=\"loading\" />");
+    var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
 
-    // Async requests {{{2
+    // Autocomplete {{{2
     $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
