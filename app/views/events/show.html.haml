@@ -28,6 +28,10 @@
 %p
   %strong Instructor:
   = h @event.instructor.name
+- if !@event.instructors.empty?
+  %p
+    %strong Other Instructors:
+    = @event.instructors.map(&:name).to_sentence
 %p
   %strong Created at:
   = dt @event.created_at
