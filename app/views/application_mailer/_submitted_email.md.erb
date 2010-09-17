@@ -8,7 +8,7 @@ Dear <%=h APP_CONFIG[:company_name] %> team:
 
 ## <%=h @event.title %> ##
 
-Requested for *<%=h @event.start_time.strftime("%A, %b %d") %>*.
+Requested for *<%=d @event.start_time %>*.
 Lasting <%=h distance_of_time_in_words(@event.start_time, @event.end_time) %>.
 Located at __<%=h @event.location %>__.
 <%- if @event.live_in? -%>For a long term stay<%- end -%>

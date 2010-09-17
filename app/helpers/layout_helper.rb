@@ -147,6 +147,15 @@ module LayoutHelper
     @force_display_help
   end
 
+  # Dates {{{1
+  def d(the_date)
+    the_date.strftime("%A, %b %d")
+  end
+
+  def dt(the_datetime)
+    the_datetime.strftime("%A, %b %d %H:%m")
+  end
+
   # }}}1
 end
 

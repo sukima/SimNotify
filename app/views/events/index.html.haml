@@ -53,8 +53,8 @@
               %span.ui-icon.ui-icon-home Has notes
             - if event.live_in
               %span.ui-icon.ui-icon-home Live in
-          %td= h event.start_time
-          %td= h event.end_time
+          %td= dt event.start_time
+          %td= dt event.end_time
           %td
             %nobr
               - if event.submitted? || event.approved?
