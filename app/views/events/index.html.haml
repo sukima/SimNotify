@@ -53,8 +53,10 @@
               %span.ui-icon.ui-icon-home Has notes
             - if event.live_in
               %span.ui-icon.ui-icon-home Live in
-          %td= h event.start_time
-          %td= h event.end_time
+            - if !event.instructors.empty?
+              %span.ui-icon.ui-icon-person Other Instructors
+          %td= dt event.start_time
+          %td= dt event.end_time
           %td
             %nobr
               - if event.submitted? || event.approved?
@@ -79,6 +81,9 @@
       %div
         %span.ui-icon.ui-icon-home
         Live in
+      %div
+        %span.ui-icon.ui-icon-person
+        Other instructors
       .waiting-approval Waiting for approval
       .approved Approved
   - if @events.length <= 0

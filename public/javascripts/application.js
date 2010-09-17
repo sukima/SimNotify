@@ -110,13 +110,35 @@ APP.initHelpTabs = function () {
 // Document Ready {{{1
 $(document).ready(function() {
     // Reusable Resources {{{2
-    var $loading = $("<img src=\"images/loading.gif\" alt=\"loading\" />");
+    var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
 
-    // Async requests {{{2
+    // Autocomplete {{{2
     $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
             $(this).autocomplete({ source: APP.autocomplete_map[$(this).attr('id')] });
+        });
+
+        $("select.multiselect").each(function () {
+            if ( $(this).attr("multiple") === undefined )
+            {
+                $(this).multiSelect({
+                    multiple: false,
+                    showHeader: false,
+                    minWidth: 200,
+                    selectedText: function (numChecked, numTotal, checkedItem) {
+                        return $(checkedItem).attr("title");
+                    }
+                });
+            }
+            else
+            {
+                $(this).multiSelect({
+                    minWidth: 300,
+                    selectedList: 2,
+                    showHeader: false
+                });
+            }
         });
     });
 

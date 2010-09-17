@@ -57,9 +57,12 @@ class InstructorsController < ApplicationController
   def emails
     if params[:term]
       @emails = Instructor.find(:all, :conditions =>
-        ["email LIKE ?", params[:term]+'%']).map(&:email)
+        ["name LIKE ? OR email LIKE ?", '%'+params[:term]+'%', '%'+params[:term]+'%'])
     else
-      @emails = Instructor.all.map(&:email)
+      @emails = Instructor.all
+    end
+    @emails = @emails.map do |i|
+      { :label => "#{i.name} <#{i.email}>", :value => i.email }
     end
 
     respond_to do |format|

@@ -23,24 +23,37 @@ module LayoutHelper
 
   # jQuery {{{1
   def stylesheet_link_jquery
+    ret = ""
     theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
       @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
-    stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
+    ret += stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
+    ret += stylesheet_link_tag "jquery.multiselect"
+    return ret
   end
 
   def javascript_include_jquery
+    min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
     ret = ""
     if APP_CONFIG[:use_google_api]
       ret += javascript_include_tag("http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}").sub('.js', '')
       ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").sub('.js', '')
       ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js").sub('.js', '')
     else
-      ret += javascript_include_tag "jquery"
-      ret += javascript_include_tag "jquery-ui"
+      ret += javascript_include_tag "jquery#{min_ext}"
+      ret += javascript_include_tag "jquery-ui#{min_ext}"
     end
-    ret += javascript_include_tag "jquery.timepickr"
-    #ret += stylesheet_link_tag "ui.timepickr"
+    ret += javascript_include_tag "jquery.timepickr#{min_ext}"
+    ret += javascript_include_tag "jquery.multiselect#{min_ext}"
     return ret
+  end
+
+  # IE Bug Fixes {{{1
+  def iebugfixes_include_tag
+    #min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
+    #ret = ""
+    #ret +=
+    javascript_include_tag "jquery.bgiframe" # already minified
+    #return ret
   end
 
   # Navigation buttons {{{1
@@ -132,6 +145,15 @@ module LayoutHelper
 
   def force_display_help?
     @force_display_help
+  end
+
+  # Dates {{{1
+  def d(the_date)
+    the_date.strftime("%A, %b %d")
+  end
+
+  def dt(the_datetime)
+    the_datetime.strftime("%A, %b %d %H:%m")
   end
 
   # }}}1

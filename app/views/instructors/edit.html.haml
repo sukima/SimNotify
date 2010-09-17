@@ -2,4 +2,6 @@
 - unless @instructor == @current_instructor
   %p
     %strong You are editing someone elses profile
+%p
+  %strong Joined on #{d @instructor.created_at}
 = render :partial => 'form'

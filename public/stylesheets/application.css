@@ -104,6 +104,10 @@ tr.approved td {
 }
 
 /* jQuery fixns' */
+.ui-autocomplete-loading {
+  background: white url('../images/mini-loading.gif') right center no-repeat;
+}
+
 #flash_error .ui-icon,
 #flash_notice .ui-icon,
 .notification .ui-icon,

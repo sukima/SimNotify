@@ -21,7 +21,8 @@ class MainController < ApplicationController
   def autocomplete_map
     @map = {
       :instructor_session_email => emails_instructors_path,
-      :event_location => location_suggestions_path
+      :event_location => location_suggestions_path,
+      :event_instructors => emails_instructors_path
     }
 
     respond_to do |format|
