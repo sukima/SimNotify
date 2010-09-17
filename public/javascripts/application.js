@@ -118,6 +118,28 @@ $(document).ready(function() {
         $('input.autocomplete').each(function(index) {
             $(this).autocomplete({ source: APP.autocomplete_map[$(this).attr('id')] });
         });
+
+        $("select.multiselect").each(function () {
+            if ( $(this).attr("multiple") === undefined )
+            {
+                $(this).multiSelect({
+                    multiple: false,
+                    showHeader: false,
+                    minWidth: 200,
+                    selectedText: function (numChecked, numTotal, checkedItem) {
+                        return $(checkedItem).attr("title");
+                    }
+                });
+            }
+            else
+            {
+                $(this).multiSelect({
+                    minWidth: 300,
+                    selectedList: 2,
+                    showHeader: false
+                });
+            }
+        });
     });
 
     // Datepicker / Timepicker {{{2
