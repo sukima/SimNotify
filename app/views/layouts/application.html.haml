@@ -1,7 +1,7 @@
 !!! Strict
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
-    %title= h(yield(:title) || "Untitled")
+    %title= "#{APP_CONFIG[:application_name]} - " + h(yield(:title) || "Untitled")
     %meta{:content => "text/html; charset=iso-8859-15", "http-equiv" => "content-type"}/
     %meta{:content => "SimNotify by Devin Weaver suki (at) tritarget.org", :name => "generator"}/
     = stylesheet_link_tag 'application'
