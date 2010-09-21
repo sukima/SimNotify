@@ -60,6 +60,13 @@
   border-color: green;
 }
 
+.special-event,
+.fc-agenda .special-event .fc-event-time,
+.special-event a {
+  background-color: #FF9900;
+  border-color: #FF9900;
+}
+
 #calendar-legend {
   float: right;
   border: solid thin black;

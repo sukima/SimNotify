@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100915120252) do
+ActiveRecord::Schema.define(:version => 20100918013425) do
 
   create_table "equipment_suggestions", :force => true do |t|
     t.string "title"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(:version => 20100915120252) do
     t.integer "event_id"
     t.integer "manikin_id"
     t.integer "manikin_req_type_id"
+  end
+
+  create_table "special_events", :force => true do |t|
+    t.string   "title"
+    t.text     "notes"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.boolean  "all_day",       :default => false
+    t.integer  "instructor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

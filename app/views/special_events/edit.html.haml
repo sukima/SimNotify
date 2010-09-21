@@ -1,0 +1,5 @@
+- title "Edit Special Event"
+= render :partial => 'form'
+%p
+  = link_to_confirm "Cancel", @special_event
+  | #{link_to_confirm "View All Special Events", special_events_path}

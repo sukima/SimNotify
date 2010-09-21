@@ -1,0 +1,44 @@
+- title "Special Events"
+= table_sorter([4])
+- if @listing_mod == "old"
+  .notification
+    You are viewing the past events.
+- elsif @listing_mod == "all"
+  .notification
+    You are viewing <strong>all</strong> events old and new.
+.button-box
+  = link_to_confirm "View Pending", "#{special_events_path}?mod=pending", :class => "button"
+  = link_to_confirm "View Old", "#{special_events_path}?mod=old", :class => "button"
+  = link_to_confirm "View All", "#{special_events_path}?mod=all", :class => "button"
+%table#table_to_sort
+  %thead
+    %tr
+      %th Title
+      %th Instructor
+      %th Start&nbsp;Time
+      %th End&nbsp;Time
+      %th Actions
+  %tbody
+    - for event in @special_events
+      %tr{:class => event.status_as_class}
+        %td= link_to_confirm h(event.title), event
+        %td= link_to_confirm h(event.instructor.name), event.instructor
+        %td= dt event.start_time
+        %td= dt event.end_time
+        %td
+          %nobr
+            = link_icon_to "pencil", t(:edit), edit_event_path(event)
+            = link_icon_to "trash", t(:destroy), delete_event_path(event), :confirm => t(:destroy_confirm)
+#event_legend.ui-widget
+  .legend-caption.ui-widget-header.ui-corner-top Legend
+  .ui-widget-content.ui-corner-bottom
+    %div
+      %span.ui-icon.ui-icon-pencil
+      = t(:edit)
+    %div
+      %span.ui-icon.ui-icon-trash
+      = t(:destroy)
+- if @special_events.length <= 0
+  .notification No events
+%p= link_to_confirm "New Special Event", new_special_event_path
+%p= link_to_confirm "Return", root_path

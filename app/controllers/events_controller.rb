@@ -38,18 +38,22 @@ class EventsController < ApplicationController
       end
       flash[:notice] = "Successfully created event."
       redirect_to @event
-    else
-      render :action => 'new'
+      return
     end
+    render :action => 'new'
   end
 
   def edit
     @event = Event.find(params[:id])
+    redirect_to root_url unless event_owned_or_admin_check(@event)
   end
 
   def update
     @event = Event.find(params[:id])
-    if event_owned_or_admin_check(@event)
+    if !event_owned_or_admin_check(@event)
+      redirect_to root_url
+      return
+    else
       if params[:event][:submit_note]
         if @event.update_attributes({
             :submit_note => params[:event][:submit_note],

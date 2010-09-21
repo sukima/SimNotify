@@ -1,0 +1,27 @@
+- title "Special Event"
+%h2 Event: #{h @special_event.title}
+%p
+  %strong Notes:
+  = h @special_event.notes
+%p
+  %strong Start Time:
+  = dt @special_event.start_time
+%p
+  %strong End Time:
+  = dt @special_event.end_time
+- if @special_event.all_day
+  %p
+    %strong All Day Event
+%p
+  %strong Instructor:
+  = h @special_event.instructor.name
+%p
+  %strong Created at:
+  = dt @special_event.created_at
+%p
+  %strong Last Updated:
+  = dt @special_event.updated_at
+%p
+  = link_to_confirm t(:edit), edit_special_event_path(@special_event)
+  | #{link_to_confirm t(:destroy), delete_special_event_path(@special_event), :confirm => 'Are you sure?'}
+  | #{link_to_confirm "View All Special Events", special_events_path}

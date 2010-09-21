@@ -1,17 +1,9 @@
 - title "Sessions"
 -# wide_content if is_admin?
-- javascript "jquery.tablesorter"
-- stylesheet "tablesorter/style"
-- header_hash = (is_admin?) ?                                          |
-  "0: { sorter: false }, 4: { sorter: false }, 7: { sorter: false }" : |
-  "2: { sorter: false }, 5: { sorter: false }"                         |
-:javascript
-  $(document).ready(function () {
-    $("#table_to_sort").addClass("tablesorter").tablesorter({
-      /* debug: true, */
-      headers: { #{header_hash} }
-    });
-  });
+- if is_admin?
+  = table_sorter([0,4,7])
+- else
+  = table_sorter([2,5])
 - if is_admin?
   - if @listing_mod == "old"
     .notification
@@ -42,8 +34,6 @@
         %tr{:class => event.status_as_class}
           - if is_admin? && event.submitted? && !event.approved?
             %td= check_box_tag "event_ids[]", event.id
-          - else
-            %td &nbsp;
           %td= link_to_confirm h(event.title), event
           %td= h event.location
           - if is_admin?

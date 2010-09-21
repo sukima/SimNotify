@@ -13,24 +13,27 @@ class CalendarController < ApplicationController
       start_time = Time.at(params[:start].to_i)
       end_time = Time.at(params[:end].to_i)
       conditions = { :start_time => (start_time .. end_time), :submitted => true }
+
       if (is_admin?)
         @events = Event.find(:all, :conditions => conditions)
       else
         @events = @current_instructor.events.find(:all, :conditions => conditions)
       end
+
       json_events = []
+
       @events.each do |e|
-        json_event = {
-          :title => e.title, # add submitted specials
-          :start => e.start_time,
-          :end => e.end_time,
-          :url => event_path(e),
-          :allDay => e.live_in?
-        }
-        className = e.status_as_class
-        json_event[:className] = className unless className.nil?
-        json_events << json_event
+        json_events << build_json_event(e)
       end
+
+      SpecialEvent.find(:all, :conditions => conditions.except(:submitted)).
+          each do |e|
+        json_events << build_json_event(e, {
+          :eventMethod => :special_event_path,
+          :allDay => :all_day?
+        })
+      end
+
     else
       render :text => "Invalid parameters", :status => 406
       return
@@ -40,5 +43,19 @@ class CalendarController < ApplicationController
       format.json { render :json => json_events.to_json }
       format.any { render :text => "Invalid format", :status => 406 }
     end
+  end
+
+  private
+  def build_json_event(e, opt={ :eventMethod => event_path, :allDay => :live_in? })
+      json_event = {
+        :title => e.title, # add submitted specials
+        :start => e.start_time,
+        :end => e.end_time,
+        :url => send(opt[:eventMethod], e),
+        :allDay => e.send(opt[:allDay])
+      }
+      className = e.status_as_class
+      json_event[:className] = className unless className.nil?
+      return json_event
   end
 end
