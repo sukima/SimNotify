@@ -63,7 +63,7 @@
             = scenario.flags_as_strings.to_sentence
   .box= link_to "Add a scenario", new_event_scenario_path(@event)
 %p
-  = link_to "Edit", edit_event_path(@event)
+  = link_to t(:edit), edit_event_path(@event)
   | #{link_to_confirm t(:destroy), delete_event_path(@event), :confirm => 'Are you sure?'}
   - if @current_instructor.admin?
     | #{link_to "View All Sessions", events_path}
