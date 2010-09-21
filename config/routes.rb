@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
     :approve => :put
   }
 
-  map.resources :special_event, :member => { :delete => :get }
+  map.resources :special_events, :member => { :delete => :get }
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
   map.logout 'logout', :controller => 'instructor_sessions', :action => 'destroy'
