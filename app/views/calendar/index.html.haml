@@ -3,7 +3,7 @@
 - stylesheet 'fullcalendar'
 - stylesheet "calendar-fixes"
 - wide_content
-:javescript
+:javascript
   $(document).ready(function () {
     $("#calendar").fullCalendar({
         firstDay: 1, // Monday
@@ -24,6 +24,8 @@
   = link_to "Home", root_path
   #calendar-legend
     %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right.waiting-approval
-      Waiting for approval
+      %strong Waiting for approval
     %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right.approved
-      Approved
+      %strong Approved
+    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right.special-event
+      %strong Special Event
