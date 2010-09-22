@@ -1,6 +1,9 @@
 SimNotify
 =========
 
+Version: 0.0.0  
+Author: Devin Weaver <suki@tritarget.org>
+
 SimNotify is a simple web app designed to make it easy for instructors to
 schedule a class (Event) and register equipment needs. Basically it is a
 simple form that they can fill out and the system will store the information
