@@ -1,0 +1,19 @@
+Dear <%=h @event.instructor.name %><%- if !@event.instructors.empty? -%> and others<%- end -%>:
+
+The _<%=h @event.title %>_ session has been approved.
+
+<%- if @event.priority_request? -%>
+This session is only <%=h distance_of_time_in_words_to_now(@event.start_time) %> away!
+<%- end -%>
+
+Requested for *<%=d @event.start_time %>*.
+Lasting <%=h distance_of_time_in_words(@event.start_time, @event.end_time) %>.
+Located at __<%=h @event.location %>__.
+<%- if @event.live_in? -%>For a long term stay<%- end -%>
+
+View [more information][1].
+
+You may [edit the session][2] if you need to make further changes.
+
+[1]: <%= event_url(@event) %>
+[2]: <%= edit_event_url(@event) %>

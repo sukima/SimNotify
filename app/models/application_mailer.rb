@@ -26,4 +26,13 @@ class ApplicationMailer < ActionMailer::Base
     sent_on     Time.now
     body        :event => event
   end
+
+  def approved_email(event)
+    recipients  event.instructor.email
+    cc          event.instructors.map(&:email)
+    from        APP_CONFIG[:system_email_address]
+    subject     "[#{APP_CONFIG[:application_name]}] Session approved: #{event.title}"
+    sent_on     Time.now
+    body        :event => event
+  end
 end

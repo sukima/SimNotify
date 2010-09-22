@@ -122,6 +122,7 @@ class EventsController < ApplicationController
       @event.approved = true
       if @event.save
         flash[:notice] = "Successfully approved event"
+        ApplicationMailer.deliver_approved_email(@event)
       end
       redirect_to @event
       return
