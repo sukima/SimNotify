@@ -32,8 +32,11 @@
     %tbody
       - for event in @events
         %tr{:class => event.status_as_class}
-          - if is_admin? && event.submitted? && !event.approved?
-            %td= check_box_tag "event_ids[]", event.id
+          - if is_admin?
+            - if event.submitted? && !event.approved?
+              %td= check_box_tag "event_ids[]", event.id
+            - else
+              %td &nbsp;
           %td= link_to_confirm h(event.title), event
           %td= h event.location
           - if is_admin?
