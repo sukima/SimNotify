@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
 
   public
   def self.in_queue(instructor)
-    conditions = [ "submitted = 'f' AND approved = 'f' AND start_time > ?", Time.new ]
+    conditions = [ "submitted = ? AND approved = ? AND start_time > ?", false, false, Time.new ]
     if instructor == :all
       return Event.find(:all, :conditions => conditions)
     else
@@ -40,7 +40,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.submitted(instructor)
-    conditions = [ "submitted = 't' AND approved = 'f' AND start_time > ?", Time.new ]
+    conditions = [ "submitted = ? AND approved = ? AND start_time > ?", true, false, Time.new ]
     if instructor == :all
       return Event.find(:all, :conditions => conditions)
     else
@@ -49,7 +49,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.approved(instructor)
-    conditions = [ "approved = 't' AND start_time > ?", Time.new ]
+    conditions = [ "approved = ? AND start_time > ?", true, Time.new ]
     if instructor == :all
       return Event.find(:all, :conditions => conditions)
     else
