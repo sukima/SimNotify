@@ -1,9 +1,0 @@
-admin:
-  id: 1
-  name: "Administrator Admin"
-  email: "admin@example.com"
-  admin: true
-  crypted_password: "555360e4b8d08759fd2f88c8d2e6658e1eb395ca681633349ef87f72053da968df2631adb64993c516e18ae19fc679681e4df67302712ce3b364d3cf95494790"
-  password_salt: "5k-kkQgAV7-3qAVhUwMa"
-  notify_recipient: true
-  new_user: false
