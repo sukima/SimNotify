@@ -23,7 +23,7 @@ config.action_view.cache_template_loading            = true
 
 # Disable delivery errors, bad email addresses will be ignored
 config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default_url_options = { :host => "YOUR_SITE.com", :port => 4000 }
+config.action_mailer.default_url_options = { :host => "www.schedulesimulation.com" }
 
 # Enable threaded mode
 # config.threadsafe!
