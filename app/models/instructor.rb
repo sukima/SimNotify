@@ -2,7 +2,8 @@ class Instructor < ActiveRecord::Base
   has_many :events
   acts_as_authentic
 
-  validates_presence_of :name, :email
+  validates_presence_of :name
+  validates_presence_of :email
   validates_uniqueness_of :name
   validates_each :name do |record, attr, value|
     name_hash = self.parse_name(value)
