@@ -20,14 +20,17 @@ class CalendarController < ApplicationController
         @events = @current_instructor.events.find(:all, :conditions => conditions)
       end
 
-      json_events = []
+      @special_events = SpecialEvent.find(:all,
+          :conditions => conditions.except(:submitted)).
+
+      json_events = [ ]
+
 
       @events.each do |e|
         json_events << build_json_event(e)
       end
 
-      SpecialEvent.find(:all, :conditions => conditions.except(:submitted)).
-          each do |e|
+      @special_events.each do |e|
         json_events << build_json_event(e, {
           :eventMethod => :special_event_path,
           :allDay => :all_day?
@@ -49,8 +52,8 @@ class CalendarController < ApplicationController
   def build_json_event(e, opt={ :eventMethod => event_path, :allDay => :live_in? })
       json_event = {
         :title => e.title, # add submitted specials
-        :start => e.start_time,
-        :end => e.end_time,
+        :start => e.start_time.to_i,
+        :end => e.end_time.to_i,
         :url => send(opt[:eventMethod], e),
         :allDay => e.send(opt[:allDay])
       }
