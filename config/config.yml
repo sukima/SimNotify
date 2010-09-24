@@ -1,9 +1,0 @@
-development:
-  use_google_api: false
-
-test:
-  use_google_api: false
-
-production:
-  google_api_key: "INSERT-YOUR-KEY"
-  use_google_api: true

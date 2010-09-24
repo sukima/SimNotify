@@ -1,0 +1,87 @@
+- title "Sessions"
+-# wide_content if is_admin?
+- if is_admin?
+  = table_sorter([0,4,7])
+- else
+  = table_sorter([2,5])
+- if is_admin?
+  - if @listing_mod == "old"
+    .notification
+      You are viewing the past sessions.
+  - elsif @listing_mod == "all"
+    .notification
+      You are viewing <strong>all</strong> sessions. Even those that have not been submitted.
+  .button-box
+    = link_to_confirm "View Pending", "#{events_path}?mod=pending", :class => "button"
+    = link_to_confirm "View Old", "#{events_path}?mod=old", :class => "button"
+    = link_to_confirm "View All", "#{events_path}?mod=all", :class => "button"
+- form_tag approve_events_path, :method => :put do
+  %table#table_to_sort
+    %thead
+      %tr
+        - if is_admin?
+          %th Approve
+        %th Title
+        %th Location
+        - if is_admin?
+          %th Instructor
+        %th Info
+        %th Start&nbsp;Time
+        %th End&nbsp;Time
+        %th Actions
+    %tbody
+      - for event in @events
+        %tr{:class => event.status_as_class}
+          - if is_admin?
+            - if event.submitted? && !event.approved?
+              %td= check_box_tag "event_ids[]", event.id
+            - else
+              %td &nbsp;
+          %td= link_to_confirm h(event.title), event
+          %td= h event.location
+          - if is_admin?
+            %td= link_to_confirm h(event.instructor.name), event.instructor
+          %td
+            - if !event.notes.empty?
+              %span.ui-icon.ui-icon-home Has notes
+            - if event.live_in
+              %span.ui-icon.ui-icon-home Live in
+            - if !event.instructors.empty?
+              %span.ui-icon.ui-icon-person Other Instructors
+          %td= dt event.start_time
+          %td= dt event.end_time
+          %td
+            %nobr
+              - if event.submitted? || event.approved?
+                = link_to_event_revoke t(:revoke), event, true
+              = link_icon_to "pencil", t(:edit), edit_event_path(event)
+              = link_icon_to "trash", t(:destroy), delete_event_path(event), :confirm => t(:destroy_confirm)
+  #event_legend.ui-widget
+    .legend-caption.ui-widget-header.ui-corner-top Legend
+    .ui-widget-content.ui-corner-bottom
+      %div
+        %span.ui-icon.ui-icon-cancel
+        = t(:revoke)
+      %div
+        %span.ui-icon.ui-icon-pencil
+        = t(:edit)
+      %div
+        %span.ui-icon.ui-icon-trash
+        = t(:destroy)
+      %div
+        %span.ui-icon.ui-icon-note
+        Has notes
+      %div
+        %span.ui-icon.ui-icon-home
+        Live in
+      %div
+        %span.ui-icon.ui-icon-person
+        Other instructors
+      .waiting-approval Waiting for approval
+      .approved Approved
+  - if @events.length <= 0
+    .notification No sessions
+  - else
+    .button-box= submit_tag "Approve Selected Sessions", :class => 'button'
+%p= link_to_confirm "New Session", new_event_path
+%p= link_to_confirm "Return", root_path

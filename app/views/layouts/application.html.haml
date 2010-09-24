@@ -1,0 +1,53 @@
+!!! Strict
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %title= "#{APP_CONFIG[:application_name]} - " + h(yield(:title) || "Untitled")
+    %meta{:content => "text/html; charset=iso-8859-15", "http-equiv" => "content-type"}/
+    %meta{:content => "#{APP_CONFIG[:application_name]} v#{APP_CONFIG[:application_version]} by Devin Weaver suki (at) tritarget.org", :name => "generator"}/
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'style'
+    = formtastic_stylesheet_link_tag
+    = stylesheet_link_jquery
+    = stylesheet_link_tag 'site'
+    = javascript_include_jquery
+    = javascript_include_tag 'application'
+    = iebugfixes_include_tag
+    = yield(:head)
+  %body
+    #container
+      #logo-container= image_tag "logo.png"
+      #header
+        %span#title= APP_CONFIG[:company_name]
+        - if show_title?
+          %br/
+          %span#subtitle= h yield(:title)
+      - if logged_in?
+        #navigation
+          %ul
+            %li= link_to_home
+            = nav_link_to_calendar if (!@is_calendar)
+            - if is_admin?
+              = nav_link_to "Edit Instructors", instructors_path
+              = nav_link_to "Edit Manikins", manikins_path
+              = nav_link_to "Edit Location Suggestions", location_suggestions_path
+              = nav_link_to "View Sessions", events_path
+            = nav_link_to "Special Events", special_events_path
+            = nav_link_to "Start new session", new_event_path
+            = yield :nav_list
+            = nav_link_to_help if (!@is_help)
+      - if wide_content?
+        .clear
+      #content
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}"
+        = yield
+      #clear
+      #footer
+        \&copy; 2010
+        %a{:href => "#"}= APP_CONFIG[:company_name]
+        - if APP_CONFIG[:include_designer_credit]
+          | Design by
+          %a{:href => "http://nicolas.freezee.org", :target => "_BLANK"} Nicolas Fafchamps
+    / Design Created By Nicolas Fafchamps (2006) - Public domain
+    - if force_display_help?
+      #force_display_help{:style=>'display: none;'}

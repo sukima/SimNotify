@@ -1,0 +1,7 @@
+- title "New Session"
+- force_display_help if @current_instructor.new_user?
+= render :partial => 'form'
+%p
+  = link_to_home "Cancel"
+  - if @current_instructor.admin?
+    | #{link_to_confirm "View All Sessions", events_path}

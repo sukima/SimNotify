@@ -6,7 +6,16 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  # Scrub sensitive parameters from your log
-  filter_parameter_logging :password
-  filter_parameter_logging :password_confirmation
+  def delete
+    destroy
+  end
+
+  def event_owned_or_admin_check(event)
+    if event.instructor != @current_instructor && !is_admin?
+      flash[:error] = t(:permission_denied)
+      return false
+    else
+      return true
+    end
+  end
 end

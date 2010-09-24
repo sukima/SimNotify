@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100728001759) do
+ActiveRecord::Schema.define(:version => 20100918013425) do
 
   create_table "equipment_suggestions", :force => true do |t|
     t.string "title"
@@ -31,6 +31,11 @@ ActiveRecord::Schema.define(:version => 20100728001759) do
     t.boolean  "approved",      :default => false
   end
 
+  create_table "events_instructors", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "instructor_id"
+  end
+
   create_table "instructors", :force => true do |t|
     t.string   "name",                                 :null => false
     t.string   "email",                                :null => false
@@ -42,6 +47,13 @@ ActiveRecord::Schema.define(:version => 20100728001759) do
     t.datetime "updated_at"
     t.string   "crypted_password"
     t.string   "password_salt"
+    t.boolean  "notify_recipient",  :default => false
+    t.string   "gui_theme"
+    t.boolean  "new_user",          :default => true
+  end
+
+  create_table "location_suggestions", :force => true do |t|
+    t.string "location", :null => false
   end
 
   create_table "manikin_req_types", :force => true do |t|
@@ -83,6 +95,17 @@ ActiveRecord::Schema.define(:version => 20100728001759) do
     t.integer "event_id"
     t.integer "manikin_id"
     t.integer "manikin_req_type_id"
+  end
+
+  create_table "special_events", :force => true do |t|
+    t.string   "title"
+    t.text     "notes"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.boolean  "all_day",       :default => false
+    t.integer  "instructor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

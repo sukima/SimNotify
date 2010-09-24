@@ -5,4 +5,11 @@ class ApplicationFormtasticBuilder < Formtastic::SemanticFormBuilder
     options = options.merge({ :input_html => input_html })
     input method, options
   end
+
+  def multiselect_input(method, options = {})
+    input_html = { :class => 'multiselect' }
+    input_html = options[:input_html].merge(input_html) unless options[:input_html].nil?
+    options = options.merge({ :input_html => input_html })
+    input method, options
+  end
 end

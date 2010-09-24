@@ -1,0 +1,40 @@
+- title "Scenario"
+%p
+  %strong Equipment:
+  = h @scenario.equipment
+%p
+  %strong Staff Support:
+  = h @scenario.staff_support
+%p
+  %strong Moulage:
+  = h @scenario.moulage
+%p
+  %strong Notes:
+  = h @scenario.notes
+%p
+  %strong Support Material:
+  = h @scenario.support_material
+%p
+  %strong Description:
+  = h @scenario.description
+%p
+  %strong Video:
+  = h @scenario.video
+%p
+  %strong Mobile:
+  = h @scenario.mobile
+%p
+  %strong Manikin needs requested:
+  - if @scenario.manikin_req_type
+    = h @scenario.manikin_req_type.req_type
+  - else
+    None
+%p
+  %strong Manikin:
+  = (@scenario.manikin.nil?) ? "Not Assigned" : h(@scenario.manikin.name_and_type)
+%p
+  = link_to "Edit", edit_scenario_path(@scenario)
+  | #{link_to_confirm t(:destroy), delete_scenario_path(@scenario), :confirm => t(:destroy_confirm)}
+  | #{link_to_confirm "Home", root_url}
+  - if @current_instructor.admin?
+    | #{link_to_confirm "View All", scenarios_path}

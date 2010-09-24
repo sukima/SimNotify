@@ -13,7 +13,13 @@ class InstructorsController < ApplicationController
   
   def create
     @instructor = Instructor.new(params[:instructor])
+
+    # When a user is created we can't allow them to self promote to admin.
+    @instructor.admin = false unless is_admin?
+    @instructor.notify_recipient = false unless is_admin?
+
     if @instructor.save
+      ApplicationMailer.deliver_welcome_email(@instructor)
       flash[:notice] = "Thank you for signing up! You are now logged in."
       redirect_to root_url
     else
@@ -29,6 +35,10 @@ class InstructorsController < ApplicationController
   def update
     @instructor = Instructor.find(params[:id])
     login_admin unless @instructor == @current_instructor
+
+    # Prevent self promotion to admin.
+    @instructor.admin = false unless is_admin?
+
     if @instructor.update_attributes(params[:instructor])
       flash[:notice] = "Successfully updated your profile."
       redirect_to root_url
@@ -45,10 +55,18 @@ class InstructorsController < ApplicationController
   end
 
   def emails
-    @emails = Instructor.all.map { |i| i.email }
+    if params[:term]
+      @emails = Instructor.find(:all, :conditions =>
+        ["name LIKE ? OR email LIKE ?", '%'+params[:term]+'%', '%'+params[:term]+'%'])
+    else
+      @emails = Instructor.all
+    end
+    @emails = @emails.map do |i|
+      { :label => "#{i.name} <#{i.email}>", :value => i.email }
+    end
 
     respond_to do |format|
-      format.js { render :json => @emails.to_json }
+      format.json { render :json => @emails.to_json }
       format.any { render :text => "Invalid format", :status => 406 }
     end
   end

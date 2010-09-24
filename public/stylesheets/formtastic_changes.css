@@ -16,3 +16,29 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 form.formtastic fieldset > ol > li.boolean label {
   float: none;
 }
+
+form.formtastic fieldset ol li fieldset div.ui-timepickr ol {
+  width: 300px;
+  padding: 3px;
+}
+
+form.formtastic fieldset ol li fieldset div.ui-timepickr ol li {
+  padding: 3px;
+}
+
+/* jQuery multiSelect fixes (Attempts to undo the damage that formtastic does) */
+form.formtastic fieldset ol li .ui-multiselect-options label {
+  width: 95%;
+  float: none;
+  padding-top: 0.2em;
+}
+
+form.formtastic fieldset ol li .ui-multiselect-options li label {
+  padding-top: 0.3em;
+}
+
+form.formtastic fieldset ol li .ui-multiselect-options li label input {
+  margin-top: -0.4em;
+  margin-right: 5px;
+  vertical-align: middle;
+}

@@ -1,16 +1,29 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :manikins
+  map.resources :location_suggestions, :member => { :delete => :get }
 
-  map.resources :scenarios
-  map.resources :events, :has_many => :scenarios, :member => { :submit => [ :get, :put ] }
+  map.resources :manikins, :member => { :delete => :get }
+
+  map.resources :scenarios, :member => { :delete => :get }
+  map.resources :events, :has_many => :scenarios,
+  :collection => {
+    :approve => :put
+  },
+  :member => {
+    :delete => :get,
+    :submit => :get,
+    :revoke => :get,
+    :approve => :put
+  }
+
+  map.resources :special_events, :member => { :delete => :get }
 
   map.signup 'signup', :controller => 'instructors', :action => 'new'
   map.logout 'logout', :controller => 'instructor_sessions', :action => 'destroy'
   map.login 'login', :controller => 'instructor_sessions', :action => 'new'
   map.resources :instructor_sessions
 
-  map.resources :instructors, :collection => { :emails => [ :get ] }
-
+  map.resources :instructors, :collection => { :emails => [ :get ] },
+    :member => { :delete => :get }
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -44,9 +57,14 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "main"
+  map.help "help", :controller => "main", :action => "help"
 
-  map.autoconnect_map "main/autocomplete_map", :controller => "main", :action => "autocomplete_map"
+  map.autocomplete_map "main/autocomplete_map", :controller => "main", :action => "autocomplete_map"
   map.connect "main/autocomplete_map.:format", :controller => "main", :action => "autocomplete_map"
+
+  map.calendar 'calendar', :controller => 'calendar'
+  map.connect 'calendar/:action', :controller => 'calendar'
+  map.connect 'calendar/:action.:format', :controller => 'calendar'
 
   # See how all your routes lay out with "rake routes"
 

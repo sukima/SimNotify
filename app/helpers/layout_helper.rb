@@ -3,6 +3,7 @@
 # to do so you may need to add this line to your ApplicationController
 #   helper :layout
 module LayoutHelper
+  # Page information {{{1
   def title(page_title, show_title = true)
     @content_for_title = page_title.to_s
     @show_title = show_title
@@ -20,40 +21,88 @@ module LayoutHelper
     content_for(:head) { javascript_include_tag(*args) }
   end
 
+  # jQuery {{{1
   def stylesheet_link_jquery
-    stylesheet_link_tag "smoothness/jquery-ui-1.8.2.custom.css"
-  end
-
-  def javascript_include_jquery
     ret = ""
-    if APP_CONFIG['use_google_api']
-      ret += javascript_include_tag "http://www.google.com/jsapi?key=#{APP_CONFIG['google_api_key']}"
-      ret += javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-      ret += javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"
-    else
-      ret += javascript_include_tag "jquery"
-      ret += javascript_include_tag "jquery-ui"
-    end
+    theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
+      @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
+    ret += stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
+    ret += stylesheet_link_tag "jquery.multiselect"
     return ret
   end
 
+  def javascript_include_jquery
+    min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
+    ret = ""
+    if APP_CONFIG[:use_google_api]
+      ret += javascript_include_tag("http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}").sub('.js', '')
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").sub('.js', '')
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js").sub('.js', '')
+    else
+      ret += javascript_include_tag "jquery#{min_ext}"
+      ret += javascript_include_tag "jquery-ui#{min_ext}"
+    end
+    ret += javascript_include_tag "jquery.timepickr#{min_ext}"
+    ret += javascript_include_tag "jquery.multiselect#{min_ext}"
+    return ret
+  end
+
+  # IE Bug Fixes {{{1
+  def iebugfixes_include_tag
+    #min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
+    #ret = ""
+    #ret +=
+    javascript_include_tag "jquery.bgiframe" # already minified
+    #return ret
+  end
+
+  # Navigation buttons {{{1
   # See app/views/layouts/application.html.erb comments for why we are using
   # this helper method.
+  def nav_link_to(*args)
+    rtn = "<li>"
+    rtn += link_to_confirm *args
+    rtn += "</li>"
+    return rtn
+  end
+
   def add_nav_link(*args)
     content_for(:nav_list) do
-      rtn = "<li>"
-      rtn += link_to *args
-      rtn += "</li>"
+      nav_link_to *args
     end
   end
 
+  def nav_link_to_calendar
+    nav_link_to "Calendar", calendar_path
+  end
+
+  # Links {{{1
   # builds a link that is dynamic for confirmation or not
-  def link_to_confirm(title, path)
-    if @confirm_exit.nil? || !@confirm_exit
-      return link_to title, path
+  def link_to_confirm(title, path, opts=nil)
+    opts = {} if opts.nil?
+    if opts[:confirm].nil? && (@confirm_exit.nil? || !@confirm_exit)
+      return link_to title, path, opts
     else
-      return link_to title, path, :confirm => t(:cancel_confirm)
+      opts[:confirm] = t(:cancel_confirm) if opts[:confirm].nil?
+      opts[:confirm_message] = opts[:confirm]
+      return link_to title, path, opts
     end
+  end
+
+  def link_icon_to(icon, title, path, opts=nil)
+    opts = {} if opts.nil?
+    opts[:class] = "" if opts[:class].nil?
+    opts[:class] = "ui-icon ui-icon-#{icon} #{opts[:class]}"
+    opts[:title] = title if opts[:title].nil?
+    return link_to_confirm title, path, opts
+  end
+
+  def nav_link_to_help(title = nil)
+    title = t(:help) if title.nil?
+    rtn = "<li>"
+    rtn += link_to title, help_path, {:id => 'nav_help_link'}
+    rtn += "</li>"
+    return rtn
   end
 
   def link_to_home(title = nil)
@@ -61,7 +110,53 @@ module LayoutHelper
     link_to_confirm title, root_url
   end
 
+  def link_to_event_submit(title, event, use_icon=false)
+    if use_icon
+      link_icon_to "calendar", title, submit_event_path(event), {:confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])}
+    else
+      link_to_confirm title, submit_event_path(event), {:confirm => t(:submit_confirm, :company_name => APP_CONFIG[:company_name])}
+    end
+  end
+
+  def link_to_event_revoke(title, event, use_icon=false)
+    if use_icon
+      link_icon_to "cancel", title, revoke_event_path(event), {:confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}
+    else
+      link_to_confirm title, revoke_event_path(event), {:confirm => t(:revoke_confirm, :company_name => APP_CONFIG[:company_name])}
+    end
+  end
+
+  # Page variables {{{1
   def confirm_on_exit
     @confirm_exit = true
   end
+
+  def wide_content(val = true)
+    @wide_content = val
+  end
+
+  def wide_content?
+    @wide_content
+  end
+
+  def force_display_help(val = true)
+    @force_display_help = val
+  end
+
+  def force_display_help?
+    @force_display_help
+  end
+
+  # Dates {{{1
+  def d(the_date)
+    the_date.strftime("%A, %b %d")
+  end
+
+  def dt(the_datetime)
+    the_datetime.strftime("%A, %b %d %H:%m")
+  end
+
+  # }}}1
 end
+
+# vim:set et ts=2 sw=2 fdm=marker:

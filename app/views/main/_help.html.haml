@@ -1,0 +1,109 @@
+- if @current_instructor.new_user?
+  .notification
+    This help screen is automatically displayed until you create your first
+    session.
+#help
+  %ul
+    %li
+      %a{:href=>"#intro"} Intro
+    %li
+      %a{:href=>"#sessions"} Sessions
+    %li
+      %a{:href=>"#scenarios"} Scenarios
+    %li
+      %a{:href=>"#submitting"} Submitting
+    %li
+      %a{:href=>"#revoking"} Revoking
+    %li
+      %a{:href=>"#calendar"} Calendar
+    %li
+      %a{:href=>"#special_events"} Special Events
+  #intro
+    %h2 Introduction
+    %p
+      There is a process to entering a session. Because of the many parts
+      involved it is broken into several steps.
+    %ol
+      %li Create a session
+      %li Add scenarios to the session
+      %li Submit the session for approval
+      %li And final approval
+    .help-buttons
+      %a.help-button{:href=>"#sessions"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #sessions
+    %h2 Sessions
+    %p
+      Sessions are how we define a block of time. This includes classes, Mocks,
+      and long term stays.
+    %h4 Title
+    %p All sessions must have a title.
+    %h4 Location
+    %p
+      Then location can be entered by typing. A drop down will appear to
+      provide possible suggestions. If a suggestion matches please use that
+      one. Otherwise if it is not in the list continue to enter in the location
+      of the session.
+    %h4 Benefit
+    %p
+      The benefit to the system is a description to how the session planned
+      will benefit the system. Is it beneficial to patient safety? Is it
+      beneficial to cost savings? Is it to improve education? What other
+      reasons will this session be beneficial?
+    %h4 Notes
+    %p
+      Provide a description and extra notes about this session. This is an open
+      ended field which means you can describe anything you feel the need to.
+      Providing a description of the session and additional notes if important.
+      The more information in this field the less the staff has to clarify
+      things via email before it is approved.
+    %h4 Times
+    %p
+      The start and end time. On most browsers when you click on a date it will pop up a date picker. It is designed to automatically fill in the end time based on the start time. To select the time of day click on the field and buttons will drop down. You select a time by moving your mouse over them more buttons will drop down. Click on the minutes to make your selection.
+    %p You can not set the end time prior to the start time.
+    %p
+      Please try not to submit a session that is only a few days away. Advance
+      notice is needed to provide quality service. But if you must the
+      submission will still go through.
+    %h4 Live in
+    %p
+      If this is a session were the equipment is to stay for an extended time
+      (for example nursing competencies) check this field.
+    .help-buttons
+      %a.help-button{:href=>"#intro"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#scenarios"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #scenarios
+    %h2 Scenarios
+    .help-buttons
+      %a.help-button{:href=>"#sessions"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#submitting"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #submitting
+    %h2 Submitting Sessions
+    .help-buttons
+      %a.help-button{:href=>"#scenarios"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#revoking"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #revoking
+    %h2 Revoking Sessions
+    .help-buttons
+      %a.help-button{:href=>"#submiting"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#calendar"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #calendar
+    %h2 Calendar
+    .help-buttons
+      %a.help-button{:href=>"#revoking"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#special_events"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #special_events
+    %h2 Special Events
+    .help-buttons
+      %a.help-button{:href=>"#calendar"}
+        %span.ui-icon.ui-icon-seek-prev Previous
