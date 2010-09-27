@@ -11,10 +11,10 @@ Factory.define :instructor do |i|
   i.password_confirmation "secret"
 end
 
-Factory.define :admin, :parrent => :instructor do |i|
+Factory.define :admin, :parent => :instructor do |i|
   i.admin true
 end
 
-Factory.define :new_instructor, :parrent => :instructor do |i|
+Factory.define :new_instructor, :parent => :instructor do |i|
   i.new_user true
 end
