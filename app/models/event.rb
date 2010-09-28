@@ -84,7 +84,7 @@ class Event < ActiveRecord::Base
 
   def collective_has_needs
     scenarios.each do |s|
-      if s.staff_support || s.moulage || s.video || mobile
+      if s.staff_support || s.moulage || s.video || s.mobile
         return true
       end
     end
