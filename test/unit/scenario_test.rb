@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ScenarioTest < ActiveSupport::TestCase
-  #should belong_to :event
+  should belong_to :event
   should belong_to :manikin_req_type
   should belong_to :manikin
 
