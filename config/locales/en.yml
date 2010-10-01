@@ -20,6 +20,8 @@ en:
   submit: "Submit for approval"
   revoke: "Revoke"
   edit: "Edit"
+  login_required: "You must first log in or sign up before accessing this page."
+  admin_required: "You must be an administrator to access that page"
   cancel_confirm: "This form has not been saved. Are you sure you want to continue?"
   submit_confirm: "By submitting this session to the %{company_name} team you will NOT be able to change the time of the event. Are you sure you want to submit this for approval?"
   revoke_confirm: "You are about to revoke this session. The %{company_name} team will be notified and you will need to resubmit again. Are you sure you wish to continue?"
