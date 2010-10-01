@@ -20,6 +20,7 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "shoulda", :version => '2.11.3', :lib => "shoulda"
+  config.gem "mocha", :version => '0.9.8'
   config.gem "factory_girl", :version => '1.3.2'
   config.gem "haml", :version => '3.0.18'
   config.gem "authlogic", :version => '2.1.6'
