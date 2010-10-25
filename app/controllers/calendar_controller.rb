@@ -38,13 +38,13 @@ class CalendarController < ApplicationController
       end
 
     else
-      render :text => "Invalid parameters", :status => 406
+      render :text => "Invalid parameters", :status => :not_acceptable
       return
     end
 
     respond_to do |format|
       format.json { render :json => json_events.to_json }
-      format.any { render :text => "Invalid format", :status => 406 }
+      format.any { render :text => "Invalid format", :status => :not_acceptable }
     end
   end
 
