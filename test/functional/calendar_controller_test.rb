@@ -6,8 +6,8 @@ class CalendarControllerTest < ActionController::TestCase
   should route(:get, "/calendar").to(:action => :index)
   should route(:get, "/calendar/events").to(:action => :events)
 
-  should require_logged_in
-  should require_logged_in.for(:events)
+  should_require_logged_in
+  should_require_logged_in :action => :events
 
 #  logged_in_as(:instructor) do
 #    setup { @event = Factory(:special_event) }
