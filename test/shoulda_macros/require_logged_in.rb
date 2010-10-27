@@ -1,65 +1,30 @@
-module Shoulda
-  module SimNotify
-
-    module Matchers
-      def require_logged_in(action)
-        RequireLoggedInMatcher.new(action)
+class Test::Unit::TestCase
+  include ActionController::UrlWriter
+  def self.should_require_logged_in(opt = { })
+    opt[:method] ||= :get
+    opt[:action] ||= :index
+    opt[:login_path] ||= 'login'
+    context "require a login to #{opt[:method].to_s} action #{opt[:action].to_s}" do
+      setup do
+        method(opt[:method]).call(opt[:action])
       end
 
-      def require_admin(action)
-        RequireAdminMatcher.new(action)
-      end
-
-      class RequireLoggedInMatcher
-        def initialize(action)
-          @check_action = action
-          @use_method = :get
-        end
-
-        def for_method(method)
-          @use_method = method
-          self
-        end
-
-        def matches?(subject)
-          if @use_method == :post
-            post @check_action
-          else
-            get @check_action
-          end
-          RedirectToMatcher.new(login_path).matcher?
-        end
-
-        def description
-          "require user to log in for #{@check_action.to_s} action"
-        end
-      end
-
-      class RequireAdminMatcher
-        def initialize(action)
-          @check_action = action
-          @use_method = :get
-        end
-
-        def for_method(method)
-          @use_method = method
-          self
-        end
-
-        def matcher?
-          if @use_method == :post
-            post @check_action
-          else
-            get @check_action
-          end
-          SetTheFlashMatcher.new.to(I18n.translate(:admin_required)).matches?
-        end
-
-        def description
-          "require administrator access for #{@check_action.to_s} action"
-        end
-      end
+      should redirect_to(opt[:login_path])
+      should set_the_flash.to I18n.translate(:login_required)
     end
+  end
 
+  def self.should_require_admin(opt = { })
+    opt[:method] ||= :get
+    opt[:action] ||= :index
+    opt[:root_path] ||= ''
+    context "require administrator access to #{opt[:method].to_s} action #{opt[:action].to_s}" do
+      setup do
+        method(opt[:method]).call(opt[:action])
+      end
+
+      should redirect_to(opt[:root_path])
+      should set_the_flash.to I18n.translate(:admin_required)
+    end
   end
 end
