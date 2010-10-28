@@ -21,7 +21,7 @@ class CalendarController < ApplicationController
       end
 
       @special_events = SpecialEvent.find(:all,
-          :conditions => conditions.except(:submitted)).
+          :conditions => conditions.except(:submitted))
 
       json_events = [ ]
 

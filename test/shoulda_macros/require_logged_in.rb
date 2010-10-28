@@ -3,7 +3,7 @@ class Test::Unit::TestCase
   def self.should_require_logged_in(opt = { })
     opt[:method] ||= :get
     opt[:action] ||= :index
-    opt[:login_path] ||= 'login'
+    opt[:login_path] ||= '/login'
     context "require a login to #{opt[:method].to_s} action #{opt[:action].to_s}" do
       setup do
         method(opt[:method]).call(opt[:action])
