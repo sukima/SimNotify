@@ -9,7 +9,10 @@ class CalendarController < ApplicationController
   end
 
   def events
-    if params[:start] && params[:end]
+    if !params[:start] || !params[:end]
+      render :text => "Invalid parameters", :status => :not_acceptable
+      return
+    else
       start_time = Time.at(params[:start].to_i)
       end_time = Time.at(params[:end].to_i)
       conditions = { :start_time => (start_time .. end_time), :submitted => true }
@@ -36,16 +39,9 @@ class CalendarController < ApplicationController
           :allDay => :all_day?
         })
       end
-
-    else
-      render :text => "Invalid parameters", :status => :not_acceptable
-      return
     end
 
-    respond_to do |format|
-      format.json { render :json => json_events.to_json }
-      format.any { render :text => "Invalid format", :status => :not_acceptable }
-    end
+    render :json => json_events.to_json
   end
 
   private
