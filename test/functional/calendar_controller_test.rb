@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class CalendarControllerTest < ActionController::TestCase
-  def build_factory
-      @event = Factory(:special_event)
-  end
   setup :activate_authlogic
 
   should route(:get, "/calendar").to(:action => :index)
@@ -12,35 +9,61 @@ class CalendarControllerTest < ActionController::TestCase
   should_require_logged_in
   should_require_logged_in :action => :events
 
-  context "get index" do
+  context "when logged in" do
     setup do
-      build_factory
-      get :index
+      InstructorSession.create(Factory(:instructor))
     end
-    should render_template :index
-  end
 
-  context "get events without params" do
-    setup do
-      build_factory
-      get :events
+    context "get :index" do
+      setup do
+        get :index
+      end
+      should respond_with :success
+      should render_template :index
     end
-    should respond_with :not_acceptable
-  end
 
-  context "get events any format" do
-    setup do
-      build_factory
-      get :events, { :start => 0, :end => 1 }
-    end
-    should respond_with :not_acceptable
-  end
+    context "get :event" do
+      context "without params" do
+        setup do
+          get :events
+        end
+        should respond_with :not_acceptable
+      end
 
-  context "get events json format" do
-    setup do
-      build_factory
-      get :events, { :format => :json, :start => 0, :end => 1 }
+      context "with params" do
+        setup do
+          assert @event = Factory(:special_event)
+          @start = @event.start_time - 5.days
+          @end = @event.end_time + 5.days
+          get :events, :start => @start, :end => @end
+          begin
+            @json = ActiveSupport::JSON.decode(@response.body)
+          rescue
+            @json = nil
+          end
+        end
+        should respond_with :success
+        should assign_to(:special_events).with(@event)
+        should respond_with_content_type(/json/)
+        context "json object" do
+          should "be valid" do
+            assert_not_nil @json, "possible exception thrown in setup (response: #{@response.body})"
+          end
+          should "have a title" do
+            assert_not_nil @json[0]['title']
+          end
+          should "have a start and end time" do
+            assert_not_nil @json[0]['start']
+            assert_not_nil @json[0]['end']
+          end
+          should "have className == special-event" do
+            assert_match "special-event", @json[0]['className']
+          end
+          should "have a allDay field" do
+            assert_not_nil @json[0]['allDay']
+          end
+        end
+      end
     end
-    should respond_with :success
   end
 end
