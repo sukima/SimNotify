@@ -1,9 +1,12 @@
 require 'test_helper'
 
 class InstructorTest < ActiveSupport::TestCase
-  setup { @instructor = Factory(:instructor) }
-  should have_many(:events)
+  setup do
+    @instructor = Factory(:instructor)
+  end
   should have_authlogic
+
+  should have_many(:events)
 
   should validate_presence_of(:name)
   should validate_uniqueness_of(:name)
