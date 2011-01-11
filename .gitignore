@@ -15,3 +15,4 @@ public/images/logo.png
 .rvmrc
 vendor/gems
 vendor/rails
+.todo
