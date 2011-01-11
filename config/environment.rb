@@ -24,6 +24,11 @@ Rails::Initializer.run do |config|
   config.gem "formtastic", :version => '1.1.0'
   config.gem "validation_reflection", :version => '0.3.8'
   config.gem "maruku", :version => '0.6.0'
+  # Special gems for testing
+  config.gem "shoulda", :version => '2.11.3', :environment => [:test]
+  config.gem "shoulda_routing_macros", :version => "0.1.2", :environment => [:test]
+  config.gem "mocha", :version => '0.9.8', :environment => [:test]
+  config.gem "factory_girl", :version => '1.3.2', :environment => [:test]
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

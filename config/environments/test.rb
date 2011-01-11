@@ -31,9 +31,3 @@ config.action_mailer.delivery_method = :test
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.delivery_method = :sendmail
 config.action_mailer.default_url_options = { :host => "127.0.0.1", :port => 4000 }
-
-# Special gems for testing
-config.gem "shoulda", :version => '2.11.3', :lib => "shoulda"
-config.gem "shoulda_routing_macros", :version => "0.1.2"
-config.gem "mocha", :version => '0.9.8'
-config.gem "factory_girl", :version => '1.3.2'
