@@ -4,9 +4,10 @@ class Test::Unit::TestCase
     opt[:method] ||= :get
     opt[:action] ||= :index
     opt[:login_path] ||= '/login'
+    opt[:params] ||= { }
     context "require a login to #{opt[:method].to_s} action #{opt[:action].to_s}" do
       setup do
-        method(opt[:method]).call(opt[:action])
+        method(opt[:method]).call(opt[:action], opt[:params])
       end
 
       should redirect_to(opt[:login_path])
@@ -18,9 +19,10 @@ class Test::Unit::TestCase
     opt[:method] ||= :get
     opt[:action] ||= :index
     opt[:root_path] ||= ''
+    opt[:params] ||= { }
     context "require administrator access to #{opt[:method].to_s} action #{opt[:action].to_s}" do
       setup do
-        method(opt[:method]).call(opt[:action])
+        method(opt[:method]).call(opt[:action], opt[:params])
       end
 
       should redirect_to(opt[:root_path])
