@@ -4,7 +4,7 @@ class InstructorTest < ActiveSupport::TestCase
   setup do
     @instructor = Factory(:instructor)
   end
-  should have_authlogic
+  should_have_authlogic
 
   should have_many(:events)
 
