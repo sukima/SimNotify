@@ -39,8 +39,8 @@ class LocationSuggestionsControllerTest < ActionController::TestCase
       setup do
         get :new
       end
-      should_respond_with :success
-      should_render_template :new
+      should respond_with :success
+      should render_template :new
     end
 
     context "POST :create" do
@@ -51,7 +51,7 @@ class LocationSuggestionsControllerTest < ActionController::TestCase
       should "increase count by 1" do
         assert LocationSuggestion.count - @old_count == 1
       end
-      should_redirect_to(":show") { location_suggestion_path(LocationSuggestion.last) }
+      should redirect_to(":show") { location_suggestion_path(LocationSuggestion.last) }
     end
     
     context "GET :show" do
@@ -68,7 +68,7 @@ class LocationSuggestionsControllerTest < ActionController::TestCase
         @loc = Factory.create(:location_suggestion)
         put :update, :id => @loc.id, :location_suggestion => { :location => "barfoo" }
       end
-      should_redirect_to(":show") { location_suggestion_path(LocationSuggestion.find(@loc.id)) }
+      should redirect_to(":show") { location_suggestion_path(LocationSuggestion.find(@loc.id)) }
     end
 
     context "GET :destroy" do
@@ -80,7 +80,7 @@ class LocationSuggestionsControllerTest < ActionController::TestCase
       should "decrease count by 1" do
         assert LocationSuggestion.count - @old_count == -1
       end
-      should_redirect_to(":index") { location_suggestions_path }
+      should redirect_to(":index") { location_suggestions_path }
     end
   end # logged_in_as :admin
 end
