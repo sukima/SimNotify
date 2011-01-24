@@ -19,7 +19,7 @@
       %th End&nbsp;Time
       %th Actions
   %tbody
-    - for event in @special_events
+    - @special_events.each do |event|
       %tr{:class => event.status_as_class}
         %td= link_to_confirm h(event.title), event
         %td= link_to_confirm h(event.instructor.name), event.instructor

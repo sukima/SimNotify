@@ -1,4 +1,6 @@
 Factory.define :instructor do |i|
+  # Prevents Authlogic from logging in automatically
+  i.skip_session_maintenance true
   i.sequence(:name) { |n| "first_name#{n} last_name#{n}" }
   i.sequence(:email) { |n| "testemail#{n}@example.com" }
   i.office "nowhere"
