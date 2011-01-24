@@ -30,16 +30,16 @@ class ManikinsControllerTest < ActionController::TestCase
         @f = Factory.create(:manikin)
         get :show, :id => @f.id
       end
-      should_respond_with :success
-      should_render_template :show
+      should respond_with :success
+      should render_template :show
     end
 
     context "GET :new" do
       setup do
         get :new
       end
-      should_respond_with :success
-      should_render_template :new
+      should respond_with :success
+      should render_template :new
     end
 
     context "POST :create" do
@@ -51,7 +51,7 @@ class ManikinsControllerTest < ActionController::TestCase
       should "increase count by 1" do
         assert Manikin.count - @old_count == 1
       end
-      should_redirect_to(":show") { manikin_path(Manikin.last) }
+      should redirect_to(":show") { manikin_path(Manikin.last) }
     end
 
     context "GET :edit" do
@@ -59,8 +59,8 @@ class ManikinsControllerTest < ActionController::TestCase
         @f = Factory.create(:manikin)
         get :edit, :id => @f.id
       end
-      should_respond_with :success
-      should_render_template :edit
+      should respond_with :success
+      should render_template :edit
     end
 
     context "PUT :update" do
@@ -69,7 +69,7 @@ class ManikinsControllerTest < ActionController::TestCase
         @f.serial_number = "1111111111"
         put :update, :id => @f.id, :manikin => @f.attributes
       end
-      should_redirect_to(":show") { manikin_path(Manikin.find(@f.id)) }
+      should redirect_to(":show") { manikin_path(Manikin.find(@f.id)) }
     end
 
     context "GET :destroy" do
@@ -81,7 +81,7 @@ class ManikinsControllerTest < ActionController::TestCase
       should "decrease count by 1" do
         assert Manikin.count - @old_count == -1
       end
-      should_redirect_to(":index") { manikins_path }
+      should redirect_to(":index") { manikins_path }
     end
   end
 end
