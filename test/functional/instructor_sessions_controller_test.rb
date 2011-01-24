@@ -1,20 +1,11 @@
 require 'test_helper'
 
 class InstructorSessionsControllerTest < ActionController::TestCase
-  def test_new
-    get :new
-    assert_template 'new'
-  end
-  
-  def test_create_invalid
-    post :create, :instructor_session => { :username => "foo", :password => "badpassword" }
-    assert_template 'new'
-    assert_nil InstructorSession.find
-  end
-  
-  def test_create_valid
-    post :create, :instructor_session => { :username => "foo", :password => "secret" }
-    assert_redirected_to root_url
-    assert_equal instructors(:foo), InstructorSession.find.instructor
-  end
+  setup :activate_authlogic
+
+  should route(:get, "/login").to(:action => 'new')
+  should route(:get, "/logout").to(:action => 'destroy')
+  should route(:get, "/signup").to(:controller => 'instructors', :action => 'new')
+  # This doesn't work:
+  # should route(:get, "/instructor_sessions/new").to(:action => 'new')
 end
