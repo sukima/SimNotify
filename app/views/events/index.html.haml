@@ -15,7 +15,7 @@
     = link_to_confirm "View Pending", "#{events_path}?mod=pending", :class => "button"
     = link_to_confirm "View Old", "#{events_path}?mod=old", :class => "button"
     = link_to_confirm "View All", "#{events_path}?mod=all", :class => "button"
-- form_tag approve_events_path, :method => :put do
+- form_tag approve_all_events_path, :method => :put do
   %table#table_to_sort
     %thead
       %tr

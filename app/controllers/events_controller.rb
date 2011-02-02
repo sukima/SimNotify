@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_filter :login_required
+  before_filter :login_admin, :only => [ :approve, :approve_all ]
 
   def index
     @listing_mod = params[:mod]
@@ -112,26 +113,22 @@ class EventsController < ApplicationController
   end
 
   def approve
-    if !is_admin?
-      flash[:error] = "You do not have permission to do that"
-      redirect_to root_url
-      return
+    @event = Event.find(params[:id])
+    @event.approved = true
+    if @event.save
+      flash[:notice] = "Successfully approved event"
+      ApplicationMailer.deliver_approved_email(@event)
     end
-    if params[:id]
-      @event = Event.find(params[:id])
-      @event.approved = true
-      if @event.save
-        flash[:notice] = "Successfully approved event"
-        ApplicationMailer.deliver_approved_email(@event)
-      end
-      redirect_to @event
-      return
+    redirect_to @event
+  end
+
+  def approve_all
+    Event.update_all ["approved=?", true], :id => params[:event_ids]
+    params[:event_ids].each do |event_id|
+      the_event = Event.find(event_id)
+      ApplicationMailer.deliver_approved_email(the_event)
     end
-    if params[:event_ids]
-      Event.update_all ["approved=?", true], :id => params[:event_ids]
-      flash[:notice] = "Sessions have been approved"
-      redirect_to events_path
-      return
-    end
+    flash[:notice] = "Sessions have been approved"
+    redirect_to events_path
   end
 end
