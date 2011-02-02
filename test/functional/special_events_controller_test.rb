@@ -8,7 +8,6 @@ class SpecialEventsControllerTest < ActionController::TestCase
   should_require_login_for_resources
 
   logged_in_as :instructor do
-    # Stub out SpecialEvent.find
     should_require_admin_for_resources :except => [:index, :show, :new, :create],
       :flash => :permission_denied,
       :factory => :special_event

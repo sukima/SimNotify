@@ -3,7 +3,8 @@ class Test::Unit::TestCase
   def self.logged_in_as(person, &block)
     context "logged in as #{person.to_s}" do
       setup do
-        InstructorSession.create(Factory(person))
+        @instructor = Factory(person)
+        InstructorSession.create(@instructor)
       end
 
       yield

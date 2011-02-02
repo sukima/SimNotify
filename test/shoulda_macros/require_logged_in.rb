@@ -5,12 +5,12 @@ class Test::Unit::TestCase
       opt.reverse_merge!({
         :method => :get,
         :action => :index,
-        :login_path => '/login',
+        :redirect_to => '/login',
         :flash => nil,
         :factory => nil,
         :params => { }
       })
-      context "require a login to #{opt[:method].to_s} action #{opt[:action].to_s}" do
+      should "require a login to #{opt[:method].to_s} action #{opt[:action].to_s}" do
         setup do
           if !opt[:factory].nil?
             @f = Factory.create(opt[:factory])
@@ -19,25 +19,31 @@ class Test::Unit::TestCase
           method(opt[:method]).call(opt[:action], opt[:params])
         end
 
-        should redirect_to(opt[:login_path])
-        if opt[:flash].kind_of? Symbol
-          should set_the_flash.to I18n.translate(opt[:flash])
-        elsif !opt[:flash].nil?
-          should set_the_flash.to opt[:flash]
-        end
+        # @flash = @controller.send(:flash)
+        # #assert RedirectToMatcher(opt[:redirect_to]).matches?
+        # if !opt[:flash].nil?
+          # if Symbol === opt[:flash]
+            # assert @flash.values.any? {|value| value == I18n.translate(opt[:flash])}
+          # elsif Regex === opt[:flash]
+            # assert @flash.values.any? {|value| value =~ opt[:flash]}
+          # else
+            # assert @flash.values.any? {|value| value == opt[:flash]}
+          # end
+        # end
       end
     end
 
     def should_require_admin(opt = { })
+      opt[:redirect_to] = opt[:login_path] if opt[:login_path] && !opt[:redirect_to]
       opt.reverse_merge!({
         :method => :get,
         :action => :index,
-        :root_path => '',
+        :redirect_to => '/',
         :flash => nil,
         :factory => nil,
         :params => { }
       })
-      context "require administrator access to #{opt[:method].to_s} action #{opt[:action].to_s}" do
+      should "require administrator access to #{opt[:method].to_s} action #{opt[:action].to_s}" do
         setup do
           if !opt[:factory].nil?
             @f = Factory.create(opt[:factory])
@@ -46,12 +52,17 @@ class Test::Unit::TestCase
           method(opt[:method]).call(opt[:action], opt[:params])
         end
 
-        should redirect_to(opt[:root_path])
-        if opt[:flash].kind_of? Symbol
-          should set_the_flash.to I18n.translate(opt[:flash])
-        elsif !opt[:flash].nil?
-          should set_the_flash.to opt[:flash]
-        end
+        # @flash = @controller.send(:flash)
+        # assert_redirected_to(opt[:redirect_to])
+        # if !opt[:flash].nil?
+          # if Symbol === opt[:flash]
+            # assert @flash.values.any? {|value| value == I18n.translate(opt[:flash])}
+          # elsif Regex === opt[:flash]
+            # assert @flash.values.any? {|value| value =~ opt[:flash]}
+          # else
+            # assert @flash.values.any? {|value| value == opt[:flash]}
+          # end
+        # end
       end
     end
 
@@ -80,6 +91,11 @@ class Test::Unit::TestCase
         post_options = { :params => options[:params] }
       else
         post_options = { :factory => options[:factory] }
+      end
+      if !options[:redirect_to].blank?
+        post_options[:redirect_to] = options[:redirect_to]
+      elsif !options[:login_path].blank?
+        post_options[:login_path] = options[:login_path]
       end
 
       unless Array(options[:except]).include?(:index)
