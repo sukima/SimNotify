@@ -1,54 +1,173 @@
 require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
-  def test_index
-    get :index
-    assert_template 'index'
+  setup :activate_authlogic
+
+  should_map_resources :events
+
+  should route(:get, "/events/1/submit").to(:action => :submit, :id => 1)
+  should route(:get, "/events/1/revoke").to(:action => :revoke, :id => 1)
+  should route(:put, "/events/1/approve").to(:action => :approve, :id => 1)
+  should route(:put, "/events/approve_all").to(:action => :approve_all)
+
+  should_require_login_for_resources
+
+  logged_in_as :instructor do
+    should_require_admin_for_resources :except => [:index, :new, :create, :update, :destroy],
+      :flash => :permission_denied,
+      :factory => :event
+
+    context "" do
+      setup do
+        @f = Factory(:event, :instructor => @instructor)
+        ApplicationMailer.stubs(:deliver_submitted_email)
+        ApplicationMailer.stubs(:deliver_approved_email)
+        ApplicationMailer.stubs(:deliver_revoked_email)
+      end
+
+      context "GET :index" do
+        setup do
+          get :index, :mod => "foo"
+        end
+        should assign_to(:events)
+        should assign_to(:listing_mod)
+        should respond_with :success
+        should render_template :index
+      end
+
+      context "GET :show" do
+        setup do
+          get :show, :id => @f.id
+        end
+        should assign_to(:event)
+        should respond_with :success
+        should render_template :show
+      end
+
+      context "GET :new" do
+        setup do
+          get :new
+        end
+        should assign_to(:event)
+        should respond_with :success
+        should render_template :new
+      end
+
+      context "POST :create" do
+        setup do
+          @f = Factory.build(:event, :instructor => @instructor)
+          @old_count = Event.count
+          post :create, :event => @f.attributes
+        end
+        should "increase count by 1" do
+          assert Event.count - @old_count == 1
+        end
+        should redirect_to(":show") { event_path(Event.last) }
+      end
+
+      context "GET :edit" do
+        setup do
+          get :edit, :id => @f.id
+        end
+        should assign_to(:event)
+        should respond_with :success
+        should render_template :edit
+      end
+
+      context "GET :submit" do
+        setup do
+          get :submit, :id => @f.id
+        end
+        should assign_to(:event)
+        should respond_with :success
+        should render_template :submit
+      end
+
+      context "GET :revoke" do
+        setup do
+          get :revoke, :id => @f.id
+        end
+        should assign_to(:event)
+        should respond_with :success
+        should render_template :revoke
+      end
+
+      should_require_admin({
+        :method => :get,
+        :action => :approve,
+        :facory => :event,
+        :flash => :permission_denied
+      })
+
+      should_require_admin({
+        :method => :get,
+        :action => :approve_all,
+        :flash => :permission_denied
+      })
+
+      context "PUT :update" do
+        context "" do
+          setup do
+            @f.title = "test_update_model_event_field_title"
+            put :update, :id => @f.id, :event => @f.attributes
+          end
+          should redirect_to(":show") { event_path(@f) }
+        end
+
+        context "with submit_note" do
+          setup do
+            put :update, :id => @f.id, :event => { :submit_note => "test submit note" }
+          end
+          should set_the_flash.to(/submitted/)
+          should redirect_to('/') { root_path }
+        end
+
+        context "with revoke_note" do
+          setup do
+            put :update, :id => @f.id, :event => { :revoke_note=> "test revoke note" }
+          end
+          should set_the_flash.to(/revoked/)
+          should redirect_to(':show') { event_path(@f) }
+        end
+      end
+
+      context "GET :destroy" do
+        setup do
+          @old_count = Event.count
+          delete :destroy, :id => @f.id
+        end
+        should "decrease count by 1" do
+          assert Event.count - @old_count == -1
+        end
+        should redirect_to(":index") { events_path }
+      end
+    end
   end
 
-  def test_show
-    get :show, :id => Event.first
-    assert_template 'show'
-  end
+  logged_in_as :admin do
+    context "" do
+      setup do
+        @f = Factory.create(:event, :instructor => @instructor)
+        ApplicationMailer.stubs(:deliver_submitted_email)
+        ApplicationMailer.stubs(:deliver_approved_email)
+        ApplicationMailer.stubs(:deliver_revoked_email)
+      end
 
-  def test_new
-    get :new
-    assert_template 'new'
-  end
+      context "GET :approve" do
+        setup do
+          put :approve, :id => @f.id
+        end
+        should set_the_flash.to(/approved/)
+        should redirect_to(":show") { event_path(@f) }
+      end
 
-  def test_create_invalid
-    Event.any_instance.stubs(:valid?).returns(false)
-    post :create
-    assert_template 'new'
-  end
-
-  def test_create_valid
-    Event.any_instance.stubs(:valid?).returns(true)
-    post :create
-    assert_redirected_to event_url(assigns(:event))
-  end
-
-  def test_edit
-    get :edit, :id => Event.first
-    assert_template 'edit'
-  end
-
-  def test_update_invalid
-    Event.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Event.first
-    assert_template 'edit'
-  end
-
-  def test_update_valid
-    Event.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Event.first
-    assert_redirected_to event_url(assigns(:event))
-  end
-
-  def test_destroy
-    event = Event.first
-    delete :destroy, :id => event
-    assert_redirected_to events_url
-    assert !Event.exists?(event.id)
+      context "GET :approve_all" do
+        setup do
+          put :approve_all, :event_ids => [ @f.id ]
+        end
+        should set_the_flash.to(/approved/)
+        should redirect_to(":index") { events_path }
+      end
+    end
   end
 end

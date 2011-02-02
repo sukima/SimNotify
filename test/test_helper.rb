@@ -1,8 +1,16 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
+require 'authlogic/test_case'
+
+# Shoulda DOES NOT autoload shoulda_macros. I don't care how much the "docs"
+# claim otherwise. I tested it with over 10 puts and debugger. It doesn't load
+# as a gem nor as an unpacked gem! So we do it manually here. So much for DRY!
+require 'shoulda/integrations/test_unit'
+Shoulda.autoload_macros RAILS_ROOT, File.join("vendor", "{plugins,gems}", "*")
 
 class ActiveSupport::TestCase
+  include Authlogic::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -32,7 +40,5 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
-
-  # Add more helper methods to be used by all tests here...
+  #fixtures :all
 end

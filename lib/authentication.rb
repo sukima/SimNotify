@@ -45,7 +45,7 @@ module Authentication
   
   def login_required
     unless logged_in?
-      flash[:error] = t(:loggin_required)
+      flash[:error] = t(:login_required)
       store_target_location
       redirect_to login_url
     end

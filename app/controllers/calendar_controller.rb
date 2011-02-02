@@ -9,7 +9,10 @@ class CalendarController < ApplicationController
   end
 
   def events
-    if params[:start] && params[:end]
+    if !params[:start] || !params[:end]
+      render :text => "Invalid parameters", :status => :not_acceptable
+      return
+    else
       start_time = Time.at(params[:start].to_i)
       end_time = Time.at(params[:end].to_i)
       conditions = { :start_time => (start_time .. end_time), :submitted => true }
@@ -21,7 +24,7 @@ class CalendarController < ApplicationController
       end
 
       @special_events = SpecialEvent.find(:all,
-          :conditions => conditions.except(:submitted)).
+          :conditions => conditions.except(:submitted))
 
       json_events = [ ]
 
@@ -36,16 +39,9 @@ class CalendarController < ApplicationController
           :allDay => :all_day?
         })
       end
-
-    else
-      render :text => "Invalid parameters", :status => 406
-      return
     end
 
-    respond_to do |format|
-      format.json { render :json => json_events.to_json }
-      format.any { render :text => "Invalid format", :status => 406 }
-    end
+    render :json => json_events.to_json
   end
 
   private

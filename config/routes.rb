@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :scenarios, :member => { :delete => :get }
   map.resources :events, :has_many => :scenarios,
   :collection => {
-    :approve => :put
+    :approve_all => :put
   },
   :member => {
     :delete => :get,

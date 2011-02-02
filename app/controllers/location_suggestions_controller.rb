@@ -46,7 +46,7 @@ class LocationSuggestionsController < ApplicationController
   def destroy
     @location_suggestion = LocationSuggestion.find(params[:id])
     @location_suggestion.destroy
-    flash[:notice] = "Successfully destroyed location suggestion."
+    flash[:notice] = "Successfully deleted location suggestion."
     redirect_to location_suggestions_url
   end
 end
