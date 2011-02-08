@@ -39,6 +39,7 @@ en:
       instructor:
         office: "Department"
         admin: "Is an administrator?"
+        is_tech: "Is a technician?"
         notify_recipient: "Recive session submission emails."
         gui_theme: "Theme"
       event:
