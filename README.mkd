@@ -44,11 +44,11 @@ Data Model
     ,---------------| instructor_id    |              |
     |               `------------------'              |
     |   ,---------------------.                       |
-    `->>| instructor          |<--.                   |
-        |---------------------|   |   ,------------.  |
-        | name                |   |   | event      |<-'
-        | email               |   |   |------------|
-        | office              |   |   | title      |
+    `->>| instructor          |<--.-. ,------------.  |
+        |---------------------|   | | | event      |<-'
+        | name                |   | | |------------|
+        | email               |   | | | title      |
+        | office              |   | `-| technician |
         | phone               |   |   | location   |..........
         | admin?              |   |   | benefit    |         .
         | notify_recipient?   |   |   | notes      |         .

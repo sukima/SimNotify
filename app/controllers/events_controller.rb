@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_filter :login_required
   before_filter :login_admin, :only => [ :approve, :approve_all ]
+  before_filter :find_technicians, :only => [:new, :edit]
 
   def index
     @listing_mod = params[:mod]
@@ -32,7 +33,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
     @event.instructor = @current_instructor
-    if @event.save
+    if technician_assignment_allowed && @event.save
       if @current_instructor.new_user?
         @current_instructor.new_user = false
         @current_instructor.save
@@ -80,7 +81,7 @@ class EventsController < ApplicationController
           end
           return
         end
-      elsif @event.update_attributes(params[:event])
+      elsif technician_assignment_allowed && @event.update_attributes(params[:event])
         flash[:notice] = "Successfully updated session"
         redirect_to @event
         return
@@ -130,5 +131,18 @@ class EventsController < ApplicationController
     end
     flash[:notice] = "Sessions have been approved"
     redirect_to events_path
+  end
+
+  private
+  def technician_assignment_allowed
+    if !@event.technician.blank? && !is_admin?
+      @event.errors.add :technician, I18n.translate(:technician_assignment_denied)
+      false
+    end
+    true
+  end
+
+  def find_technicians
+    @technicians = Instructor.find(:all, :conditions => [ "is_tech = ?", true ]) if is_admin?
   end
 end

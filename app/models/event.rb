@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   belongs_to :instructor
   has_and_belongs_to_many :instructors
   has_many :scenarios
+  belongs_to :technician, :class_name => "Instructor"
 
   validates_presence_of :title, :location, :benefit, :start_time, :end_time
 

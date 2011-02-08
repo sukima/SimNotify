@@ -32,6 +32,12 @@
   %p
     %strong Other Instructors:
     = @event.instructors.map(&:name).to_sentence
+- if @event.technician.nil?
+  %p No technician has been assigned to this session.
+- else
+  %p
+    %strong Technician:
+    = link_to @event.technician.name, @event.technician
 %p
   %strong Created at:
   = dt @event.created_at
