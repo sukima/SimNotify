@@ -27,7 +27,7 @@
     %strong Equipment is there for an extended stay
 %p
   %strong Instructor:
-  = h @event.instructor.name
+  = link_to h(@event.instructor.name), @event.instructor
 - if !@event.instructors.empty?
   %p
     %strong Other Instructors:
@@ -37,7 +37,7 @@
 - else
   %p
     %strong Technician:
-    = link_to @event.technician.name, @event.technician
+    = link_to h(@event.technician.name), @event.technician
 %p
   %strong Created at:
   = dt @event.created_at

@@ -27,6 +27,7 @@ module LayoutHelper
     theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
       @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
     ret += stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
+    ret += stylesheet_link_tag "jquery-ui-timepicker-addon"
     ret += stylesheet_link_tag "jquery.multiselect"
     return ret
   end
@@ -42,7 +43,7 @@ module LayoutHelper
       ret += javascript_include_tag "jquery#{min_ext}"
       ret += javascript_include_tag "jquery-ui#{min_ext}"
     end
-    ret += javascript_include_tag "jquery.timepickr#{min_ext}"
+    ret += javascript_include_tag "jquery-ui-timepicker-addon#{min_ext}"
     ret += javascript_include_tag "jquery.multiselect#{min_ext}"
     return ret
   end
