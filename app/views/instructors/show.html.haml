@@ -1,0 +1,21 @@
+- title "Instructor Details"
+%h2 #{@instructor.name}
+= roles_for(@instructor)
+%p
+  %strong Email:
+  = mail_to @instructor.email
+%p
+  %strong Office:
+  =h @instructor.office
+%p
+  %strong Phone:
+  =h @instructor.phone
+%p
+  %strong Joined:
+  =d @instructor.created_at
+%p
+  - if @instructor == @current_instructor || is_admin?
+    = link_to t(:edit), edit_instructor_path(@instructor)
+  - if is_admin?
+    | #{link_to_confirm t(:destroy), delete_instructor_path(@instructor), :confirm => 'Are you sure?'}
+    | #{link_to "Show all", instructors_path}

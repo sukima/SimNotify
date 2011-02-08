@@ -6,6 +6,15 @@ class InstructorsController < ApplicationController
     @instructors = Instructor.all
   end
 
+  def show
+    @instructor = Instructor.find(params[:id])
+  
+    respond_to do |wants|
+      wants.html # show.html.erb
+      wants.xml  { render :xml => @instructor }
+    end
+  end
+
   def new
     @instructor = Instructor.new
     current_instructor
