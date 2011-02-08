@@ -12,6 +12,7 @@
         %p You are an administrator.
       - else
         = f.input :admin
+      = f.input :is_tech
       = f.input :notify_recipient
     = f.input :gui_theme, :as => :radio, :collection => APP_CONFIG[:gui_themes]
   - f.buttons do
