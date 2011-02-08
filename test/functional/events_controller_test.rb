@@ -54,15 +54,31 @@ class EventsControllerTest < ActionController::TestCase
       end
 
       context "POST :create" do
-        setup do
-          @f = Factory.build(:event, :instructor => @instructor)
-          @old_count = Event.count
-          post :create, :event => @f.attributes
+        context "" do
+          setup do
+            @old_count = Event.count
+            post :create, :event => @f.attributes
+          end
+          should "increase count by 1" do
+            assert Event.count - @old_count == 1
+          end
+          should redirect_to(":show") { event_path(Event.last) }
         end
-        should "increase count by 1" do
-          assert Event.count - @old_count == 1
+        context "with assigned technician" do
+          setup do
+            @f.technician = Factory.create(:instructor)
+            @old_count = Event.count
+            post :create, :event => @f.attributes
+          end
+          should assign_to(:event)
+          should "cause an error" do
+            errors = @controller.instance_variable_get("@event").errors
+            assert errors.include?(:technician)
+            should_have_translation(errors[:technician], :technician_assignment_denied)
+          end
+          should respond_with :success
+          should render_template :new
         end
-        should redirect_to(":show") { event_path(Event.last) }
       end
 
       context "GET :edit" do
@@ -114,6 +130,22 @@ class EventsControllerTest < ActionController::TestCase
           should redirect_to(":show") { event_path(@f) }
         end
 
+        context "with assigned technician" do
+          setup do
+            @f.technician = Factory.create(:instructor)
+            @old_count = Event.count
+            post :create, :event => @f.attributes
+          end
+          should assign_to(:event)
+          should "cause an error" do
+            errors = @controller.instance_variable_get("@event").errors
+            assert errors.include?(:technician)
+            should_have_translation(errors[:technician], :technician_assignment_denied)
+          end
+          should respond_with :success
+          should render_template :edit
+        end
+
         context "with submit_note" do
           setup do
             put :update, :id => @f.id, :event => { :submit_note => "test submit note" }
@@ -151,6 +183,21 @@ class EventsControllerTest < ActionController::TestCase
         ApplicationMailer.stubs(:deliver_submitted_email)
         ApplicationMailer.stubs(:deliver_approved_email)
         ApplicationMailer.stubs(:deliver_revoked_email)
+      end
+
+      context "GET :new" do
+        setup do
+          get :new
+        end
+        should assign_to(:technicians)
+      end
+
+      context "GET :edit" do
+        setup do
+          @f = Factory(:event)
+          get :edit, :id => @f.id
+        end
+        should assign_to(:technicians)
       end
 
       context "GET :approve" do
