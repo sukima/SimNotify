@@ -1,11 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
 
-# Special gems for testing
-config.gem "shoulda", :version => '2.11.3'
-config.gem "shoulda_routing_macros", :version => "0.1.2"
-config.gem "mocha", :version => '0.9.8'
-config.gem "factory_girl", :version => '1.3.2'
-
 # The test environment is used exclusively to run your application's
 # test suite.  You never need to work with it otherwise.  Remember that
 # your test database is "scratch space" for the test suite and is wiped
