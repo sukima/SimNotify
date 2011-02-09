@@ -13,7 +13,8 @@ gem "maruku", "~> 0.6.0"
 
 group :development do
   # bundler requires these gems in development
-  # gem "rails-footnotes"
+  gem "rails-footnotes"
+  gem "ruby-debug"
 end
 
 group :test do
