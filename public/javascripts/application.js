@@ -18,55 +18,50 @@ jQuery.fn.submitWithAjax = function() {
 // Application object {{{1
 var APP = {};
 
-// Function: saveDateValues() {{{2
-APP.saveDateValues = function () {
-    var sels = $(this).closest('.date, .datetime').find("select:lt(3)");
-    var d = null;
-    try {
-        d = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val() );
-        $(sels[0]).val(d.getFullYear());
-        $(sels[1]).val(d.getMonth() + 1);
-        $(sels[2]).val(d.getDate());
-    } catch (e) {
-        $(this).val('');
-    }
-};
-
-// Function: saveTimeValues() {{{2
-APP.saveTimeValues = function () {
-    var sels = $(this).closest('.date, .datetime').find("select:gt(2)");
-    var t = $(this).val().split(":");
-
-    $(sels[0]).val(t[0]);
-    $(sels[1]).val(t[1]);
-};
-
-// Locale text {{{3
+// Locale text {{{2
 APP.locale = {
-    pick_date: "Pick a date...",
-    pick_time: "Pick a time..."
+    pick_datetime: "Pick a date and time..."
+};
+
+// Function: getTimeValues() {{{2
+APP.getTimeValues = function(dateTimeStr) {
+    var t = dateTimeStr.replace(/^.*\s+/, '').split(":");
+    return { hour: t[0], minute: t[1] };
+};
+
+// Function: getDateValues() {{{2
+APP.getDateValues = function(dateTimeStr) {
+    var d = dateTimeStr.replace(/\s+.*$/, '').split("/");
+    return { month: d[0], day: d[1], year: d[2] };
+};
+
+// Function: getDateTimeStringFromHashes() {{{2
+APP.getDateTimeStringFromHash = function(d) {
+    return d.month + "/" + d.day + "/" + d.year + " " + d.hour + ":" + d.minute;
+};
+
+// Function: saveDateValues() {{{2
+// Rails default select list uses the following order:
+//     year, month, day, hour, minute
+APP.saveDateValues = function () {
+    var sels = $(this).closest('.datetime').find("select:lt(5)");
+    var t = APP.getTimeValues($(this).val());
+    var d = APP.getDateValues($(this).val());
+    $(sels[0]).val(d.year);
+    $(sels[1]).val(d.month);
+    $(sels[2]).val(d.day);
+    $(sels[3]).val(t.hour);
+    $(sels[4]).val(t.minute);
 };
 
 // Function: syncStartEndDates() {{{2
 APP.syncStartEndDates = function () {
     var end_date = $("#event_end_time_input .ui-date-text");
-    var d1 = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $(this).val());
-    var d2 = (end_date.val() == APP.locale.pick_date) ?
-        0 : $.datepicker.parseDate($.datepicker._defaults.dateFormat, end_date.val());
+    var d1 = $(this).val().replace(/[^\d]/g, '');
+    var d2 = (end_date.val() == APP.locale.pick_datetime) ?
+        0 : end_date.val().replace(/[^\d]/g, '');
     if  (d2 < d1)
         end_date.val($(this).val()).trigger('change').effect('highlight');
-};
-
-// Function: syncStartEndTimes() {{{2
-APP.syncStartEndTimes = function () {
-    var end_time = $("#event_end_time_input .ui-time-text");
-    var t = $(this).val().split(":");
-    var t2 = (end_time.val() == APP.locale.pick_time) ?
-        0 : end_time.val().replace(/[^\d]/g, '');
-    if (t2 < t.join("")) {
-        t[0] = (t[0] * 1) + (1 * (t[0] < 23) ? 1 : 0);
-        end_time.val(t.join(":")).trigger('change').effect('highlight');
-    }
 };
 
 // Function: initNotifications() {{{2
@@ -144,13 +139,13 @@ $(document).ready(function() {
 
     // Datepicker / Timepicker {{{2
     // Define the dateFormat for the datepicker
-    $.datepicker._defaults.dateFormat = 'M dd yy';
+    // $.datepicker._defaults.dateFormat = 'M dd yy';
 
     /**
      * Replaces the date or datetime field with jquey-ui datepicker
      */
-    // Date Picker Init {{{3
-    $('.date, .datetime').each(function(i, el) {
+    // Date/Time Picker Init {{{3
+    $('.datetime').each(function(i, el) {
         var input = document.createElement('input');
         if ($(el).attr('id') == "event_start_time_input")
             $(input).bind('change', APP.syncStartEndDates);
@@ -159,66 +154,40 @@ $(document).ready(function() {
         $(input).attr({'type': 'text', 'class': 'ui-date-text'});
         // Insert the input:text before the first select
         $(el).find("select:first").before(input);
-        $(el).find("select:lt(3)").hide();
+        $(el).find("select:lt(5)").hide();
         // Set the input with the value of the selects
-        var values = [];
-        $(el).find("select:lt(3)").each(function(i, el) {
+        var values = [ ];
+        $(el).find("select:lt(5)").each(function(i, el) {
             var val = $(el).val();
             if(val != '') values.push(val);
         });
         if( values.length > 1 ) {
             d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
-            $(input).val( $.datepicker.formatDate($.datepicker._defaults.dateFormat, d) );
+            $(input).val(APP.getDateTimeStringFromHash({
+                year: values[0],
+                month: values[1],
+                day: values[2],
+                hour: values[3],
+                minute: values[4]
+            }));
         }
         else
         {
-            $(input).val(APP.locale.pick_date);
+            $(input).val(APP.locale.pick_datetime);
         }
 
-        $(input).datepicker();
-    });
-
-    // Time Picker Init {{{3
-    $('.time, .datetime').each(function(i, el) {
-        var input = document.createElement('input');
-        var saveFunction = null;
-        if ($(el).attr('id') == "event_start_time_input")
-            $(input).bind('change', APP.syncStartEndTimes);
-
-        $(input).attr({'type': 'text', 'class': 'ui-time-text'});
-        $(el).find("select:last").after(input);
-        $(el).find("select:gt(2)").hide();
-
-        values = [];
-        $(el).find("select:gt(2)").each(function(i, el) {
-            var val = $(el).val();
-            if(val != '') values.push(val);
-        });
-        if( values.length > 1) {
-            $(input).val( values[0] + ":" + values[1] );
-        }
-        else
-        {
-            $(input).val(APP.locale.pick_time);
-        }
-
-        $(input).timepickr({
-            convention: 24,
-            select: function () {
-                $(this).trigger('change');
-            },
-            width: 260
+        $(input).datetimepicker({
+            stepMinute: 15,
+            minuteGrid: 15,
+            hourGrid: 4
         });
     });
-    // }}}3
 
     /**
      * Sets the date for each select with the date selected with datepicker
      */
     // Input change events {{{3
     $('input.ui-date-text').live('change', APP.saveDateValues);
-
-    $('input.ui-time-text').live('change', APP.saveTimeValues);
 
     // }}}3
 
