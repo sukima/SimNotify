@@ -26,7 +26,9 @@ module LayoutHelper
     ret = ""
     theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
       @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
-    ret += stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css"
+    # Make sure to change the default path for the themes in
+    # public/javascripts/application.js also.
+    ret += stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css", :class => "theme"
     ret += stylesheet_link_tag "jquery-ui-timepicker-addon"
     ret += stylesheet_link_tag "jquery.multiselect"
     return ret

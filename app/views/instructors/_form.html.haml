@@ -14,6 +14,10 @@
         = f.input :admin
       = f.input :is_tech
       = f.input :notify_recipient
+    #theme_sample.ui-state-default.ui-corner-all.ui-helper-clearfix{:style=>"display:none;"}
+      %span.ui-icon.ui-icon-info
+      Theme sample
+      %span.ui-icon.ui-icon-lightbulb
     = f.input :gui_theme, :as => :radio, :collection => APP_CONFIG[:gui_themes]
   - f.buttons do
     - if logged_in?

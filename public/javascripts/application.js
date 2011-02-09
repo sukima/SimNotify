@@ -16,7 +16,9 @@ jQuery.fn.submitWithAjax = function() {
 };
 
 // Application object {{{1
-var APP = {};
+var APP = { config: {
+    jquery_theme_path: "/stylesheets/themes/%s/jquery-ui-1.8.4.custom.css"
+}};
 
 // Locale text {{{2
 APP.locale = {
@@ -266,6 +268,15 @@ $(document).ready(function() {
     if ( $("#force_display_help").length > 0 ) {
         $("#nav_help_link").trigger('click');
     }
+
+    // Theme Viewer {{{2
+    // In future this could be the change event instead of click but currently
+    // were using radio boxes.
+    $("#instructor_gui_theme_input input").click(function () {
+        url = APP.config.jquery_theme_path.replace(/(^|[^%])%s/, "$1" + $(this).val());
+        $("link.theme").attr("href", url);
+        $("#theme_sample").show();
+    });
 
 }); // }}}1
 
