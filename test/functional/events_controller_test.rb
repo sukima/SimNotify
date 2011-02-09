@@ -73,8 +73,9 @@ class EventsControllerTest < ActionController::TestCase
           should assign_to(:event)
           should "cause an error" do
             errors = @controller.instance_variable_get("@event").errors
-            assert errors.include?(:technician)
-            should_have_translation(errors[:technician], :technician_assignment_denied)
+            assert errors.invalid?(:technician), "attribute :technician is valid"
+            assert_no_match(/^translation missing:/i, errors[:technician], "Missing translation")
+            assert_equal(I18n.translate(:technician_assignment_denied), errors[:technician])
           end
           should respond_with :success
           should render_template :new
@@ -134,13 +135,14 @@ class EventsControllerTest < ActionController::TestCase
           setup do
             @f.technician = Factory.create(:instructor)
             @old_count = Event.count
-            post :create, :event => @f.attributes
+            put :update, :id => @f.id, :event => @f.attributes
           end
           should assign_to(:event)
           should "cause an error" do
             errors = @controller.instance_variable_get("@event").errors
-            assert errors.include?(:technician)
-            should_have_translation(errors[:technician], :technician_assignment_denied)
+            assert errors.invalid?(:technician), "attribute :technician is valid"
+            assert_no_match(/^translation missing:/i, errors[:technician], "Missing translation")
+            assert_equal(I18n.translate(:technician_assignment_denied), errors[:technician])
           end
           should respond_with :success
           should render_template :edit

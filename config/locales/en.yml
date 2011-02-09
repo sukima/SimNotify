@@ -34,6 +34,7 @@ en:
   cannot_destroy_event: "You cannot delete a session after it has been submitted and/or approved. You must revoke it first."
   permission_denied: "You do not have permission to access that action."
   missing_parameters: "Missing key parameter information from the request. (Possible bug)"
+  technician_assignment_denied: "You do not have permission to assigna technician."
   formtastic:
     labels:
       instructor:

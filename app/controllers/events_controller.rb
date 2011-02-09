@@ -135,11 +135,12 @@ class EventsController < ApplicationController
 
   private
   def technician_assignment_allowed
-    if !@event.technician.blank? && !is_admin?
+    if params[:event][:technician_id].blank? || is_admin?
+      true
+    else
       @event.errors.add :technician, I18n.translate(:technician_assignment_denied)
       false
     end
-    true
   end
 
   def find_technicians
