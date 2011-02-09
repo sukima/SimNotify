@@ -16,3 +16,4 @@ public/images/logo.png
 vendor/gems
 vendor/rails
 .todo
+.bundle
