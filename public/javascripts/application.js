@@ -106,6 +106,13 @@ APP.initHelpTabs = function () {
 
 // Document Ready {{{1
 $(document).ready(function() {
+    // Flag Detection {{{2
+    if ( $("#NewUserFlag").length > 0 ) {
+        APP.config.new_user = true;
+    } else {
+        APP.config.new_user = false;
+    }
+
     // Reusable Resources {{{2
     var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
 
@@ -208,6 +215,10 @@ $(document).ready(function() {
 
     $(".button").button();
 
+    if (APP.config.new_user) {
+        $("#nav_help_link").button("option", "icons", {primary:'ui-icon-info'});
+    }
+
     // Notifications {{{2
     APP.initNotifications();
 
@@ -265,6 +276,7 @@ $(document).ready(function() {
         });
     });
 
+    // Deprecated in favor of #NewUserFlag
     if ( $("#force_display_help").length > 0 ) {
         $("#nav_help_link").trigger('click');
     }
