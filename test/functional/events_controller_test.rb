@@ -56,8 +56,9 @@ class EventsControllerTest < ActionController::TestCase
       context "POST :create" do
         context "" do
           setup do
+            @newevent = Factory.build(:event, :instructor => @instructor)
             @old_count = Event.count
-            post :create, :event => @f.attributes
+            post :create, :event => @newevent.attributes
           end
           should "increase count by 1" do
             assert Event.count - @old_count == 1
@@ -66,9 +67,10 @@ class EventsControllerTest < ActionController::TestCase
         end
         context "with assigned technician" do
           setup do
-            @f.technician = Factory.create(:instructor)
+            @newevent = Factory.build(:event, :instructor => @instructor)
+            @newevent.technician = Factory.create(:instructor)
             @old_count = Event.count
-            post :create, :event => @f.attributes
+            post :create, :event => @newevent.attributes
           end
           should assign_to(:event)
           should "cause an error" do
