@@ -49,7 +49,7 @@
           | Design by
           %a{:href => "http://nicolas.freezee.org", :target => "_BLANK"} Nicolas Fafchamps
     / Design Created By Nicolas Fafchamps (2006) - Public domain
-    -# if @current_instructor.new_user?
-    #NewUserFlag{:style=>'display:none;'}
+    - if @current_instructor.new_user?
+      #NewUserFlag{:style=>'display:none;'}
     - if force_display_help? # Deprecated in favor of #NewUserFlag
       #force_display_help{:style=>'display: none;'}
