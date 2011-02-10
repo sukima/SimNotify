@@ -17,6 +17,7 @@ jQuery.fn.submitWithAjax = function() {
 
 // Application object {{{1
 var APP = { config: {
+    debug: true,
     jquery_theme_path: "/stylesheets/themes/%s/jquery-ui-1.8.4.custom.css"
 }};
 
@@ -24,6 +25,22 @@ var APP = { config: {
 APP.locale = {
     pick_datetime: "Pick a date and time..."
 };
+
+// Function: log() {{{2
+// APP.log = function (msg) {
+    // var alert_needed = true;
+    // var str = msg;
+    // if (!typeof msg === String) srt = msg.toString();
+    // if (console && console.log) {
+        // console.log(msg);
+        // alert_needed = false;
+    // }
+    // if ( $("#general_debug_info").length > 0 ) {
+        // $("#general_debug_info").append(str);
+        // alert_needed = false;
+    // }
+    // if (alert_needed) alert(str);
+// };
 
 // Function: getTimeValues() {{{2
 APP.getTimeValues = function(dateTimeStr) {
@@ -34,6 +51,9 @@ APP.getTimeValues = function(dateTimeStr) {
 // Function: getDateValues() {{{2
 APP.getDateValues = function(dateTimeStr) {
     var d = dateTimeStr.replace(/\s+.*$/, '').split("/");
+    // the month and day are not 0 padded unlike the rest of the select values.
+    d[0] = d[0].replace(/^0+/, '');
+    d[1] = d[1].replace(/^0+/, '');
     return { month: d[0], day: d[1], year: d[2] };
 };
 
@@ -109,6 +129,7 @@ $(document).ready(function() {
     // Flag Detection {{{2
     if ( $("#NewUserFlag").length > 0 ) {
         APP.config.new_user = true;
+        if (APP.config.debug) $("NewUserFlag").append("NewUserFlag set").show();
     } else {
         APP.config.new_user = false;
     }
@@ -163,7 +184,7 @@ $(document).ready(function() {
         $(input).attr({'type': 'text', 'class': 'ui-date-text'});
         // Insert the input:text before the first select
         $(el).find("select:first").before(input);
-        $(el).find("select:lt(5)").hide();
+        if (!APP.config.debug) $(el).find("select:lt(5)").hide();
         // Set the input with the value of the selects
         var values = [ ];
         $(el).find("select:lt(5)").each(function(i, el) {
