@@ -1,5 +1,6 @@
 class Instructor < ActiveRecord::Base
   has_many :events
+  belongs_to :facility
   acts_as_authentic
 
   validates_presence_of :name

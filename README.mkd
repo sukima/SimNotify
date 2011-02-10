@@ -46,13 +46,14 @@ Data Model
     |   ,---------------------.                       |
     `->>| instructor          |<--.-. ,------------.  |
         |---------------------|   | | | event      |<-'
-        | name                |   | | |------------|
-        | email               |   | | | title      |
-        | office              |   | `-| technician |
-        | phone               |   |   | location   |..........
-        | admin?              |   |   | benefit    |         .
-        | notify_recipient?   |   |   | notes      |         .
-        | new_user?           |   |   | start_time |         .
+        | name                |   | | |------------|              ,------------.
+        | email               |   | | | title      |           ,->| facilities |
+        | office              |   | `-| technician |           |  |------------|
+        | phone               |   |   | location   |.......... |  | name       |
+        | admin?              |   |   | benefit    |         . |  `------------'
+        | notify_recipient?   |   |   | facility   |---------.-+
+        | new_user?           |   |   | notes      |         . |
+        | facility            |---|---) start_time )---------.-'
         | (acts_as_authentic) |   |   | end_time   |         .
         `---------------------'   |   | live_in?   |         .
                                   `---| instructor |         .
