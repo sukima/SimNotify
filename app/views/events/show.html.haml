@@ -5,6 +5,10 @@
   %p.notification This event has been approved.
 %h2
   Session: #{h @event.title}
+- if !@event.facility.nil?
+  %p
+    %strong Facility:
+    =h @event.facility.name
 %p
   %strong Location:
   = h @event.location
