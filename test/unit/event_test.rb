@@ -3,6 +3,7 @@ require 'test_helper'
 class EventTest < ActiveSupport::TestCase
   should belong_to :instructor
   should belong_to :technician
+  should belong_to :facility
   should have_and_belong_to_many :instructors
   should have_many :scenarios
 

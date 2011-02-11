@@ -24,6 +24,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :instructors, :collection => { :emails => [ :get ] },
     :member => { :delete => :get }
+
+  map.resources :facilities, :except => :show, :member => { :delete => :get }
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

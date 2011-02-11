@@ -4,6 +4,10 @@
 %p
   %strong Email:
   = mail_to @instructor.email
+- if !@instructor.facility.nil?
+  %p
+    %strong Facility:
+    =h @instructor.facility.name
 %p
   %strong Office:
   =h @instructor.office

@@ -28,6 +28,9 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.instructor = @current_instructor
+    if !@current_instructor.facility.nil?
+      @event.facility = @current_instructor.facility
+    end
   end
 
   def create

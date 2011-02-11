@@ -1,6 +1,4 @@
 - title "Edit Manikin"
-- if @current_instructor.admin?
-  - add_nav_link "View All manikins", manikins_path
 = render :partial => 'form'
 %p
   = link_to_confirm "Cancel", @manikin
