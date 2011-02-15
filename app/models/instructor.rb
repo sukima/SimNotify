@@ -1,5 +1,6 @@
 class Instructor < ActiveRecord::Base
   has_many :events
+  has_many :assets
   belongs_to :facility
   acts_as_authentic
 
