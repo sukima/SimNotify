@@ -4,6 +4,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :manikins, :member => { :delete => :get }
 
   map.resources :scenarios, :member => { :delete => :get }
+
+  # shallow nested resource trick found from:
+  # http://weblog.jamisbuck.org/2007/2/5/nesting-resources
   map.resources :events, :has_many => :scenarios,
   :collection => {
     :approve_all => :put
@@ -13,7 +16,11 @@ ActionController::Routing::Routes.draw do |map|
     :submit => :get,
     :revoke => :get,
     :approve => :put
-  }
+  } do |assets|
+    assets.resources :assets, :name_prefix => "event_"
+  end
+
+  map.resources :assets
 
   map.resources :special_events, :member => { :delete => :get }
 

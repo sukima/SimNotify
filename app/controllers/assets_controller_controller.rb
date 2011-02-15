@@ -1,2 +1,0 @@
-class AssetsControllerController < ApplicationController
-end
