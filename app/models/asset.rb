@@ -1,6 +1,7 @@
 class Asset < ActiveRecord::Base
   has_attached_file :session_asset, :styles => { :thumb => "64x64#" }
   belongs_to :instructor
+  has_and_belongs_to_many :events
 
   # Prevent processing for non-image files.
   # Referenced from blog post:

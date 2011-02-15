@@ -37,6 +37,7 @@ Phase 2
 
 Data Model
 ==========
+<<<<<<< HEAD
                     ,------------------.
                     | event_instructor |
                     |------------------|
@@ -85,6 +86,55 @@ Data Model
     |   | mobile?           |    |    | oos?             |       |
     |   | manikin           |    `--->| manikin_req_type |       |
     |   `-------------------'         `------------------'       |
+=======
+                    ,--------------------.
+                    | events_instructors |
+                    |--------------------|
+                    | event_id           |------------.
+    ,---------------| instructor_id      |            |
+    |               `--------------------'            |  ,---------------.
+    |   ,---------------------.       ,------------.  |  | assets_events |
+    +-->| instructors         |<--.-. | events     |<-'  |---------------|
+    |   |---------------------|   | | |------------|<<---| event_id      |
+    |   | name                |   | | | title      |   ,-| asset_id      |
+    |   | email               |   | | |            |   | `---------------'
+    |   | office              |   | `-| technician |   |
+    |   | phone               |   |   | location   |.. `---------.
+    |   | admin?              |   |   | benefit    | .           |
+    |   | notify_recipient?   |   |   | notes      | .           |
+    |   | new_user?           |   |   | start_time | .           |
+    |   | (acts_as_authentic) |   |   | end_time   | .           |
+    |   `---------------------'   |   | live_in?   | .           |
+    |   ,---------------------.   `---| instructor | .           |
+    | ..| scenarios           |<<-----| scenarios  | .           |
+    | . |---------------------|       | submitted? | .           |
+    | . | equipment           |.....  | approved?  | ..........  |
+    | . | staff_support?      |    .  `------------'          .  |
+    | . | moulage?            |    . ,----------------------. .  |
+    | . | notes               |    . | location_suggestions |..  |
+    | . | support_material    |    . |----------------------|    |
+    | . | description         |    . | location             |    |
+    | . | video?              |    . `----------------------'    |
+    | . | mobile?             |    . ,-----------------------.   |
+    | . | manikin_req_type    |<-. ..| equipment_suggestions |   |
+    | . | manikin             |<.|   |-----------------------|   |
+    | . `---------------------' ||   | name                  |   |
+    | .                         ||   `-----------------------'   |
+    | . ,--------------------.  ||    ,-------------------.      |
+    | ..| scenario_templates |  |+----| manikin_req_types |      |
+    |   |--------------------|  ||    |-------------------|      |
+    |   | title              |  ||    | type              |      |
+    |   | equipment          |  ||    `-------------------'      |
+    |   | staff_support?     |  ||    ,------------------.       |
+    |   | moulage?           |  `|----| manikins         |       |
+    |   | notes              |   |    |------------------|       |
+    |   | support_material   |   |    | name             |       |
+    |   | description        |   |    | serial_number    |       |
+    |   | video?             |   |    | type             |       |
+    |   | mobile?            |   |    | oos?             |       |
+    |   | manikin            |   `--->| manikin_req_type |       |
+    |   `--------------------'        `------------------'       |
+>>>>>>> Adds assets_events habtm relationship
     |                           ,----------------------------.   |
     |                           | assets                     |<<-'
     |                           |----------------------------|

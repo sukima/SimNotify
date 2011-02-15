@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :instructor
   has_and_belongs_to_many :instructors
+  has_and_belongs_to_many :assets
   has_many :scenarios
   belongs_to :technician, :class_name => "Instructor"
   belongs_to :facility
