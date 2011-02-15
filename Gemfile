@@ -2,14 +2,13 @@ source :gemcutter
 gem "rails", "2.3.5"
 gem "mysql"
 
+# bundler requires these gems in all environments
 gem "haml", "~> 3.0.18"
 gem "authlogic", "~> 2.1.6"
 gem "formtastic", "~> 1.1.0"
 gem "validation_reflection", "~> 0.3.8"
 gem "maruku", "~> 0.6.0"
-# bundler requires these gems in all environments
-# gem "nokogiri", "1.4.2"
-# gem "geokit"
+gem "paperclip"
 
 group :development do
   # bundler requires these gems in development
