@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class AssetTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
-  end
+  should belong_to :instructor
+  should have_and_belong_to_many :events
 end

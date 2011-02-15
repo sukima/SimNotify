@@ -7,6 +7,7 @@ class InstructorTest < ActiveSupport::TestCase
   should_have_authlogic
 
   should have_many(:events)
+  should have_many :assets
   should belong_to :facility
 
   should validate_presence_of(:name)

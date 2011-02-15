@@ -5,6 +5,7 @@ class EventTest < ActiveSupport::TestCase
   should belong_to :technician
   should belong_to :facility
   should have_and_belong_to_many :instructors
+  should have_and_belong_to_many :assets
   should have_many :scenarios
 
   should validate_presence_of :title
