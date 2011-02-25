@@ -35,6 +35,7 @@ en:
   permission_denied: "You do not have permission to access that action."
   missing_parameters: "Missing key parameter information from the request. (Possible bug)"
   technician_assignment_denied: "You do not have permission to assigna technician."
+  no_scenarios_attached: "You must attach a scenario to this event before it can be submitted."
   formtastic:
     labels:
       instructor:

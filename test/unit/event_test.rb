@@ -41,6 +41,17 @@ class EventTest < ActiveSupport::TestCase
     end
   end
 
+  context "check_submit_ok" do
+    setup do
+      assert @event = Factory(:event)
+      @event.submit_note = "Test note"
+    end
+    should "prevent submition if no scenarios are associated" do
+      assert !@event.save
+      assert_bad_value @event, :submit_note, I18n.translate(:no_scenarios_attached)
+    end
+  end
+
   context "class find method" do
     context "self.submitted" do
       setup { assert @submitted = Factory(:submitted) }

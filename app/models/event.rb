@@ -11,15 +11,13 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :title, :location, :benefit, :start_time, :end_time
 
-  validate :no_reverse_time_travel
-
-  before_update :check_change_status
+  validate :no_reverse_time_travel, :check_change_status, :check_submit_ok
 
   protected
   # Prevent start and end time from changing if the sim has already been submitted
   def check_change_status
     ret_val = true
-    if submitted?
+    if !new_record? && submitted?
       if start_time_changed?
         errors.add :start_time, I18n.translate(:event_frozen)
         ret_val = false
@@ -30,6 +28,15 @@ class Event < ActiveRecord::Base
       end
     end
     return ret_val
+  end
+
+  def check_submit_ok
+    if !new_record? && !submit_note.blank? && scenarios.empty? && assets.empty?
+      errors.add :submit_note, I18n.translate(:no_scenarios_attached)
+      false
+    else
+      true
+    end
   end
 
   public
