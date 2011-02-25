@@ -16,11 +16,11 @@ ActionController::Routing::Routes.draw do |map|
     :submit => :get,
     :revoke => :get,
     :approve => :put
-  } do |assets|
-    assets.resources :assets, :name_prefix => "event_"
+  } do |m|
+    m.resources :assets, :name_prefix => "event_"
   end
 
-  map.resources :assets
+  map.resources :assets, :member => { :delete => :get }
 
   map.resources :special_events, :member => { :delete => :get }
 
