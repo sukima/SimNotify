@@ -3,7 +3,13 @@ class AssetsController < ApplicationController
   before_filter :find_event
 
   def index
-    @assets = Asset.all
+    if not @event.nil?
+      @assets = @event.assets
+    elsif is_admin?
+      @assets = Asset.all
+    else
+      @assets = Asset.find(:all, :conditions => {:instructor => @current_instructor})
+    end
 
     respond_to do |wants|
       wants.html # index.html.erb
@@ -23,6 +29,7 @@ class AssetsController < ApplicationController
   def new
     @asset = Asset.new
     assign_event
+    assign_instructor
 
     respond_to do |wants|
       wants.html # new.html.erb
@@ -33,11 +40,20 @@ class AssetsController < ApplicationController
   def create
     @asset = Asset.new(params[:asset])
     assign_event
+    assign_instructor
 
     respond_to do |wants|
       if @asset.save
         flash[:notice] = 'Asset was successfully uploaded.'
-        wants.html { redirect_to(@asset) }
+        wants.html do
+          if params[:commit] == I18n.translate("formtastic.actions.add_more_assets")
+            redirect_to new_event_asset_path(@event)
+          elsif params[:commit] == I18n.translate("formtastic.actions.finish_assets")
+            redirect_to root_url
+          else
+            redirect_to(@event)
+          end
+        end
         wants.xml  { render :xml => @asset, :status => :created, :location => @asset }
       else
         wants.html { render :action => "new" }
@@ -51,14 +67,18 @@ class AssetsController < ApplicationController
     @asset.destroy
 
     respond_to do |wants|
-      wants.html { redirect_to(assets_url) }
+      wants.html { redirect_to(event_assets_path) }
       wants.xml  { head :ok }
     end
   end
 
   private
   def assign_event
-    @asset.event = @event if !@event.blank?
+    @asset.events = [ @event ] if !@event.blank?
+  end
+
+  def assign_instructor
+    @asset.instructor = @current_instructor
   end
 
   def find_event

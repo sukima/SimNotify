@@ -17,10 +17,10 @@ ActionController::Routing::Routes.draw do |map|
     :revoke => :get,
     :approve => :put
   } do |m|
-    m.resources :assets, :name_prefix => "event_"
+    m.resources :assets, :name_prefix => "event_", :member => { :delete => :get }
   end
 
-  map.resources :assets, :member => { :delete => :get }
+  #map.resources :assets, :only => :index, :member => { :delete => :get }
 
   map.resources :special_events, :member => { :delete => :get }
 
