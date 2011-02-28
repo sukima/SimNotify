@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
   end
 
   def check_submit_ok
-    if !new_record? && !submit_note.blank? && scenarios.empty? && assets.empty?
+    if !new_record? && !submit_note.blank? && missing_scenario?
       errors.add :submit_note, I18n.translate(:no_scenarios_attached)
       false
     else
@@ -123,5 +123,9 @@ class Event < ActiveRecord::Base
     else
       return nil
     end
+  end
+
+  def missing_scenario?
+    assets.empty? && scenarios.empty?
   end
 end

@@ -96,4 +96,19 @@ class EventTest < ActiveSupport::TestCase
       assert @event.collective_has_needs
     end
   end
+
+  context "missing_scenario?" do
+    setup { assert @event = Factory(:event) }
+    should "return true when assets and scenarios are empty" do
+      assert @event.missing_scenario?
+    end
+    should "return false when assets assigned" do
+      @event.assets = [ Factory(:asset) ]
+      assert !@event.missing_scenario?
+    end
+    should "return false when scenario assigned" do
+      @event.scenarios = [ Factory(:scenario) ]
+      assert !@event.missing_scenario?
+    end
+  end
 end
