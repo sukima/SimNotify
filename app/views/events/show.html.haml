@@ -72,6 +72,20 @@
             %strong Support Needs:
             = scenario.flags_as_strings.to_sentence
   .box= link_to "Add a scenario", new_event_scenario_path(@event)
+#assets
+  %h3 Attached Files
+  - if @event.assets.empty?
+    .box No files attached.
+  - else
+    %ul
+      - @event.assets.each do |asset|
+        %li
+          %a{:href => asset.url}
+            -# if asset.image?
+              = image_tag asset.url(:thumb)
+            -# else
+              = image_tag asset.icon_url
+            %span #{asset.file_name}
 %p
   = link_to t(:edit), edit_event_path(@event)
   | #{link_to_confirm t(:destroy), delete_event_path(@event), :confirm => 'Are you sure?'}

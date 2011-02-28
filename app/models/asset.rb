@@ -13,4 +13,8 @@ class Asset < ActiveRecord::Base
   def image?
     !(session_asset_content_type =~ /^image.*/).nil?
   end
+
+  def icon_url
+    "/unknown.jpg"
+  end
 end
