@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(:version => 20110215195816) do
   end
 
   create_table "assets_events", :id => false, :force => true do |t|
-    t.integer "event_id"
     t.integer "asset_id"
+    t.integer "event_id"
   end
 
   create_table "equipment_suggestions", :force => true do |t|

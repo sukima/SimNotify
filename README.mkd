@@ -37,19 +37,18 @@ Phase 2
 
 Data Model
 ==========
-<<<<<<< HEAD
                     ,------------------.
                     | event_instructor |
                     |------------------|
                     | event_id         |--------------.
     ,---------------| instructor_id    |              |
     |               `------------------'              |
-    |   ,---------------------.                       |   ,-------------.
-    `->>| instructor          |<--.-. ,------------.  |   | event_asset |
-    ,-->|---------------------|   | | | event      |<-'   |-------------|
-    |   | name                |   | | |------------|<<----| event_id    |
-    |   | email               |   | | | title      |    .-| asset_id    |
-    |   | office              |   | `-| technician |    | `-------------'
+    |   ,---------------------.                       |   ,---------------.
+    `->>| instructor          |<--.-. ,------------.  |   | assets_events |
+    ,-->|---------------------|   | | | event      |<-'   |---------------|
+    |   | name                |   | | |------------|<<----| event_id      |
+    |   | email               |   | | | title      |    .-| asset_id      |
+    |   | office              |   | `-| technician |    | `---------------'
     |   | phone               |   |   | location   |..  |
     |   | admin?              |   |   | benefit    | .  |    ,------------.
     |   | notify_recipient?   |   |   | facility   |----|-+->| facilities |
