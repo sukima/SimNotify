@@ -37,6 +37,8 @@ en:
   technician_assignment_denied: "You do not have permission to assigna technician."
   no_scenarios_attached: "You must attach a scenario to this event before it can be submitted."
   formtastic:
+    titles:
+      previous_uploads: "Previous Uploads"
     labels:
       instructor:
         office: "Department"
@@ -84,3 +86,5 @@ en:
       sign_up: "Sign up"
       submit_event: "Submit"
       revoke_event: "Revoke"
+      add_more_assets: "Save and Add Another"
+      finish_assets: "Finish"
