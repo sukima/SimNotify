@@ -42,7 +42,7 @@ class EventsController < ApplicationController
         @current_instructor.save
       end
       flash[:notice] = "Successfully created event."
-      redirect_to @event
+      redirect_to new_event_asset_path(@event)
       return
     end
     render :action => 'new'

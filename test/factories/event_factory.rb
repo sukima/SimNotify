@@ -10,7 +10,7 @@ Factory.define :event do |e|
   e.title "event title"
   e.submitted false
   e.approved false
-  e.scenarios [ ] # FIXME: This isn't right
+  #e.scenarios [ ] # FIXME: This isn't right
   #e.association :scenarios, :factory => :scenario
 end
 

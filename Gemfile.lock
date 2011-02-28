@@ -27,6 +27,9 @@ GEM
     mocha (0.9.11)
       rake
     mysql (2.8.1)
+    paperclip (2.3.8)
+      activerecord
+      activesupport
     rack (1.0.1)
     rails (2.3.5)
       actionmailer (= 2.3.5)
@@ -58,6 +61,7 @@ DEPENDENCIES
   maruku (~> 0.6.0)
   mocha (~> 0.9.8)
   mysql
+  paperclip (~> 2.3)
   rails (= 2.3.5)
   rails-footnotes
   ruby-debug

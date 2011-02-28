@@ -5,6 +5,7 @@ class EventTest < ActiveSupport::TestCase
   should belong_to :technician
   should belong_to :facility
   should have_and_belong_to_many :instructors
+  should have_and_belong_to_many :assets
   should have_many :scenarios
 
   should validate_presence_of :title
@@ -37,6 +38,17 @@ class EventTest < ActiveSupport::TestCase
       assert !@event.save
       assert_bad_value @event, :start_time, I18n.translate(:event_frozen)
       assert_bad_value @event, :end_time, I18n.translate(:event_frozen)
+    end
+  end
+
+  context "check_submit_ok" do
+    setup do
+      assert @event = Factory(:event)
+      @event.submit_note = "Test note"
+    end
+    should "prevent submition if no scenarios are associated" do
+      assert !@event.save
+      assert_bad_value @event, :submit_note, I18n.translate(:no_scenarios_attached)
     end
   end
 
@@ -82,6 +94,21 @@ class EventTest < ActiveSupport::TestCase
       @scenario = Factory(:scenario_no_needs, :mobile => true)
       @event.scenarios = [ @scenario ]
       assert @event.collective_has_needs
+    end
+  end
+
+  context "missing_scenario?" do
+    setup { assert @event = Factory(:event) }
+    should "return true when assets and scenarios are empty" do
+      assert @event.missing_scenario?
+    end
+    should "return false when assets assigned" do
+      @event.assets = [ Factory(:asset) ]
+      assert !@event.missing_scenario?
+    end
+    should "return false when scenario assigned" do
+      @event.scenarios = [ Factory(:scenario) ]
+      assert !@event.missing_scenario?
     end
   end
 end

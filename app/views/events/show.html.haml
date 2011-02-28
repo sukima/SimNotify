@@ -3,6 +3,8 @@
   %p.notification This event has been submitted and is pending approval.
 - if @event.approved?
   %p.notification This event has been approved.
+- if @event.priority_request?
+  %p.warning WARNING: Session is only #{distance_of_time_in_words_to_now(@event.start_time)} from now!
 %h2
   Session: #{h @event.title}
 - if !@event.facility.nil?
@@ -21,8 +23,6 @@
 %p
   %strong Start Time:
   = dt @event.start_time
-- if @event.priority_request?
-  %p.warning WARNING: Session is only #{distance_of_time_in_words_to_now(@event.start_time)} from now!
 %p
   %strong End Time:
   = dt @event.end_time
@@ -50,6 +50,7 @@
   = dt @event.updated_at
 #scenarios
   %h3 Scenarios
+  .box= link_to "Add a scenario", new_event_scenario_path(@event)
   - if @event.scenarios.empty?
     .box No scenarios defined yet!
   - else
@@ -71,7 +72,24 @@
           %p.flags-list
             %strong Support Needs:
             = scenario.flags_as_strings.to_sentence
-  .box= link_to "Add a scenario", new_event_scenario_path(@event)
+#assets
+  %h3 Attached Files
+  .box= link_to "Attach a file", new_event_asset_path(@event)
+  - if @event.assets.empty?
+    .box No files attached.
+  - else
+    %ul.hlist
+      - @event.assets.each do |asset|
+        %li
+          %div.icon-item
+            %a{:href => asset.session_asset.url}
+              = asset_image_tag(asset)
+              %div
+                = asset.session_asset_file_name
+            = link_icon_to "trash", t(:destroy),
+              delete_event_asset_path(@event, asset),
+              :confirm => t(:destroy_item_confirm, :item => asset.session_asset_file_name)
+.clear
 %p
   = link_to t(:edit), edit_event_path(@event)
   | #{link_to_confirm t(:destroy), delete_event_path(@event), :confirm => 'Are you sure?'}
