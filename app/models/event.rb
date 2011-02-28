@@ -126,6 +126,12 @@ class Event < ActiveRecord::Base
   end
 
   def missing_scenario?
-    assets.empty? && scenarios.empty?
+    has_document = false
+    assets.each do |a|
+      if not a.image?
+        has_document = true
+      end
+    end
+    !has_document && scenarios.empty?
   end
 end
