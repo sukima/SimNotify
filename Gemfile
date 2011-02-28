@@ -8,7 +8,7 @@ gem "authlogic", "~> 2.1.6"
 gem "formtastic", "~> 1.1.0"
 gem "validation_reflection", "~> 0.3.8"
 gem "maruku", "~> 0.6.0"
-gem "paperclip"
+gem "paperclip", "~> 2.3"
 
 group :development do
   # bundler requires these gems in development

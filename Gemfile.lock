@@ -61,7 +61,7 @@ DEPENDENCIES
   maruku (~> 0.6.0)
   mocha (~> 0.9.8)
   mysql
-  paperclip
+  paperclip (~> 2.3)
   rails (= 2.3.5)
   rails-footnotes
   ruby-debug
