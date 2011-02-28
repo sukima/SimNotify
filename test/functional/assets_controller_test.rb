@@ -108,7 +108,7 @@ class AssetsControllerTest < ActionController::TestCase
       should "decrease count by 1" do
         assert Asset.count - @old_count == -1
       end
-      should redirect_to(":index") { event_assets_path(@e) }
+      should redirect_to(":index") { event_path(@e) }
     end
   end
 end

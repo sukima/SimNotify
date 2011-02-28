@@ -69,7 +69,7 @@ class AssetsController < ApplicationController
     @asset.destroy
 
     respond_to do |wants|
-      wants.html { redirect_to(event_assets_path) }
+      wants.html { redirect_to(event_path(@event)) }
       wants.xml  { head :ok }
     end
   end
