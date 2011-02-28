@@ -1,13 +1,18 @@
 - title "Add Assets"
 %h2 Add A Scenario
 %p Please upload one or more assets including a scenario outline.
-- if not @current_instructor.assets.empty?
-  - semantic_form_for @event do |f|
-    - f.inputs :previous_uploads do
-      = f.input :asset, :as => :select, :collection => @current_instructor.assets
+-# - if not @current_instructor.assets.empty?
+  -# - semantic_form_for @event do |f|
+    -# - f.inputs :previous_uploads do
+      -# = f.input :assets,
+        -# :label => :previous_asset,
+        -# :as => :select,
+        -# :collection => @current_instructor.assets.map { |a| [a.session_asset_file_name, a.id] }
+    -# - f.buttons do
+      -# = f.commit_button :use_selected_file
 - semantic_form_for [@event, @asset], :html => { :enctype => "multipart/form-data" } do |f|
   = f.semantic_errors
-  - f.inputs do
+  - f.inputs :choose_file do
     = f.input :session_asset, :as => :file
   - f.buttons do
     = f.commit_button :add_more_assets
