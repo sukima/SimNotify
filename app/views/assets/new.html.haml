@@ -1,0 +1,18 @@
+- title "Add Assets"
+%h2 Add A Scenario
+%p Please upload one or more assets including a scenario outline.
+- if not @current_instructor.assets.empty?
+  - semantic_form_for @event do |f|
+    - f.inputs :previous_uploads do
+      = f.input :asset, :as => :select, :collection => @current_instructor.assets
+- semantic_form_for [@event, @asset], :html => { :enctype => "multipart/form-data" } do |f|
+  = f.semantic_errors
+  - f.inputs do
+    = f.input :session_asset, :as => :file
+  - f.buttons do
+    = f.commit_button :add_more_assets
+    = f.commit_button :finish_assets
+%p
+  = link_to_home "Cancle"
+  - if is_admin?
+    | #{link_to_confirm "View All assets", assets_path}
