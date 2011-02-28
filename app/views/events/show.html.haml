@@ -50,6 +50,7 @@
   = dt @event.updated_at
 #scenarios
   %h3 Scenarios
+  .box= link_to "Add a scenario", new_event_scenario_path(@event)
   - if @event.scenarios.empty?
     .box No scenarios defined yet!
   - else
@@ -71,22 +72,20 @@
           %p.flags-list
             %strong Support Needs:
             = scenario.flags_as_strings.to_sentence
-  .box= link_to "Add a scenario", new_event_scenario_path(@event)
 #assets
   %h3 Attached Files
+  .box= link_to "Attach a file", new_event_asset_path(@event)
   - if @event.assets.empty?
     .box No files attached.
   - else
-    %ul
+    %ul.hlist
       - @event.assets.each do |asset|
         %li
           %a{:href => asset.session_asset.url}
-            -# if asset.image?
-              = image_tag asset.url(:thumb)
-            -# else
-              = image_tag asset.icon_url
-            %span #{asset.session_asset_file_name}
-  .box= link_to "Attach a file", new_event_asset_path(@event)
+            = asset_image_tag(asset)
+            %div
+              = asset.session_asset_file_name
+.clear
 %p
   = link_to t(:edit), edit_event_path(@event)
   | #{link_to_confirm t(:destroy), delete_event_path(@event), :confirm => 'Are you sure?'}

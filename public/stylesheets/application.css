@@ -134,3 +134,27 @@ tr.approved td {
 #event_legend .ui-widget-content {
   padding: 0 0.5em 0.5em;
 }
+
+#assets {
+  width: 100%;
+}
+
+#assets ul.hlist {
+  list-style-type: none;
+  text-align: center;
+}
+
+#assets ul.hlist li {
+  display: inline;
+  float: left;
+}
+
+#assets ul.hlist li img {
+  text-align: center;
+  border: none;
+}
+
+#assets ul.hlist li a {
+  display: block;
+  padding: 10px;
+}

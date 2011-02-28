@@ -38,7 +38,9 @@ en:
   no_scenarios_attached: "You must attach a scenario to this event before it can be submitted."
   formtastic:
     titles:
-      previous_uploads: "Previous Uploads"
+      previous_uploads: "Pick a previous upload"
+      # choose_file: "Or upload a new file"
+      choose_file: "Upload a new file"
     labels:
       instructor:
         office: "Department"
@@ -53,6 +55,8 @@ en:
         live_in: "Extended stay"
         submit_note: "Additional notes"
         revoke_note: "Reason for revoking session"
+        assets: "Attached files"
+        previous_asset: "Previously used assets"
       scenario:
         mobile: "Needs mobile cart"
         staff_support: "Needs staff support"
@@ -88,3 +92,4 @@ en:
       revoke_event: "Revoke"
       add_more_assets: "Save and Add Another"
       finish_assets: "Finish"
+      use_selected_file: "Attach selected file"
