@@ -9,6 +9,10 @@ gem "validation_reflection", "~> 0.3.8"
 gem "maruku", "~> 0.6.0"
 gem "paperclip", "~> 2.3"
 
+group :native do
+  gem "mysql"
+end
+
 group :development do
   # bundler requires these gems in development
   gem "rails-footnotes"
