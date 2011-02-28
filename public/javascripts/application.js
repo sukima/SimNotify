@@ -17,7 +17,7 @@ jQuery.fn.submitWithAjax = function() {
 
 // Application object {{{1
 var APP = { config: {
-    debug: true,
+    debug: false,
     jquery_theme_path: "/stylesheets/themes/%s/jquery-ui-1.8.4.custom.css"
 }};
 
