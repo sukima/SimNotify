@@ -154,7 +154,11 @@ tr.approved td {
   border: none;
 }
 
-#assets ul.hlist li a {
+#assets ul.hlist li div.icon-item {
   display: block;
   padding: 10px;
 }
+
+/* #assets ul.hlist li a.delete { */
+  /* display: inline; */
+/* } */
