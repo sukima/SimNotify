@@ -63,7 +63,7 @@ class EventsControllerTest < ActionController::TestCase
           should "increase count by 1" do
             assert Event.count - @old_count == 1
           end
-          should redirect_to(":show") { event_path(Event.last) }
+          should redirect_to(":new asset") { new_event_asset_path(Event.last) }
         end
         context "with assigned technician" do
           setup do
@@ -152,6 +152,7 @@ class EventsControllerTest < ActionController::TestCase
 
         context "with submit_note" do
           setup do
+            @f.assets = [ Factory(:asset) ]
             put :update, :id => @f.id, :event => { :submit_note => "test submit note" }
           end
           should set_the_flash.to(/submitted/)

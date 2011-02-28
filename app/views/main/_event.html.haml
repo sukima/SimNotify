@@ -1,7 +1,8 @@
 %li
   - if !event.approved? && event.priority_request?
-    %span.priority
-      PRIORITY!
+    %span.priority PRIORITY!
+  - if !event.approved? && event.missing_scenario?
+    %span.priority No scenario assigned and no files uploaded!
   = link_to event.title, event
   \-
   - if event.live_in?
