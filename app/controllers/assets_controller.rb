@@ -3,13 +3,14 @@ class AssetsController < ApplicationController
   before_filter :find_event
 
   def index
-    if not @event.nil?
+    # TODO: Allow selecting assets from list of past uploads.
+    # if not @event.nil?
       @assets = @event.assets
-    elsif is_admin?
-      @assets = Asset.all
-    else
-      @assets = Asset.find(:all, :conditions => {:instructor => @current_instructor})
-    end
+    # elsif is_admin?
+      # @assets = Asset.all
+    # else
+      # @assets = Asset.find(:all, :conditions => {:instructor => @current_instructor})
+    # end
 
     respond_to do |wants|
       wants.html # index.html.erb
@@ -56,7 +57,8 @@ class AssetsController < ApplicationController
         end
         wants.xml  { render :xml => @asset, :status => :created, :location => @asset }
       else
-        wants.html { render :action => "new" }
+        flash[:error] = 'There was a problem processing your file. Please try again.'
+        wants.html { redirect_to new_event_asset_path(@event) }
         wants.xml  { render :xml => @asset.errors, :status => :unprocessable_entity }
       end
     end
