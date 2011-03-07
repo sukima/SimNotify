@@ -18,7 +18,7 @@ jQuery.fn.submitWithAjax = function() {
 // Application object {{{1
 var APP = { config: {
     debug: false,
-    jquery_theme_path: "/stylesheets/themes/%s/jquery-ui-1.8.4.custom.css"
+    jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
 }};
 
 // Locale text {{{2
@@ -88,6 +88,9 @@ APP.syncStartEndDates = function () {
 
 // Function: initNotifications() {{{2
 APP.initNotifications = function (scope) {
+    if (jQuery.browser.msie)
+        return;
+
     scope = (scope === undefined) ? null : scope;
 
     $(".notification", scope).wrap("<div class=\"ui-widget\" />").
@@ -119,6 +122,18 @@ APP.initHelpTabs = function () {
         e.preventDefault();
         $("#help").tabs('select', $(this).attr('href'));
         return false;
+    });
+};
+
+// Function: initThemePicker() {{{2
+APP.initThemePicker = function () {
+    if (!jQuery.support.htmlSerialize)
+        return;
+
+    $("#instructor_gui_theme").change(function () {
+        url = APP.config.jquery_theme_path.replace(/(^|[^%])%s/, "$1" + $(this).val());
+        $("link.theme").attr("href", url);
+        $("#theme_sample").show();
     });
 };
 
@@ -303,13 +318,7 @@ $(document).ready(function() {
     }
 
     // Theme Viewer {{{2
-    // In future this could be the change event instead of click but currently
-    // were using radio boxes.
-    $("#instructor_gui_theme_input input").click(function () {
-        url = APP.config.jquery_theme_path.replace(/(^|[^%])%s/, "$1" + $(this).val());
-        $("link.theme").attr("href", url);
-        $("#theme_sample").show();
-    });
+    APP.initThemePicker();
 
 }); // }}}1
 
