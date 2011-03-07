@@ -162,3 +162,7 @@ tr.approved td {
 /* #assets ul.hlist li a.delete { */
   /* display: inline; */
 /* } */
+
+#theme_sample {
+  margin: 0px 0px 10px 0px;
+}

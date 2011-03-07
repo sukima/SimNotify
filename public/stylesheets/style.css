@@ -83,6 +83,7 @@ p {
 
 #content {
   float: left;
+  text-align: left;
   width: 535px;
   font-size: 0.9em;
   margin-right: 0px;
