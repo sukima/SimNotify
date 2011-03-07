@@ -9,6 +9,7 @@
 Instructor.create({
   :name             => "Administrator Admin",
   :email            => "admin@example.com",
+  :phone            => "555-555-5555",
   :admin            => true,
   :password         => "admin",
   :password_confirmation => "admin",
