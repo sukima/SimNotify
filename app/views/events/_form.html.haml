@@ -2,11 +2,14 @@
 - semantic_form_for @event do |f|
   - f.inputs do
     = f.input :title
+    = f.input :facility
     = f.input :location, :as => :autocomplete
     = f.input :benefit
     = f.input :notes
     = f.input :start_time
     = f.input :end_time
     = f.input :instructors, :as => :multiselect
+    - if is_admin?
+      = f.input :technician,  :as => :select,      :collection => @technicians
     = f.input :live_in
   = f.buttons

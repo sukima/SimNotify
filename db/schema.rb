@@ -9,7 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100918013425) do
+ActiveRecord::Schema.define(:version => 20110215195816) do
+
+  create_table "assets", :force => true do |t|
+    t.string   "session_asset_file_name"
+    t.string   "session_asset_content_type"
+    t.integer  "session_asset_file_size"
+    t.datetime "session_asset_updated_at"
+    t.integer  "instructor_id"
+  end
+
+  create_table "assets_events", :id => false, :force => true do |t|
+    t.integer "asset_id"
+    t.integer "event_id"
+  end
 
   create_table "equipment_suggestions", :force => true do |t|
     t.string "title"
@@ -29,11 +42,19 @@ ActiveRecord::Schema.define(:version => 20100918013425) do
     t.string   "title"
     t.boolean  "submitted",     :default => false
     t.boolean  "approved",      :default => false
+    t.integer  "technician_id"
+    t.integer  "facility_id"
   end
 
   create_table "events_instructors", :id => false, :force => true do |t|
     t.integer "event_id"
     t.integer "instructor_id"
+  end
+
+  create_table "facilities", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "instructors", :force => true do |t|
@@ -50,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20100918013425) do
     t.boolean  "notify_recipient",  :default => false
     t.string   "gui_theme"
     t.boolean  "new_user",          :default => true
+    t.boolean  "is_tech",           :default => false
+    t.integer  "facility_id"
   end
 
   create_table "location_suggestions", :force => true do |t|

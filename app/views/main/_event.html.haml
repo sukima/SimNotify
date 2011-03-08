@@ -1,7 +1,8 @@
 %li
   - if !event.approved? && event.priority_request?
-    %span.priority
-      PRIORITY!
+    %span.priority PRIORITY!
+  - if !event.approved? && event.missing_scenario?
+    %span.priority No scenario assigned and no files uploaded!
   = link_to event.title, event
   \-
   - if event.live_in?
@@ -11,7 +12,8 @@
     long
   \- #{h event.location}
   \- #{h event.start_time.to_s(:long)} (#{distance_of_time_in_words_to_now(event.start_time)} from now)
-  \- #{(event.scenarios.nil?) ? "(No scenarios)" : pluralize(event.scenarios.count, 'scenario')}
+  \- #{pluralize(event.scenarios.count, 'scenario')}
+  \- #{pluralize(event.assets.count, 'file')}
   - if !event.submitted? && !event.approved?
     %span.queue-list= link_to_event_submit t(:submit), event
   - elsif event.submitted? || event.approved?

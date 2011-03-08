@@ -4,19 +4,20 @@ class Event < ActiveRecord::Base
 
   belongs_to :instructor
   has_and_belongs_to_many :instructors
+  has_and_belongs_to_many :assets
   has_many :scenarios
+  belongs_to :technician, :class_name => "Instructor"
+  belongs_to :facility
 
   validates_presence_of :title, :location, :benefit, :start_time, :end_time
 
-  validate :no_reverse_time_travel
-
-  before_update :check_change_status
+  validate :no_reverse_time_travel, :check_change_status, :check_submit_ok
 
   protected
   # Prevent start and end time from changing if the sim has already been submitted
   def check_change_status
     ret_val = true
-    if submitted?
+    if !new_record? && submitted?
       if start_time_changed?
         errors.add :start_time, I18n.translate(:event_frozen)
         ret_val = false
@@ -27,6 +28,15 @@ class Event < ActiveRecord::Base
       end
     end
     return ret_val
+  end
+
+  def check_submit_ok
+    if !new_record? && !submit_note.blank? && missing_scenario?
+      errors.add :submit_note, I18n.translate(:no_scenarios_attached)
+      false
+    else
+      true
+    end
   end
 
   public
@@ -84,7 +94,7 @@ class Event < ActiveRecord::Base
 
   def collective_has_needs
     scenarios.each do |s|
-      if s.staff_support || s.moulage || s.video || mobile
+      if s.staff_support || s.moulage || s.video || s.mobile
         return true
       end
     end
@@ -113,5 +123,15 @@ class Event < ActiveRecord::Base
     else
       return nil
     end
+  end
+
+  def missing_scenario?
+    has_document = false
+    assets.each do |a|
+      if not a.image?
+        has_document = true
+      end
+    end
+    !has_document && scenarios.empty?
   end
 end

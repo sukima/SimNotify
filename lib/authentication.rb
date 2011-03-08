@@ -24,11 +24,13 @@ module Authentication
   end
   
   def current_instructor_session
+    # OPTIMIZE: @current_instructor_session ||= InstructorSession.find
     return @current_instructor_session if defined?(@current_instructor_session)
     @current_instructor_session = InstructorSession.find
   end
 
   def current_instructor
+    # OPTIMIZE: @current_instructor ||= current_instructor_session && current_instructor_session.record
     return @current_instructor if defined?(@current_instructor)
     @current_instructor = current_instructor_session && current_instructor_session.record
   end
@@ -43,7 +45,7 @@ module Authentication
   
   def login_required
     unless logged_in?
-      flash[:error] = "You must first log in or sign up before accessing this page."
+      flash[:error] = t(:login_required)
       store_target_location
       redirect_to login_url
     end
@@ -51,7 +53,7 @@ module Authentication
 
   def login_admin
     unless logged_in? && current_instructor.admin?
-      flash[:error] = "You must be an administrator to access that page"
+      flash[:error] = t(:admin_required)
       store_target_location
       redirect_to root_url
     end

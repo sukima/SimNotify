@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
   before_filter :login_required
+  before_filter :login_admin, :only => [ :approve, :approve_all ]
+  before_filter :find_technicians, :only => [:new, :edit]
 
   def index
     @listing_mod = params[:mod]
@@ -26,18 +28,21 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.instructor = @current_instructor
+    if !@current_instructor.facility.nil?
+      @event.facility = @current_instructor.facility
+    end
   end
 
   def create
     @event = Event.new(params[:event])
     @event.instructor = @current_instructor
-    if @event.save
+    if technician_assignment_allowed && @event.save
       if @current_instructor.new_user?
         @current_instructor.new_user = false
         @current_instructor.save
       end
       flash[:notice] = "Successfully created event."
-      redirect_to @event
+      redirect_to new_event_asset_path(@event)
       return
     end
     render :action => 'new'
@@ -79,7 +84,7 @@ class EventsController < ApplicationController
           end
           return
         end
-      elsif @event.update_attributes(params[:event])
+      elsif technician_assignment_allowed && @event.update_attributes(params[:event])
         flash[:notice] = "Successfully updated session"
         redirect_to @event
         return
@@ -112,26 +117,36 @@ class EventsController < ApplicationController
   end
 
   def approve
-    if !is_admin?
-      flash[:error] = "You do not have permission to do that"
-      redirect_to root_url
-      return
+    @event = Event.find(params[:id])
+    @event.approved = true
+    if @event.save
+      flash[:notice] = "Successfully approved event"
+      ApplicationMailer.deliver_approved_email(@event)
     end
-    if params[:id]
-      @event = Event.find(params[:id])
-      @event.approved = true
-      if @event.save
-        flash[:notice] = "Successfully approved event"
-        ApplicationMailer.deliver_approved_email(@event)
-      end
-      redirect_to @event
-      return
+    redirect_to @event
+  end
+
+  def approve_all
+    Event.update_all ["approved=?", true], :id => params[:event_ids]
+    params[:event_ids].each do |event_id|
+      the_event = Event.find(event_id)
+      ApplicationMailer.deliver_approved_email(the_event)
     end
-    if params[:event_ids]
-      Event.update_all ["approved=?", true], :id => params[:event_ids]
-      flash[:notice] = "Sessions have been approved"
-      redirect_to events_path
-      return
+    flash[:notice] = "Sessions have been approved"
+    redirect_to events_path
+  end
+
+  private
+  def technician_assignment_allowed
+    if params[:event][:technician_id].blank? || is_admin?
+      true
+    else
+      @event.errors.add :technician, I18n.translate(:technician_assignment_denied)
+      false
     end
+  end
+
+  def find_technicians
+    @technicians = Instructor.find(:all, :conditions => [ "is_tech = ?", true ]) if is_admin?
   end
 end

@@ -4,16 +4,23 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :manikins, :member => { :delete => :get }
 
   map.resources :scenarios, :member => { :delete => :get }
+
+  # shallow nested resource trick found from:
+  # http://weblog.jamisbuck.org/2007/2/5/nesting-resources
   map.resources :events, :has_many => :scenarios,
   :collection => {
-    :approve => :put
+    :approve_all => :put
   },
   :member => {
     :delete => :get,
     :submit => :get,
     :revoke => :get,
     :approve => :put
-  }
+  } do |m|
+    m.resources :assets, :name_prefix => "event_", :member => { :delete => :get }
+  end
+
+  #map.resources :assets, :only => :index, :member => { :delete => :get }
 
   map.resources :special_events, :member => { :delete => :get }
 
@@ -24,6 +31,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :instructors, :collection => { :emails => [ :get ] },
     :member => { :delete => :get }
+
+  map.resources :facilities, :except => :show, :member => { :delete => :get }
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

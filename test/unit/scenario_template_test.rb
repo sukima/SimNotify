@@ -1,8 +1,5 @@
 require 'test_helper'
 
 class ScenarioTemplateTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
-  end
+  should belong_to :manikin
 end

@@ -9,7 +9,7 @@
     %th Actions
   - for instructor in @instructors
     %tr
-      %td= h instructor.name
+      %td= link_to instructor.name, instructor
       %td= h instructor.office
       %td= h instructor.email
       %td= h instructor.phone

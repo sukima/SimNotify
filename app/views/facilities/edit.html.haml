@@ -1,0 +1,5 @@
+- title "Edit Facility"
+= render :partial => 'form'
+%p
+  = link_to_confirm "Cancel", @facility
+  | #{link_to_confirm "View All Facilities", facilities_path}

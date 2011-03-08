@@ -1,14 +1,22 @@
 class Instructor < ActiveRecord::Base
   has_many :events
+  has_many :assets
+  belongs_to :facility
   acts_as_authentic
 
-  validates_presence_of :name, :email
+  validates_presence_of :name
+  validates_presence_of :email
   validates_uniqueness_of :name
   validates_each :name do |record, attr, value|
-    hash = self.parse_name(value)
-    record.errors.add attr, 'must have a first and last name' if
-      ( hash[:first_name].nil? || hash[:last_name].nil? )
+    name_hash = self.parse_name(value)
+    if name_hash != false
+      record.errors.add attr, I18n.translate(:missing_first_last_names) if
+        ( name_hash[:first_name].nil? || name_hash[:last_name].nil? )
+    end
   end
+
+  validates_format_of :phone, :with => /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
+    :message => I18n.translate(:bad_phone_number)
 
   def name_hash
     Instructor.parse_name(name)
@@ -40,6 +48,9 @@ class Instructor < ActiveRecord::Base
       :first_name => (f = parts.shift),
       :middle_name => (m = parts.join(" "))
     }
+
+    #Covert to nill if empty string found
+    hash[:middle_name] = nil if hash[:middle_name].empty?
 
     #Reverse name if "," was used in Last, First notation.
     if hash[:first_name] =~ /,$/
