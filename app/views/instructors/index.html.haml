@@ -1,25 +1,27 @@
 - title "Instructors"
 %table
-  %tr
-    %th Name
-    %th Department
-    %th Email
-    %th Phone
-    %th Admin
-    %th Actions
-  - for instructor in @instructors
+  %thead
     %tr
-      %td= link_to instructor.name, instructor
-      %td= h instructor.office
-      %td= h instructor.email
-      %td= h instructor.phone
-      %td
-        - if instructor.admin?
-          %span.ui-icon.ui-icon-check Yes
-        - else
-          &nbsp;
-      %td
-        = link_icon_to "pencil", t(:edit), edit_instructor_path(instructor)
-        = link_icon_to "trash", t(:destroy), delete_instructor_path(instructor), :confirm => t(:destroy_confirm)
+      %th Name
+      %th Department
+      %th Email
+      %th Phone
+      %th Admin
+      %th Actions
+  %tbody
+    - for instructor in @instructors
+      %tr
+        %td= link_to instructor.name, instructor
+        %td= h instructor.office
+        %td= h instructor.email
+        %td= h instructor.phone
+        %td
+          - if instructor.admin?
+            %span.ui-icon.ui-icon-check Yes
+          - else
+            &nbsp;
+        %td
+          = link_icon_to "pencil", t(:edit), edit_instructor_path(instructor)
+          = link_icon_to "trash", t(:destroy), delete_instructor_path(instructor), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New instructor", new_instructor_path
 %p= link_to_confirm "Return", root_path

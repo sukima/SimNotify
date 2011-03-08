@@ -1,23 +1,25 @@
 - title "Manikins"
 %table
-  %tr
-    %th Name
-    %th Serial Number
-    %th Type
-    %th Out Of Service
-    %th Actions
-  - for manikin in @manikins
+  %thead
     %tr
-      %td= link_to_confirm h(manikin.name), manikin
-      %td= h manikin.serial_number
-      %td= h manikin.sim_type
-      %td
-        - if manikin.oos?
-          %span.ui-icon.ui-icon-close OOS
-        - else
-          &nbsp;
-      %td
-        = link_icon_to "pencil", t(:edit), edit_manikin_path(manikin)
-        = link_icon_to "trash", t(:destroy), delete_manikin_path(manikin), :confirm => t(:destroy_confirm)
+      %th Name
+      %th Serial Number
+      %th Type
+      %th Out Of Service
+      %th Actions
+  %tbody
+    - for manikin in @manikins
+      %tr
+        %td= link_to_confirm h(manikin.name), manikin
+        %td= h manikin.serial_number
+        %td= h manikin.sim_type
+        %td
+          - if manikin.oos?
+            %span.ui-icon.ui-icon-close OOS
+          - else
+            &nbsp;
+        %td
+          = link_icon_to "pencil", t(:edit), edit_manikin_path(manikin)
+          = link_icon_to "trash", t(:destroy), delete_manikin_path(manikin), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New Manikin", new_manikin_path
 %p= link_to_confirm "Return", root_path
