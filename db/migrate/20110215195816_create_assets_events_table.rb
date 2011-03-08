@@ -1,8 +1,8 @@
 class CreateAssetsEventsTable < ActiveRecord::Migration
   def self.up
     create_table :assets_events, :id => false do |t|
-      t.integer :event_id
-      t.integer :asset_id
+      t.references :asset
+      t.references :event
     end
   end
 

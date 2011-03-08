@@ -1,6 +1,5 @@
 source :gemcutter
 gem "rails", "2.3.5"
-gem "mysql"
 
 # bundler requires these gems in all environments
 gem "haml", "~> 3.0.18"
@@ -10,10 +9,14 @@ gem "validation_reflection", "~> 0.3.8"
 gem "maruku", "~> 0.6.0"
 gem "paperclip", "~> 2.3"
 
+group :native do
+  gem "mysql"
+end
+
 group :development do
   # bundler requires these gems in development
   gem "rails-footnotes"
-  gem "ruby-debug"
+  #gem "ruby-debug"
 end
 
 group :test do
