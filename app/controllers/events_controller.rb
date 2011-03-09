@@ -68,7 +68,11 @@ class EventsController < ApplicationController
           flash[:notice] = "Session has been submitted for approval. Thank you."
           redirect_to root_url
           return
+        else
+          render_flash_errors
+          redirect_to @event
         end
+        return
       elsif params[:event][:revoke_note]
         if @event.update_attributes({
             :revoke_note => params[:event][:revoke_note],
@@ -82,8 +86,11 @@ class EventsController < ApplicationController
           else
             redirect_to @event
           end
-          return
+        else
+          render_flash_errors
+          redirect_to @event
         end
+        return
       elsif technician_assignment_allowed && @event.update_attributes(params[:event])
         flash[:notice] = "Successfully updated session"
         redirect_to @event
@@ -148,5 +155,11 @@ class EventsController < ApplicationController
 
   def find_technicians
     @technicians = Instructor.find(:all, :conditions => [ "is_tech = ?", true ]) if is_admin?
+  end
+
+  def render_flash_errors
+    @event.errors.each do |attr, msg|
+      flash[:error] = msg
+    end
   end
 end
