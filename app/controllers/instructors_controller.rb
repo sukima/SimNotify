@@ -17,6 +17,7 @@ class InstructorsController < ApplicationController
 
   def new
     @instructor = Instructor.new
+    @instructor.gui_theme = "base"
     current_instructor
   end
   
