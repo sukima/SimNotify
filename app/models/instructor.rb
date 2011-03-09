@@ -15,7 +15,7 @@ class Instructor < ActiveRecord::Base
     end
   end
 
-  validates_format_of :phone, :with => /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
+  validates_format_of :phone, :with => /^$|^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
     :message => I18n.translate(:bad_phone_number)
 
   def name_hash
