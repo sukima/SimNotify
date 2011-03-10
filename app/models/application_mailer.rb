@@ -1,4 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
+  add_template_helper(LayoutHelper)
+
   def welcome_email(instructor)
     recipients  instructor.email
     from        APP_CONFIG[:system_email_address]
