@@ -1,4 +1,6 @@
 - title "Session"
+- if !@event.submitted? && !@event.approved?
+  %p.notification This event has not been submitted for approval yet.
 - if @event.submitted? && !@event.approved?
   %p.notification This event has been submitted and is pending approval.
 - if @event.approved?

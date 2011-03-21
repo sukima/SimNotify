@@ -19,3 +19,4 @@ class ApplicationController < ActionController::Base
     end
   end
 end
+# vim:set ft=ruby:

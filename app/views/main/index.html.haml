@@ -13,6 +13,8 @@
       = name[:prefix]
       = name[:first_name]
       \.
+- if @events_in_queue.count > 0
+  %p.notification #{pluralize @events_in_queue.count, 'session'} #{(@events_in_queue.count==1)?'has':'have'} not been submitted for approval yet.
 %h2 Sessions:
 .accordion
   .accordion-header

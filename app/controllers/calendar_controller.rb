@@ -3,9 +3,9 @@ class CalendarController < ApplicationController
 
   def index
     @is_calendar = true
-    respond_to do |format|
-      format.html
-    end
+    # respond_to do |format|
+      # format.html
+    # end
   end
 
   def events
@@ -15,7 +15,7 @@ class CalendarController < ApplicationController
     else
       start_time = Time.at(params[:start].to_i)
       end_time = Time.at(params[:end].to_i)
-      conditions = { :start_time => (start_time .. end_time), :submitted => true }
+      conditions = { :start_time => (start_time..end_time), :submitted => true }
 
       if (is_admin?)
         @events = Event.find(:all, :conditions => conditions)

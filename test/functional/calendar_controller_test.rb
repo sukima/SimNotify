@@ -18,7 +18,7 @@ class CalendarControllerTest < ActionController::TestCase
       should render_template :index
     end
 
-    context "get :event" do
+    context "get :events" do
       context "without params" do
         setup do
           get :events
