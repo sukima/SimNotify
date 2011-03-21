@@ -53,6 +53,13 @@
 }
 */
 
+.in-queue,
+.fc-agenda .in-queue .fc-event-time,
+.in-queue a {
+  background-color: red;
+  border-color: red;
+}
+
 .waiting-approval,
 .fc-agenda .waiting-approval .fc-event-time,
 .waiting-approval a {

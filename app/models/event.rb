@@ -116,7 +116,9 @@ class Event < ActiveRecord::Base
   end
 
   def status_as_class
-    if submitted? && !approved?
+    if !submitted? && !approved?
+      return "in-queue"
+    elsif submitted? && !approved?
       return "waiting-approval"
     elsif approved?
       return "approved"
