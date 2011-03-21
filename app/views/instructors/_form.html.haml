@@ -3,7 +3,8 @@
   - f.inputs do
     = f.input :name
     = f.input :email
-    = f.input :facility
+    - if Facility.count > 0
+      = f.input :facility
     = f.input :office
     = f.input :phone
     = f.input :password, :as => :password, :required => true
