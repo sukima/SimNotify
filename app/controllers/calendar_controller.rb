@@ -15,7 +15,7 @@ class CalendarController < ApplicationController
     else
       start_time = Time.at(params[:start].to_i)
       end_time = Time.at(params[:end].to_i)
-      conditions = { :start_time => (start_time..end_time), :submitted => true }
+      conditions = { :start_time => (start_time..end_time) }
 
       if (is_admin?)
         @events = Event.find(:all, :conditions => conditions)
@@ -45,7 +45,7 @@ class CalendarController < ApplicationController
   end
 
   private
-  def build_json_event(e, opt={ :eventMethod => event_path, :allDay => :live_in? })
+  def build_json_event(e, opt={ :eventMethod => :event_path, :allDay => :live_in? })
       json_event = {
         :title => e.title, # add submitted specials
         :start => e.start_time.to_i,
