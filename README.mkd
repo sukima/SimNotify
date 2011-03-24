@@ -56,21 +56,21 @@ Data Model
     |   | facility            |---------------'-| facility             | . |
     |   | (acts_as_authentic) |        ,--------| scenarios            | . |
     |   `---------------------'        |        | submitted?           | . |
-    |   ,---------------------.        |        | approved?            | . |
-    | ..| scenario            |<<------'        | followup_email_sent? | . |
-    | . |---------------------|                 `----------------------' . |
-    | . | equipment           |.....                         ............. |
-    | . | staff_support?      |    .                         .             `-----.
-    | . | moulage?            |    . ,---------------------. . ,---------------. |
-    | . | notes               |    . | location_suggestion |.. | assets_events | |
-    | . | support_material    |    . |---------------------|   |---------------| |
-    | . | description         |    . | location            |   | event_id      |-'
-    | . | video?              |    . `---------------------' ,-| asset_id      |
-    | . | mobile?             |    . ,-------------------.   | `---------------'
-    | . | manikin_req_type    |<-. ..| equipment_suggest |   `----.
-    | . | manikin             |<.|   |-------------------|        |
-    | . `---------------------' ||   | name              |        |
-    | .                         ||   `-------------------'        |
+    |   ,------------------.           |        | approved?            | . |
+    | ..| scenario         |<<---------'        | followup_email_sent? | . |
+    | . |------------------|                    `----------------------' . |
+    | . | equipment        |........                         ............. |
+    | . | staff_support?   |       .                         .             `-----.
+    | . | moulage?         |       . ,---------------------. . ,---------------. |
+    | . | notes            |       . | location_suggestion |.. | assets_events | |
+    | . | support_material |       . |---------------------|   |---------------| |
+    | . | description      |       . | location            |   | event_id      |-'
+    | . | video?           |       . `---------------------' ,-| asset_id      |
+    | . | mobile?          |       . ,-------------------.   | `---------------'
+    | . | manikin_req_type |<----. ..| equipment_suggest |   `----.
+    | . | manikin          |<---.|   |-------------------|        |
+    | . | title            |    ||   | name              |        |
+    | . `------------------'    ||   `-------------------'        |
     | . ,-------------------.   ||    ,------------------.        |
     | ..| scenario_template |   |+----| manikin_req_type |        |
     |   |-------------------|   ||    |------------------|        |
@@ -83,7 +83,7 @@ Data Model
     |   | description       |    |    | serial_number    |        |
     |   | video?            |    |    | type             |        |
     |   | mobile?           |    |    | oos?             |        |
-    |   | manikin           |    `--->| manikin_req_type |        |
+    |   | manikin_req_type  |<---'--->| manikin_req_type |        |
     |   `-------------------'         `------------------'        |
     |                           ,----------------------------.    |
     |                           | assets                     |<<--'

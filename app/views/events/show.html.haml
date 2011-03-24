@@ -65,7 +65,7 @@
         %p.scenario-title
           %span
             = (index+1).ordinalize
-            scenario: [#{link_to "Edit", edit_scenario_path(scenario)}]
+            scenario: #{link_to h(scenario.title), edit_scenario_path(scenario)}
         %p.scenario-description= h scenario.description
         - unless scenario.manikin.nil?
           %p

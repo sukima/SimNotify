@@ -3,6 +3,7 @@
 %table
   %thead
     %tr
+      %th Title
       %th Equipment
       %th Staff Support
       %th Moulage
@@ -17,6 +18,7 @@
   %tbody
     - for scenario in @scenarios
       %tr
+        %td= h scenario.title
         %td= h scenario.equipment
         %td= h scenario.staff_support
         %td= h scenario.moulage
