@@ -5,11 +5,26 @@
   %strong= h @event.title
 %p
   = session_description(@event)
-- semantic_form_for @event do |f|
-  - f.inputs do
-    = f.input :submit_note, :as => :text
-  - f.buttons do
-    = f.commit_button :submit_event
+- if @event.missing_scenario?
+  %p.notification No scenario information attached.
+  %p
+    It appears that this session does not have enough information. Please
+    complete at least <strong>one</strong> of the following to associate one or
+    more scenarios to this session:
+  %ul
+    %li
+      = link_to "Attach a scenario worksheet", new_event_asset_path(@event)
+    %li
+      = link_to "Add a scenario", new_event_scenario_path(@event)
+-else
+  - semantic_form_for @event do |f|
+    - f.inputs do
+      = f.input :submit_note, :as => :text
+    - f.buttons do
+      = f.commit_button :submit_event
 %p
   = link_to_home "Cancle"
-  | #{link_to_confirm "Edit", edit_event_path(@event)}
+  - if @event.missing_scenario?
+    | #{link_to "Edit", edit_event_path(@event)}
+  - else
+    | #{link_to_confirm "Edit", edit_event_path(@event)}
