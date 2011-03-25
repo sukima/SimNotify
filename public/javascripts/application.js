@@ -320,6 +320,17 @@ $(document).ready(function() {
     // Theme Viewer {{{2
     APP.initThemePicker();
 
+    // Submit Event Form {{{2
+    var no_scenario_link = $("#no-scenario-link");
+    if (no_scenario_link.length > 0) {
+        no_scenario_link.click(function (e) {
+            $(this).hide();
+            $("form.submit_note").show();
+        });
+
+        $("form.submit_note").hide();
+    }
+
 }); // }}}1
 
 // vim:set sw=4 ts=4 et fdm=marker:
