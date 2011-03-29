@@ -116,7 +116,7 @@ class EventTest < ActiveSupport::TestCase
     setup { assert @event = Event.new }
     should "return false for new event" do
       @event.start_time = Time.now + 2.days
-      assert @event.outdated?, "returned true for 2.days from now"
+      assert !@event.outdated?, "returned true for 2.days from now"
     end
     should "return true for outdated event" do
       @event.start_time = 6.days.ago

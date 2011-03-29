@@ -1,6 +1,6 @@
 class AddTitleToScenarios < ActiveRecord::Migration
   def self.up
-    add_column :scenarios, :title, :boolean, :null => false
+    add_column :scenarios, :title, :text, :null => false
   end
 
   def self.down
