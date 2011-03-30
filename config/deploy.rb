@@ -71,5 +71,6 @@ end
 after "deploy:update_code" do
   run "ln -s #{shared_path}/config.yml #{release_path}/config"
   run "ln -s #{shared_path}/database.yml #{release_path}/config"
+  run "ln -s #{shared_path}/logo.png #{release_path}/public/images"
   #run "ln -s #{shared_path}/environment.rb #{release_path}/config"
 end
