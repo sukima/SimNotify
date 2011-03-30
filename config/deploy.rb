@@ -2,6 +2,8 @@
 # Based on the original DreamHost deploy.rb recipe
 #
 #
+require 'bundler/capistrano'
+
 # GitHub settings #######################################################################################
 default_run_options[:pty] = true
 set :repository,  "git@github.com:sukima/SimNotify.git" #GitHub clone URL
