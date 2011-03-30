@@ -34,6 +34,9 @@ namespace :deploy do
    desc "#{t} task is a no-op with mod_rails"
    task t, :roles => :app do ; end
  end
+ task :restart, :roles => :app, :except => { :no_release => true } do
+   run "#{try_sudo} touch #{File.join(current_path,\'tmp\',\'restart.txt\')}"
+ end
 end
 
 namespace :assets  do
