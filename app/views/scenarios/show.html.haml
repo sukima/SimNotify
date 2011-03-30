@@ -1,5 +1,8 @@
 - title "Scenario"
 %p
+  %strong Title:
+  = h @scenario.title
+%p
   %strong Equipment:
   = h @scenario.equipment
 %p
@@ -33,7 +36,8 @@
   %strong Manikin:
   = (@scenario.manikin.nil?) ? "Not Assigned" : h(@scenario.manikin.name_and_type)
 %p
-  = link_to "Edit", edit_scenario_path(@scenario)
+  = link_to "Return to session", event_path(@scenario.event)
+  | #{link_to "Edit", edit_scenario_path(@scenario)}
   | #{link_to_confirm t(:destroy), delete_scenario_path(@scenario), :confirm => t(:destroy_confirm)}
   | #{link_to_confirm "Home", root_url}
   - if @current_instructor.admin?

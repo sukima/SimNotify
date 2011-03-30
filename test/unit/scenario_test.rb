@@ -5,6 +5,8 @@ class ScenarioTest < ActiveSupport::TestCase
   should belong_to :manikin_req_type
   should belong_to :manikin
 
+  should validate_presence_of :title
+
   context "flags_as_strings" do
     setup do
       assert @scenario = Factory(:scenario)

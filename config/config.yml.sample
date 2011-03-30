@@ -1,13 +1,7 @@
 company_name: "Your Site"
 application_name: "SimNotify"
-gui_themes:
-  - "redmond"
-  - "smoothness"
-  - "cupertino"
-  - "flick"
-  - "hot-sneaks"
-  - "overcast"
-  - "pepper-grinder"
+theme_dir: "jquery-ui-themes/themes"
+default_theme: "redmond"
 environment:
   development:
     include_designer_credit: true

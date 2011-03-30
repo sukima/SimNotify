@@ -3,7 +3,8 @@
   - f.inputs do
     = f.input :name
     = f.input :email
-    = f.input :facility
+    - if Facility.count > 0
+      = f.input :facility
     = f.input :office
     = f.input :phone
     = f.input :password, :as => :password, :required => true
@@ -19,7 +20,9 @@
       %span.ui-icon.ui-icon-info
       Theme sample
       %span.ui-icon.ui-icon-lightbulb
-    = f.input :gui_theme, :as => :radio, :collection => APP_CONFIG[:gui_themes]
+    = f.input :gui_theme, :as => :select,
+      :collection => APP_CONFIG[:gui_themes],
+      :include_blank => false
   - f.buttons do
     - if logged_in?
       = f.commit_button :save

@@ -1,10 +1,16 @@
 - title "Session"
+- if !@event.submitted? && !@event.approved?
+  %p.notification This event has not been submitted for approval yet.
 - if @event.submitted? && !@event.approved?
   %p.notification This event has been submitted and is pending approval.
 - if @event.approved?
   %p.notification This event has been approved.
 - if @event.priority_request?
   %p.warning WARNING: Session is only #{distance_of_time_in_words_to_now(@event.start_time)} from now!
+- if @event.missing_scenario?
+  %p.notification
+    This event does not have enough information to submit yet. Please attach a
+    scenario worksheet or add a scenario.
 %h2
   Session: #{h @event.title}
 - if !@event.facility.nil?
@@ -59,7 +65,7 @@
         %p.scenario-title
           %span
             = (index+1).ordinalize
-            scenario: [#{link_to "Edit", edit_scenario_path(scenario)}]
+            scenario: #{link_to h(scenario.title), edit_scenario_path(scenario)}
         %p.scenario-description= h scenario.description
         - unless scenario.manikin.nil?
           %p
@@ -93,9 +99,9 @@
 %p
   = link_to t(:edit), edit_event_path(@event)
   | #{link_to_confirm t(:destroy), delete_event_path(@event), :confirm => 'Are you sure?'}
+  - if !@event.submitted? && !@event.missing_scenario?
+    | <strong>#{link_to_event_submit t(:submit), @event}</strong>
+  - elsif @event.submitted?
+    | <strong>#{link_to_event_revoke t(:revoke), @event}</strong>
   - if @current_instructor.admin?
     | #{link_to "View All Sessions", events_path}
-  - if !@event.submitted?
-    | #{link_to_event_submit t(:submit), @event}
-  - else
-    | #{link_to_event_revoke t(:revoke), @event}

@@ -25,28 +25,28 @@ module LayoutHelper
   def stylesheet_link_jquery
     ret = ""
     theme = (@current_instructor && !@current_instructor.gui_theme.nil?) ?
-      @current_instructor.gui_theme : APP_CONFIG[:gui_themes][0] 
+      @current_instructor.gui_theme : APP_CONFIG[:default_theme] 
     # Make sure to change the default path for the themes in
     # public/javascripts/application.js also.
-    ret += stylesheet_link_tag "themes/#{theme}/jquery-ui-1.8.4.custom.css", :class => "theme"
+    ret += stylesheet_link_tag "#{APP_CONFIG[:theme_dir]}/#{theme}/jquery.ui.all.css", :class => "theme"
     ret += stylesheet_link_tag "jquery-ui-timepicker-addon"
     ret += stylesheet_link_tag "jquery.multiselect"
     return ret
   end
 
   def javascript_include_jquery
-    min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
+    # min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
     ret = ""
     if APP_CONFIG[:use_google_api]
       ret += javascript_include_tag("http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}").sub('.js', '')
-      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").sub('.js', '')
-      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js").sub('.js', '')
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js").sub('.js', '')
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js").sub('.js', '')
     else
-      ret += javascript_include_tag "jquery#{min_ext}"
-      ret += javascript_include_tag "jquery-ui#{min_ext}"
+      ret += javascript_include_tag "jquery.min"
+      ret += javascript_include_tag "jquery-ui.min"
     end
-    ret += javascript_include_tag "jquery-ui-timepicker-addon#{min_ext}"
-    ret += javascript_include_tag "jquery.multiselect#{min_ext}"
+    ret += javascript_include_tag "jquery-ui-timepicker-addon"
+    ret += javascript_include_tag "jquery.multiselect"
     return ret
   end
 

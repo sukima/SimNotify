@@ -112,11 +112,17 @@ class Event < ActiveRecord::Base
   end
 
   def priority_request?
-    (start_time - Time.now) < 172800 # 2 days, 60*60*24*2
+    !outdated? && (start_time - Time.now) < 172800 # 2 days, 60*60*24*2
+  end
+
+  def outdated?
+    (start_time < Time.now)
   end
 
   def status_as_class
-    if submitted? && !approved?
+    if !submitted? && !approved?
+      return "in-queue"
+    elsif submitted? && !approved?
       return "waiting-approval"
     elsif approved?
       return "approved"

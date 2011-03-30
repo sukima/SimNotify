@@ -93,6 +93,11 @@ a {
   float: right;
 }
 
+.in-queue,
+tr.in-queue td {
+  background-color: #FFCCCC;
+}
+
 .waiting-approval,
 tr.waiting-approval td {
   background-color: #CCFFCC;
@@ -162,3 +167,7 @@ tr.approved td {
 /* #assets ul.hlist li a.delete { */
   /* display: inline; */
 /* } */
+
+#theme_sample {
+  margin: 0px 0px 10px 0px;
+}

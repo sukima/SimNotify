@@ -3,6 +3,8 @@ class Scenario < ActiveRecord::Base
   belongs_to :manikin_req_type
   belongs_to :manikin
 
+  validates_presence_of :title
+
   def flags_as_strings
     flags = Array.new
     flags << "Staff Support" if staff_support

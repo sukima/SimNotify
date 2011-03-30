@@ -1,7 +1,7 @@
 SimNotify
 =========
 
-Version: 1.1.0  
+Version: 1.2.0  
 Author: Devin Weaver <suki@tritarget.org>
 
 SimNotify is a simple web app designed to make it easy for instructors to
@@ -37,105 +37,56 @@ Phase 2
 
 Data Model
 ==========
-                    ,------------------.
-                    | event_instructor |
-                    |------------------|
-                    | event_id         |--------------.
-    ,---------------| instructor_id    |              |
-    |               `------------------'              |
-    |   ,---------------------.                       |   ,---------------.
-    `->>| instructor          |<--.-. ,------------.  |   | assets_events |
-    ,-->|---------------------|   | | | event      |<-'   |---------------|
-    |   | name                |   | | |------------|<<----| event_id      |
-    |   | email               |   | | | title      |    .-| asset_id      |
-    |   | office              |   | `-| technician |    | `---------------'
-    |   | phone               |   |   | location   |..  |
-    |   | admin?              |   |   | benefit    | .  |    ,------------.
-    |   | notify_recipient?   |   |   | facility   |----|-+->| facilities |
-    |   | new_user?           |   |   | notes      | .  | |  |------------|
-    |   | facility            |---|---) start_time )----|-'  | name       |
-    |   | (acts_as_authentic) |   |   | end_time   | .  |    `------------'
-    |   `---------------------'   |   | live_in?   | .  |
-    |   ,---------------------.   `---| instructor | .  |
-    | ..| scenario            |<<-----| scenarios  | .  |
-    | . |---------------------|       | submitted? | .  `--------.
-    | . | equipment           |.....  | approved?  | .........   |
-    | . | staff_support?      |    .  `------------'         .   |
-    | . | moulage?            |    . ,---------------------. .   |
-    | . | notes               |    . | location_suggestion |..   |
-    | . | support_material    |    . |---------------------|     |
-    | . | description         |    . | location            |     |
-    | . | video?              |    . `---------------------'     |
-    | . | mobile?             |    . ,-------------------.       |
-    | . | manikin_req_type    |<-. ..| equipment_suggest |       |
-    | . | manikin             |<.|   |-------------------|       |
-    | . `---------------------' ||   | name              |       |
-    | .                         ||   `-------------------'       |
-    | . ,-------------------.   ||    ,------------------.       |
-    | ..| scenario_template |   |+----| manikin_req_type |       |
-    |   |-------------------|   ||    |------------------|       |
-    |   | title             |   ||    | type             |       |
-    |   | equipment         |   ||    `------------------'       |
-    |   | staff_support?    |   ||    ,------------------.       |
-    |   | moulage?          |   `|----| manikin          |       |
-    |   | notes             |    |    |------------------|       |
-    |   | support_material  |    |    | name             |       |
-    |   | description       |    |    | serial_number    |       |
-    |   | video?            |    |    | type             |       |
-    |   | mobile?           |    |    | oos?             |       |
-    |   | manikin           |    `--->| manikin_req_type |       |
-    |   `-------------------'         `------------------'       |
-=======
                     ,--------------------.
                     | events_instructors |
                     |--------------------|
-                    | event_id           |------------.
-    ,---------------| instructor_id      |            |
-    |               `--------------------'            |
-    |   ,---------------------.                       |  ,---------------.
-    +-->| instructors         |<--.-. ,------------.  |  | assets_events |
-    |   |---------------------|   | | | events     |<-'  |---------------|
-    |   | name                |   | | |------------|<<---| event_id      |
-    |   | email               |   | | | title      |   ,-| asset_id      |
-    |   | office              |   | `-| technician |   | `---------------'
-    |   | phone               |   |   | location   |.. `---------.
-    |   | admin?              |   |   | benefit    | .           |
-    |   | notify_recipient?   |   |   | notes      | .           |
-    |   | new_user?           |   |   | start_time | .           |
-    |   | (acts_as_authentic) |   |   | end_time   | .           |
-    |   `---------------------'   |   | live_in?   | .           |
-    |   ,---------------------.   `---| instructor | .           |
-    | ..| scenarios           |<<-----| scenarios  | .           |
-    | . |---------------------|       | submitted? | .           |
-    | . | equipment           |.....  | approved?  | ..........  |
-    | . | staff_support?      |    .  `------------'          .  |
-    | . | moulage?            |    . ,----------------------. .  |
-    | . | notes               |    . | location_suggestions |..  |
-    | . | support_material    |    . |----------------------|    |
-    | . | description         |    . | location             |    |
-    | . | video?              |    . `----------------------'    |
-    | . | mobile?             |    . ,-----------------------.   |
-    | . | manikin_req_type    |<-. ..| equipment_suggestions |   |
-    | . | manikin             |<.|   |-----------------------|   |
-    | . `---------------------' ||   | name                  |   |
-    | .                         ||   `-----------------------'   |
-    | . ,--------------------.  ||    ,-------------------.      |
-    | ..| scenario_templates |  |+----| manikin_req_types |      |
-    |   |--------------------|  ||    |-------------------|      |
-    |   | title              |  ||    | type              |      |
-    |   | equipment          |  ||    `-------------------'      |
-    |   | staff_support?     |  ||    ,------------------.       |
-    |   | moulage?           |  `|----| manikins         |       |
-    |   | notes              |   |    |------------------|       |
-    |   | support_material   |   |    | name             |       |
-    |   | description        |   |    | serial_number    |       |
-    |   | video?             |   |    | type             |       |
-    |   | mobile?            |   |    | oos?             |       |
-    |   | manikin            |   `--->| manikin_req_type |       |
-    |   `--------------------'        `------------------'       |
->>>>>>> Adds assets_events habtm relationship
-    |                           ,----------------------------.   |
-    |                           | assets                     |<<-'
+                    | event_id           |--,
+    ,---------------| instructor_id      |  |   ,----------------------.
+    |               `--------------------'  `-->| event                |
+    |   ,---------------------.                 |----------------------|<<-.
+    `->>| instructor          |<-----------+----| technition           |   |
+    ,-->|---------------------|            `----| instructor           |   |
+    |   | name                |                 | title                |   |
+    |   | email               |                 | benefit              |   |
+    |   | office              | ,----------.    | notes                |   |
+    |   | phone               | | facility |<-. | location             |.. |
+    |   | admin?              | |----------|  | | start_time           | . |
+    |   | notify_recipient?   | | name     |  | | end_time             | . |
+    |   | new_user?           | `----------'  | | live_in?             | . |
+    |   | facility            |---------------'-| facility             | . |
+    |   | (acts_as_authentic) |        ,--------| scenarios            | . |
+    |   `---------------------'        |        | submitted?           | . |
+    |   ,------------------.           |        | approved?            | . |
+    | ..| scenario         |<<---------'        | followup_email_sent? | . |
+    | . |------------------|                    `----------------------' . |
+    | . | equipment        |........                         ............. |
+    | . | staff_support?   |       .                         .             `-----.
+    | . | moulage?         |       . ,---------------------. . ,---------------. |
+    | . | notes            |       . | location_suggestion |.. | assets_events | |
+    | . | support_material |       . |---------------------|   |---------------| |
+    | . | description      |       . | location            |   | event_id      |-'
+    | . | video?           |       . `---------------------' ,-| asset_id      |
+    | . | mobile?          |       . ,-------------------.   | `---------------'
+    | . | manikin_req_type |<----. ..| equipment_suggest |   `----.
+    | . | manikin          |<---.|   |-------------------|        |
+    | . | title            |    ||   | name              |        |
+    | . `------------------'    ||   `-------------------'        |
+    | . ,-------------------.   ||    ,------------------.        |
+    | ..| scenario_template |   |+----| manikin_req_type |        |
+    |   |-------------------|   ||    |------------------|        |
+    |   | title             |   ||    | type             |        |
+    |   | equipment         |   ||    `------------------'        |
+    |   | staff_support?    |   ||    ,------------------.        |
+    |   | moulage?          |   `|----| manikin          |        |
+    |   | notes             |    |    |------------------|        |
+    |   | support_material  |    |    | name             |        |
+    |   | description       |    |    | serial_number    |        |
+    |   | video?            |    |    | type             |        |
+    |   | mobile?           |    |    | oos?             |        |
+    |   | manikin_req_type  |<---'--->| manikin_req_type |        |
+    |   `-------------------'         `------------------'        |
+    |                           ,----------------------------.    |
+    |                           | assets                     |<<--'
     |                           |----------------------------|
     |                           | session_asset_file_name    |
     |                           | session_asset_content_type |

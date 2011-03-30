@@ -14,7 +14,7 @@
   \- #{h event.start_time.to_s(:long)} (#{distance_of_time_in_words_to_now(event.start_time)} from now)
   \- #{pluralize(event.scenarios.count, 'scenario')}
   \- #{pluralize(event.assets.count, 'file')}
-  - if !event.submitted? && !event.approved?
+  - if !event.submitted? && !event.approved? && !event.missing_scenario?
     %span.queue-list= link_to_event_submit t(:submit), event
   - elsif event.submitted? || event.approved?
     %span.queue-list= link_to_event_revoke t(:revoke), event

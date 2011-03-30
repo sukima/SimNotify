@@ -2,7 +2,8 @@
 - semantic_form_for @event do |f|
   - f.inputs do
     = f.input :title
-    = f.input :facility
+    - if Facility.count > 0
+      = f.input :facility
     = f.input :location, :as => :autocomplete
     = f.input :benefit
     = f.input :notes
