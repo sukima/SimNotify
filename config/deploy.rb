@@ -30,7 +30,7 @@ role :web, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
- [:start, :stop, :restart, :finalize_update, :migrate, :migrations, :cold].each do |t|
+ [:start, :stop].each do |t|
    desc "#{t} task is a no-op with mod_rails"
    task t, :roles => :app do ; end
  end
