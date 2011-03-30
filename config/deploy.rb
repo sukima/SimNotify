@@ -9,7 +9,7 @@ default_run_options[:pty] = true
 set :repository,  "git@github.com:sukima/SimNotify.git" #GitHub clone URL
 set :scm, "git"
 set :scm_passphrase, "YE0wX8Kh" #This is the passphrase for the ssh key on the server deployed to
-set :branch, "rails2_3_11"
+set :branch, "master"
 set :scm_verbose, true
 #########################################################################################################
 set :user, 'simulat1' #Dreamhost username
