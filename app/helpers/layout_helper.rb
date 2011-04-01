@@ -38,9 +38,9 @@ module LayoutHelper
     # min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
     ret = ""
     if APP_CONFIG[:use_google_api]
-      ret += javascript_include_tag("http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}").sub('.js', '')
-      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js").sub('.js', '')
-      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js").sub('.js', '')
+      ret += javascript_include_tag("http://www.google.com/jsapi?key=#{APP_CONFIG[:google_api_key]}")
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js")
+      ret += javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js")
     else
       ret += javascript_include_tag "jquery.min"
       ret += javascript_include_tag "jquery-ui.min"
