@@ -3,9 +3,9 @@
 #
 #
 require 'bundler/capistrano'
+require File.expand_path "../sync", __FILE__
 
 # GitHub settings #######################################################################################
-default_run_options[:pty] = true
 set :repository,  "git@github.com:sukima/SimNotify.git" #GitHub clone URL
 set :scm, "git"
 set :scm_passphrase, "YE0wX8Kh" #This is the passphrase for the ssh key on the server deployed to
@@ -17,7 +17,17 @@ set :domain, 'delphinus.dreamhost.com'  # Dreamhost servername where your accoun
 set :project, 'SimNotify'  # Your application as its called in the repository
 set :application, 'schedulesimulation.com'  # Your app's location (domain or sub-domain name as setup in panel)
 set :applicationdir, "/home/#{user}/#{application}"  # The standard Dreamhost setup
-set :shared_assets, "public/images/attachments"
+set :shared_assets, %w{public/system}
+#########################################################################################################
+# additional settings
+default_run_options[:pty] = true  # Forgo errors when deploying from windows
+#ssh_options[:keys] = %w(/Path/To/id_rsa)            # If you are using ssh_keys
+#set :chmod755, "app config db lib public vendor script script/* public/disp*"
+set :use_sudo, false
+
+set :stage, "production"
+set :sync_directories, shared_assets
+set :sync_backups, 3
 
 # Don't change this stuff, but you may want to set shared files at the end of the file ##################
 # deploy config
@@ -53,13 +63,6 @@ namespace :assets  do
   end
 end
 
-# additional settings
-default_run_options[:pty] = true  # Forgo errors when deploying from windows
-#ssh_options[:keys] = %w(/Path/To/id_rsa)            # If you are using ssh_keys
-#set :chmod755, "app config db lib public vendor script script/* public/disp*"
-set :use_sudo, false
-
-
 #########################################################################################################
 
 before "deploy:setup" do
@@ -78,3 +81,5 @@ after "deploy:update_code" do
   run "ln -s #{shared_path}/htaccess #{release_path}/public/.htaccess"
   #run "ln -s #{shared_path}/environment.rb #{release_path}/config"
 end
+
+# vim:set ft=ruby sw=2 et:

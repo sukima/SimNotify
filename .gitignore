@@ -18,3 +18,4 @@ vendor/rails
 .todo
 .bundle
 public/system
+sync
