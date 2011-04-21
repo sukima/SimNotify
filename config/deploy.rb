@@ -12,7 +12,7 @@ set :scm_passphrase, "YE0wX8Kh" #This is the passphrase for the ssh key on the s
 set :branch, "master"
 set :scm_verbose, true
 #########################################################################################################
-set :user, 'simulat1' #Dreamhost username
+set :user, 'simnotify' #Dreamhost username
 set :domain, 'delphinus.dreamhost.com'  # Dreamhost servername where your account is located 
 set :project, 'SimNotify'  # Your application as its called in the repository
 set :application, 'schedulesimulation.com'  # Your app's location (domain or sub-domain name as setup in panel)
