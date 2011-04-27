@@ -4,6 +4,8 @@ class Instructor < ActiveRecord::Base
   belongs_to :facility
   acts_as_authentic
 
+  before_destroy :destroyable?
+
   validates_presence_of :name
   validates_presence_of :email
   validates_uniqueness_of :name
@@ -63,5 +65,10 @@ class Instructor < ActiveRecord::Base
 
   def self.notify_emails()
     Instructor.find(:all, :conditions => { :notify_recipient => true }).map {|i| i.email}
+  end
+
+  def destroyable?
+    # TODO: This should check for event dependencies and allow them to be moved/detroyed first.
+    false
   end
 end
