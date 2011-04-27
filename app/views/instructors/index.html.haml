@@ -23,6 +23,5 @@
             &nbsp;
         %td
           = link_icon_to "pencil", t(:edit), edit_instructor_path(instructor)
-          = link_icon_to "trash", t(:destroy), delete_instructor_path(instructor), :confirm => t(:destroy_confirm)
 %p= link_to_confirm "New instructor", new_instructor_path
 %p= link_to_confirm "Return", root_path
