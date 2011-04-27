@@ -80,7 +80,7 @@ after "deploy:update_code" do
   run "ln -s #{shared_path}/logo.png #{release_path}/public/images"
   run "ln -s #{shared_path}/htaccess #{release_path}/public/.htaccess"
   #run "ln -s #{shared_path}/environment.rb #{release_path}/config"
-  run("cd #{deploy_to}/current && /usr/bin/env bundle exec rake mailer:views RAILS_ENV=production")
+  run("cd #{release_path} && /usr/bin/env bundle exec rake mailer:views RAILS_ENV=production")
 end
 
 # vim:set ft=ruby sw=2 et:
