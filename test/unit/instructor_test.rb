@@ -31,6 +31,13 @@ class InstructorTest < ActiveSupport::TestCase
     should_not allow_value(value).for(:phone)
   end
 
+  context "destroyable?" do
+    should "return false" do
+      i = Instructor.new
+      assert !i.destroyable?
+    end
+  end
+
   context "parse_name" do
     should "return false if value is not a string" do
       assert !Instructor.parse_name(nil)
