@@ -1,7 +1,7 @@
 SimNotify
 =========
 
-Version: 1.2.1  
+Version: 1.2.2  
 Author: Devin Weaver <suki@tritarget.org>
 
 SimNotify is a simple web app designed to make it easy for instructors to
