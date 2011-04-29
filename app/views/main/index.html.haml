@@ -15,7 +15,20 @@
       \.
 - if @events_in_queue.count > 0
   %p.notification #{pluralize @events_in_queue.count, 'session'} #{(@events_in_queue.count==1)?'has':'have'} not been submitted for approval yet.
-%h2 Sessions:
+- if is_admin?
+  %h2 Administrative Attention Needed:
+  .accordion
+    .accordion-header
+      %a
+        = "Needing approval (#{pluralize @events_needs_approval.count, 'session'})"
+    .accordion-content
+      - if @events_needs_approval.empty?
+        No sessions need your attention now.
+      - else
+        You have the following sessions that need approval:
+        %ol
+          = render :partial => 'event', :collection => @events_needs_approval
+%h2 Your Sessions:
 .accordion
   .accordion-header
     %a

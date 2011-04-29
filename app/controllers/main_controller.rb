@@ -5,6 +5,7 @@ class MainController < ApplicationController
     @events_in_queue = Event.in_queue(@current_instructor)
     @events_submitted = Event.submitted(@current_instructor)
     @events_approved = Event.approved(@current_instructor)
+    @events_needs_approval = Event.submitted(:all) if is_admin?
   end
 
   def help
