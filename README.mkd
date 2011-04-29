@@ -94,6 +94,12 @@ Data Model
     |                           | session_asset_updated_at   |
     `---------------------------| instructor                 |
                                 `----------------------------'
+    ,---------.
+    | options |
+    |---------|
+    | name    |
+    | value   |
+    `---------'
 
 Notes
 =====
