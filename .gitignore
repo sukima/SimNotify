@@ -15,6 +15,7 @@ public/images/logo.png
 .rvmrc
 vendor/gems
 vendor/rails
+vendor/bundle
 .todo
 .bundle
 public/system
