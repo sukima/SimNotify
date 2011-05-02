@@ -1,0 +1,8 @@
+- semantic_form_for @options["system_email_recipients"], :namespace => "system_email_recipients" do |f|
+  - f.inputs do
+    = f.input :value,
+      :as => :multiselect,
+      :collection => Instructor.all,
+      :label => "System Email Recipients",
+      :hint => "Who do want system emails to be sent to?"
+  = f.buttons

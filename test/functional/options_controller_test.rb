@@ -23,6 +23,6 @@ class OptionsControllerTest < ActionController::TestCase
       @f.value = "test_update_model_option_field_value"
       put :update, :id => @f.id, :option => @f.attributes
     end
-    should redirect_to(":index") { option_path(@f) }
+    should redirect_to(":index") { options_path }
   end
 end
