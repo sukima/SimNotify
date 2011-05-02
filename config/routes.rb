@@ -33,6 +33,8 @@ ActionController::Routing::Routes.draw do |map|
     :member => { :delete => :get }
 
   map.resources :facilities, :except => :show, :member => { :delete => :get }
+
+  map.resources :options, :only=> [:index, :update]
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
