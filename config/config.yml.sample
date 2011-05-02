@@ -2,6 +2,7 @@ company_name: "Your Site"
 application_name: "SimNotify"
 theme_dir: "jquery-ui-themes/themes"
 default_theme: "redmond"
+send_emails: true
 environment:
   development:
     include_designer_credit: true
