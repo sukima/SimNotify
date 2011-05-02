@@ -152,7 +152,7 @@ $(document).ready(function() {
     // Reusable Resources {{{2
     var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
 
-    // Autocomplete {{{2
+    // Autocomplete / Multiselect {{{2
     $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
