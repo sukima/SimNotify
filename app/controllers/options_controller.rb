@@ -15,7 +15,7 @@ class OptionsController < ApplicationController
   
     respond_to do |wants|
       if @option.update_attributes(params[:option])
-        flash[:notice] = "Option #{@option.name} was successfully updated."
+        flash[:notice] = "Option '#{@option.name.humanize}' was successfully updated."
         wants.html { redirect_to(options_path) }
         wants.xml  { head :ok }
       else
