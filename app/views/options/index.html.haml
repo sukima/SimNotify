@@ -1,6 +1,5 @@
 - semantic_form_for @options["system_email_recipients"], :namespace => "system_email_recipients" do |f|
   - f.inputs do
-    -# FIXME: How do we populate the selected options?
     = f.input :value,
       :as => :multiselect,
       :collection => Instructor.all,
