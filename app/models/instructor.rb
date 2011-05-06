@@ -63,8 +63,10 @@ class Instructor < ActiveRecord::Base
     return hash
   end
 
+  # <b>DEPRECATED:</b> Please use <tt>Option model ("system_email_recipients")</tt> instead.
   def self.notify_emails()
-    Instructor.find(:all, :conditions => { :notify_recipient => true }).map {|i| i.email}
+    warn "`notify_emails()` is deprecated. Use the Option model ('system_email_recipients') instead."
+    ApplicationMailer.recipients_from_options
   end
 
   def destroyable?
