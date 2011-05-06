@@ -10,10 +10,10 @@ class Instructor < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :name
   validates_each :name do |record, attr, value|
-    name_hash = self.parse_name(value)
-    if name_hash != false
+    _name_hash = self.parse_name(value)
+    if _name_hash != false
       record.errors.add attr, I18n.translate(:missing_first_last_names) if
-        ( name_hash[:first_name].nil? || name_hash[:last_name].nil? )
+        ( _name_hash[:first_name].nil? || _name_hash[:last_name].nil? )
     end
   end
 
