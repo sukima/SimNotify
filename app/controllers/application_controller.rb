@@ -20,13 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_options
-    options = Option.all.index_by(&:name) # allows one database call instead of many.
-
-    # Load defaults if needed.
-    # list of instructors that will receive email when changes occur
-    options["system_email_recipients"] ||= Option.create(:name =>"system_email_recipients", :value => [])
-
-    return options
+    @options = Option.find_all_as_hash
   end
 end
 # vim:set ft=ruby:
