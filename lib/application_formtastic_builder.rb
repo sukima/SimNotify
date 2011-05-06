@@ -4,7 +4,7 @@ class ApplicationFormtasticBuilder < Formtastic::SemanticFormBuilder
     input_html = options[:input_html] || {}
     input_html[:class] = (html_class << input_html[:class]).flatten.compact.join(' ')
     options[:input_html] = input_html
-    text_input method, options
+    input method, options
   end
 
   def multiselect_input(method, options = {})
