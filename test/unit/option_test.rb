@@ -4,7 +4,7 @@ class OptionTest < ActiveSupport::TestCase
   context "before_update" do
     context "with option 'system_email_recipients'" do
       setup do
-        @option = Factory(:option)
+        @option = Factory(:system_email_recipients)
       end
       should "sanatize value" do
         @option.value = ["1","3"]
