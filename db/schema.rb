@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110330221630) do
+ActiveRecord::Schema.define(:version => 20110429182725) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -90,6 +90,11 @@ ActiveRecord::Schema.define(:version => 20110330221630) do
     t.string  "sim_type"
     t.boolean "oos"
     t.integer "manikin_req_type_id"
+  end
+
+  create_table "options", :force => true do |t|
+    t.string "name",  :null => false
+    t.string "value"
   end
 
   create_table "scenario_templates", :force => true do |t|

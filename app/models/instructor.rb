@@ -10,10 +10,10 @@ class Instructor < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :name
   validates_each :name do |record, attr, value|
-    name_hash = self.parse_name(value)
-    if name_hash != false
+    _name_hash = self.parse_name(value)
+    if _name_hash != false
       record.errors.add attr, I18n.translate(:missing_first_last_names) if
-        ( name_hash[:first_name].nil? || name_hash[:last_name].nil? )
+        ( _name_hash[:first_name].nil? || _name_hash[:last_name].nil? )
     end
   end
 
@@ -63,8 +63,10 @@ class Instructor < ActiveRecord::Base
     return hash
   end
 
+  # <b>DEPRECATED:</b> Please use <tt>Option model ("system_email_recipients")</tt> instead.
   def self.notify_emails()
-    Instructor.find(:all, :conditions => { :notify_recipient => true }).map {|i| i.email}
+    warn "`notify_emails()` is deprecated. Use the Option model ('system_email_recipients') instead."
+    ApplicationMailer.recipients_from_options
   end
 
   def destroyable?
