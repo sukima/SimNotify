@@ -12,33 +12,33 @@ class CalendarController < ApplicationController
     if !params[:start] || !params[:end]
       render :text => "Invalid parameters", :status => :not_acceptable
       return
+    end
+
+    start_time = Time.at(params[:start].to_i)
+    end_time = Time.at(params[:end].to_i)
+    conditions = { :start_time => (start_time..end_time) }
+
+    if (is_admin?)
+      @events = Event.find(:all, :conditions => conditions)
     else
-      start_time = Time.at(params[:start].to_i)
-      end_time = Time.at(params[:end].to_i)
-      conditions = { :start_time => (start_time..end_time) }
+      @events = @current_instructor.events.find(:all, :conditions => conditions)
+    end
 
-      if (is_admin?)
-        @events = Event.find(:all, :conditions => conditions)
-      else
-        @events = @current_instructor.events.find(:all, :conditions => conditions)
-      end
+    @special_events = SpecialEvent.find(:all,
+        :conditions => conditions.except(:submitted))
 
-      @special_events = SpecialEvent.find(:all,
-          :conditions => conditions.except(:submitted))
-
-      json_events = [ ]
+    json_events = [ ]
 
 
-      @events.each do |e|
-        json_events << build_json_event(e)
-      end
+    @events.each do |e|
+      json_events << build_json_event(e)
+    end
 
-      @special_events.each do |e|
-        json_events << build_json_event(e, {
-          :eventMethod => :special_event_path,
-          :allDay => :all_day?
-        })
-      end
+    @special_events.each do |e|
+      json_events << build_json_event(e, {
+        :eventMethod => :special_event_path,
+        :allDay => :all_day?
+      })
     end
 
     render :json => json_events.to_json
