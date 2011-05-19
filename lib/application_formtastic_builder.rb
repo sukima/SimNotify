@@ -1,18 +1,21 @@
 class ApplicationFormtasticBuilder < Formtastic::SemanticFormBuilder
   def autocomplete_input(method, options = {})
-    html_class = [ 'autocomplete' ]
-    input_html = options[:input_html] || {}
-    input_html[:class] = (html_class << input_html[:class]).flatten.compact.join(' ')
-    options[:input_html] = input_html
+    options[:input_html] = merge_input_html(options[:input_html], 'autocomplete')
     input method, options
   end
 
   def multiselect_input(method, options = {})
-    html_class = [ 'multiselect' ]
-    input_html = options[:input_html] || {}
     options[:multiple] = true
-    input_html[:class] = (html_class << input_html[:class]).flatten.compact.join(' ')
-    options[:input_html] = input_html
+    options[:input_html] = merge_input_html(options[:input_html], 'multiselect')
     select_input method, options
+  end
+
+  private
+  def merge_input_html(input_html, html_class)
+    input_html ||= {}
+    html_class = [ html_class ] if html_class.kind_of? String
+    html_class = [ ] if !html_class.kind_of? Array
+    input_html[:class] = (html_class << input_html[:class]).flatten.compact.join(' ')
+    return input_html
   end
 end
