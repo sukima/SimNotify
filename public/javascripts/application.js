@@ -139,6 +139,7 @@ APP.initThemePicker = function () {
 
 // }}}1
 
+
 // Document Ready {{{1
 $(document).ready(function() {
     // Flag Detection {{{2
@@ -235,6 +236,13 @@ $(document).ready(function() {
     $('input.ui-date-text').live('change', APP.saveDateValues);
 
     // }}}3
+
+
+    // Select Sliders {{{2
+    // Setup the select choices form elements to jQuery sliders
+    // Uses the SelectToUISlider plugin:
+    // http://www.filamentgroup.com/lab/update_jquery_ui_slider_from_a_select_element_now_with_aria_support/
+    $("select.slider").selectToUISlider();
 
 
     // Accordions {{{2
