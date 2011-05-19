@@ -31,6 +31,7 @@ module LayoutHelper
     ret += stylesheet_link_tag "#{APP_CONFIG[:theme_dir]}/#{theme}/jquery.ui.all.css", :class => "theme"
     ret += stylesheet_link_tag "jquery-ui-timepicker-addon"
     ret += stylesheet_link_tag "jquery.multiselect"
+    ret += stylesheet_link_tag "ui.slider.extras"
     return ret
   end
 
@@ -47,6 +48,7 @@ module LayoutHelper
     end
     ret += javascript_include_tag "jquery-ui-timepicker-addon"
     ret += javascript_include_tag "jquery.multiselect"
+    ret += javascript_include_tag "selectToUISlider.jQuery"
     return ret
   end
 
