@@ -1,0 +1,16 @@
+%h2= "Agenda for #{@date_range}"
+- form_tag agenda_path do
+  = text_field_tag 'number_of_weeks', @number_of_weeks
+  = submit_tag "Refesh"
+%hr
+- if @weeks.empty?
+  .info There are no events scheduled.
+- @weeks.each_with_index do |index,week|
+  %div{:id => "week-#{index}"}
+    %h4= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
+    - if week[:events].empty?
+      .info No events scheduled for this week.
+    - else
+      %ol.week-list
+        - week[:events].each do |event|
+          %li.week-list-item= session_description(event)

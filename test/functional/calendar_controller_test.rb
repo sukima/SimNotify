@@ -5,9 +5,11 @@ class CalendarControllerTest < ActionController::TestCase
 
   should route(:get, "/calendar").to(:action => :index)
   should route(:get, "/calendar/events").to(:action => :events)
+  should route(:get, "/calendar/agenda").to(:action => :agenda)
 
   should_require_logged_in
   should_require_logged_in :action => :events
+  should_require_logged_in :action => :agenda
 
   logged_in_as :instructor do
     context "get :index" do
@@ -16,6 +18,10 @@ class CalendarControllerTest < ActionController::TestCase
       end
       should respond_with :success
       should render_template :index
+    end
+
+    context "get :agenda" do
+      should_require_admin :action => :agenda
     end
 
     context "get :events" do
@@ -60,6 +66,20 @@ class CalendarControllerTest < ActionController::TestCase
           end
         end
       end
+    end
+  end
+
+  logged_in_as :admin do
+    context "get :agenda" do
+      setup do
+        get :agenda
+      end
+      should respond_with :success
+      should assign_to(:number_of_weeks).with("3") # default
+      should assign_to(:weeks)
+      should assign_to(:date_range)
+      should assign_to(:time_format)
+      should render_template :agenda
     end
   end
 end

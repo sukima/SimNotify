@@ -74,6 +74,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "main/autocomplete_map.:format", :controller => "main", :action => "autocomplete_map"
 
   map.calendar 'calendar', :controller => 'calendar'
+  map.agenda 'calendar/agenda', :controller => 'calendar', :action => 'agenda'
   map.connect 'calendar/:action', :controller => 'calendar'
   map.connect 'calendar/:action.:format', :controller => 'calendar'
 

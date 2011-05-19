@@ -9,6 +9,7 @@
     = formtastic_stylesheet_link_tag
     = stylesheet_link_jquery
     = stylesheet_link_tag 'site'
+    = stylesheet_link_tag 'print', :media => 'print'
     = javascript_include_jquery
     = javascript_include_tag 'application'
     = iebugfixes_include_tag
@@ -46,7 +47,7 @@
         = yield
       #clear
       #footer
-        \&copy; 2010
+        \&copy; 2011
         %a{:href => "#"}= APP_CONFIG[:company_name]
         - if APP_CONFIG[:include_designer_credit]
           | Design by
