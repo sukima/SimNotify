@@ -113,7 +113,8 @@ Building
 
 The following setup procedures are required with a fresh build.
 
-1. `rake gems:install` - Installs needed gems.
+1. `bundle install` - Installs needed gems. (Requires the bundler gem:
+   `gem install bundler`)
 2. `rake init:config` - Copyies over the sample config to the real config.
    Provides defaults. _Please edit the files for your purpose_
 3. `rake mailer:views` - Builds the views needed to send mail. You can
@@ -125,6 +126,6 @@ Versions
 
 Be sure to update the following files to the correct version number:
 
-1. README.md
-2. public/humans.txt
-3. config/initializers/load_config.rb
+1. `README.md`
+2. `public/humans.txt`
+3. `config/initializers/load_config.rb`
