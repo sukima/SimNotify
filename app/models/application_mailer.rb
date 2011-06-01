@@ -82,11 +82,12 @@ class ApplicationMailer < ActionMailer::Base
       days = o.value
     end
     events = Event.find_upcomming_approved(days)
-    # TODO: only send out if no notification has been sent. ie send
-    # notification today for an event in two days but when the rake task is ran
-    # again tomorrow (daily) it should not send.
     events.each do |e|
-      ApplicationMailer.deliver_notify_email(e)
+      if !e.notification_sent_on.blank?
+        ApplicationMailer.deliver_notify_email(e)
+        e.notification_sent_on = Time.now
+        e.save
+      end
     end
   end
 end
