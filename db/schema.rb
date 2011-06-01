@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110429182725) do
+ActiveRecord::Schema.define(:version => 20110601202344) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -30,21 +30,22 @@ ActiveRecord::Schema.define(:version => 20110429182725) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "location",                               :null => false
-    t.text     "benefit",                                :null => false
+    t.string   "location",                                :null => false
+    t.text     "benefit",                                 :null => false
     t.text     "notes"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.boolean  "live_in",             :default => false
+    t.boolean  "live_in",              :default => false
     t.integer  "instructor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.boolean  "submitted",           :default => false
-    t.boolean  "approved",            :default => false
+    t.boolean  "submitted",            :default => false
+    t.boolean  "approved",             :default => false
     t.integer  "technician_id"
     t.integer  "facility_id"
-    t.boolean  "followup_email_sent", :default => false
+    t.boolean  "followup_email_sent",  :default => false
+    t.datetime "notification_sent_on"
   end
 
   create_table "events_instructors", :id => false, :force => true do |t|
