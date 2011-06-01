@@ -38,6 +38,15 @@ class ApplicationMailer < ActionMailer::Base
     body        :event => event
   end
 
+  def notify_email(event)
+    recipients  event.instructors.email
+    cc          event.instructors.map(&:email)
+    from        APP_CONFIG[:system_email_address]
+    subject     "[#{APP_CONFIG[:application_name]}] Upcomming Session: #{event.title}"
+    sent_on     Time.now
+    body        :event => event
+  end
+
   # Find the emails that should be sent out to. The typical way to handle this
   # is to search the Option model for the entry +system_email_recipients+ which
   # is an array of ids that associate to the Instructor model.
