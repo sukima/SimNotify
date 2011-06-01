@@ -76,6 +76,13 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def self.find_upcomming_approved(number_of_days=2)
+    event_start_time = Time.now.beginning_of_day
+    event_end_time = event_start_time + number_of_days.days
+    conditions = [ "approved = ? AND start_time > ? AND start_time < ?", true, event_start_time, event_end_time ]
+    return Event.find(:all, :conditions => conditions)
+  end
+
   def collective_need_flags
     needs_hash = {
       :staff_support => false,

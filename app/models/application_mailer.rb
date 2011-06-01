@@ -70,4 +70,23 @@ class ApplicationMailer < ActionMailer::Base
     return APP_CONFIG[:system_email_address] if instructor_ids.nil? || instructor_ids.empty?
     return Instructor.find(instructor_ids, :select => 'email').map(&:email)
   end
+
+  # Find all events upcomming in the next N-days and send out a notification.
+  #
+  # ==== Attributes
+  #
+  # * +days+ - the number of days to look forward and find events.
+  def self.send_upcoming_notifications(days=nil)
+    if days.nil?
+      o = Option.find_by_name('days_to_send_event_notifications')
+      days = o.value
+    end
+    events = Event.find_upcomming_approved(days)
+    # TODO: only send out if no notification has been sent. ie send
+    # notification today for an event in two days but when the rake task is ran
+    # again tomorrow (daily) it should not send.
+    events.each do |e|
+      ApplicationMailer.deliver_notify_email(e)
+    end
+  end
 end
