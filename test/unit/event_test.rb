@@ -123,4 +123,21 @@ class EventTest < ActiveSupport::TestCase
       assert @event.outdated?, "returned false for 6.days.ago"
     end
   end
+
+  context "find_upcomming_approved" do
+    setup do
+      assert @event = Factory(:event)
+      assert @event_approved = Factory(:approved)
+      assert @upcomming = Event.find_upcomming_approved(5)
+    end
+    should "return an array" do
+      assert @upcomming.kind_of? Array
+    end
+    should "find upcomming event" do
+      assert @upcomming.include?(@event_approved)
+    end
+    should "not include unapproved event" do
+      assert ! @upcomming.include?(@event)
+    end
+  end
 end
