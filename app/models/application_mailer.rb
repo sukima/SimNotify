@@ -39,7 +39,7 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def notify_email(event)
-    recipients  event.instructors.email
+    recipients  event.instructor.email
     cc          event.instructors.map(&:email)
     from        APP_CONFIG[:system_email_address]
     subject     "[#{APP_CONFIG[:application_name]}] Upcomming Session: #{event.title}"
@@ -83,7 +83,7 @@ class ApplicationMailer < ActionMailer::Base
     end
     events = Event.find_upcomming_approved(days)
     events.each do |e|
-      if !e.notification_sent_on.blank?
+      if e.notification_sent_on.nil?
         ApplicationMailer.deliver_notify_email(e)
         e.notification_sent_on = Time.now
         e.save
