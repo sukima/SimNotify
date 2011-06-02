@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110601202344) do
+ActiveRecord::Schema.define(:version => 20110601214228) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(:version => 20110601202344) do
     t.boolean  "approved",             :default => false
     t.integer  "technician_id"
     t.integer  "facility_id"
-    t.boolean  "followup_email_sent",  :default => false
     t.datetime "notification_sent_on"
   end
 
