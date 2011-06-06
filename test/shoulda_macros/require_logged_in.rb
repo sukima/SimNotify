@@ -43,6 +43,7 @@ class Test::Unit::TestCase
         :factory => nil,
         :params => { }
       })
+      should_require_logged_in(opt)
       should "require administrator access to #{opt[:method].to_s} action #{opt[:action].to_s}" #do
         # setup do
           # if !opt[:factory].nil?
