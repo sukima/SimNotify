@@ -6,3 +6,9 @@
       :label => "System email recipients",
       :hint => "Select who should recieve system email notifications."
   = f.buttons
+- semantic_form_for @options["days_to_send_event_notifications"], :namespace => "days_to_send_event_notifications" do |f|
+  - f.inputs do
+    = f.input :value,
+      :label => "Number of days ahead a notfication is sent",
+      :hint => "The number of days that notification emails should be sent prior to the session starting."
+  = f.buttons
