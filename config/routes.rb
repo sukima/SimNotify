@@ -77,6 +77,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'calendar/:action', :controller => 'calendar'
   map.connect 'calendar/:action.:format', :controller => 'calendar'
 
+  map.notifications 'notifications', :controller => 'notifications'
+  map.send_notice 'notifications/send/:event_id', :controller => 'notifications', :action => 'send_notice'
+  map.batch_send 'notifications/batch_send', :controller => 'notifications', :action => 'batch_send'
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
