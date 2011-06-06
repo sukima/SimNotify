@@ -24,3 +24,5 @@ ManikinReqType.create([
   { :req_type => "Adult" },
   { :req_type => "Birthing" }
 ])
+
+Option.set_all_defaults! # Defaults are set in method
