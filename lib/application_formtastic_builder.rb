@@ -10,12 +10,6 @@ class ApplicationFormtasticBuilder < Formtastic::SemanticFormBuilder
     select_input method, options
   end
 
-  def slider_input(method, options = {})
-    options[:include_blank] = false
-    options[:input_html] = merge_input_html(options[:input_html], 'slider')
-    select_input method, options
-  end
-
   private
   def merge_input_html(input_html, html_class)
     input_html ||= {}
