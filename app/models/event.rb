@@ -147,4 +147,11 @@ class Event < ActiveRecord::Base
     end
     !has_document && scenarios.empty?
   end
+
+  def send_notification
+    ApplicationMailer.deliver_notify_email(self)
+
+    self.notification_sent_on = Time.now
+    self.save
+  end
 end

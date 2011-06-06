@@ -140,4 +140,14 @@ class EventTest < ActiveSupport::TestCase
       assert ! @upcomming.include?(@event)
     end
   end
+
+  context "send_notification" do
+    setup do
+      @event = Factory(:event)
+    end
+    should "set the notification_sent_on attribute" do
+      assert @event.send_notification, "Did not return true"
+      assert !@event.notification_sent_on.nil?
+    end
+  end
 end
