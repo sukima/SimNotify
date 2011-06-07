@@ -19,6 +19,8 @@
     $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
         addClass("ui-corner-all ui-helper-clearfix");
   });
+%div
+  = link_to "Current Agenda", agenda_path, :class => "button"
 #calendar-header.calendar-home-link
 #calendar
 #calendar-footer.calendar-home-link

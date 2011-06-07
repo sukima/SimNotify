@@ -5,7 +5,7 @@
 %hr
 - if @weeks.empty?
   .info There are no events scheduled.
-- @weeks.each_with_index do |index,week|
+- @weeks.each_with_index do |week,index|
   %div{:id => "week-#{index}"}
     %h4= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
     - if week[:events].empty?

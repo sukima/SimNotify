@@ -23,8 +23,8 @@ class CalendarController < ApplicationController
         :events => [ ]
       }
       conditions = { :start_time => (the_week[:week_start]..the_week[:week_end]) }
-      the_week[:events] << Event.find(:all, :conditions => conditions)
-      the_week[:events] << SpecialEvent.find(:all, :conditions => conditions)
+      the_week[:events] = Event.find(:all, :conditions => conditions) +
+        SpecialEvent.find(:all, :conditions => conditions)
       the_week[:events].sort! { |a,b| a.start_time <=> b.start_time }
 
       @weeks << the_week
