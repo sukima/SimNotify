@@ -75,7 +75,7 @@ class CalendarControllerTest < ActionController::TestCase
         get :agenda
       end
       should respond_with :success
-      should assign_to(:number_of_weeks).with("3") # default
+      should assign_to(:number_of_weeks).with(3) # default
       should assign_to(:weeks)
       should assign_to(:date_range)
       should assign_to(:time_format)
