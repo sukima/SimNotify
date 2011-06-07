@@ -41,6 +41,19 @@ class ApplicationMailerTest < ActionMailer::TestCase
         ApplicationMailer.deliver_approved_email(@event)
         assert_emails 1
       end
+      should "send email for deliver_notify_email" do
+        ApplicationMailer.deliver_notify_email(@event)
+        assert_emails 1
+      end
+    end
+    context "method send_upcoming_notifications" do
+      setup do
+        @event = Factory(:approved)
+        ApplicationMailer.send_upcoming_notifications(5)
+      end
+      should "send email" do
+        assert_emails 1
+      end
     end
   end
 end

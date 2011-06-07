@@ -38,6 +38,15 @@ class ApplicationMailer < ActionMailer::Base
     body        :event => event
   end
 
+  def notify_email(event)
+    recipients  event.instructor.email
+    cc          event.instructors.map(&:email)
+    from        APP_CONFIG[:system_email_address]
+    subject     "[#{APP_CONFIG[:application_name]}] Upcomming Session: #{event.title}"
+    sent_on     Time.now
+    body        :event => event
+  end
+
   # Find the emails that should be sent out to. The typical way to handle this
   # is to search the Option model for the entry +system_email_recipients+ which
   # is an array of ids that associate to the Instructor model.
@@ -60,5 +69,25 @@ class ApplicationMailer < ActionMailer::Base
     end
     return APP_CONFIG[:system_email_address] if instructor_ids.nil? || instructor_ids.empty?
     return Instructor.find(instructor_ids, :select => 'email').map(&:email)
+  end
+
+  # Find all events upcomming in the next N-days and send out a notification.
+  #
+  # ==== Attributes
+  #
+  # * +days+ - the number of days to look forward and find events.
+  def self.send_upcoming_notifications(days=nil)
+    if days.nil?
+      o = Option.find_by_name('days_to_send_event_notifications')
+      days = o.value
+    end
+    events = Event.find_upcomming_approved(days)
+    events.each do |e|
+      if e.notification_sent_on.nil?
+        ApplicationMailer.deliver_notify_email(e)
+        e.notification_sent_on = Time.now
+        e.save
+      end
+    end
   end
 end
