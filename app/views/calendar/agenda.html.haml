@@ -1,16 +1,36 @@
-%h2= "Agenda for #{@date_range}"
-- form_tag agenda_path do
-  = text_field_tag 'number_of_weeks', @number_of_weeks
-  = submit_tag "Refesh"
-%hr
-- if @weeks.empty?
-  .info There are no events scheduled.
-- @weeks.each_with_index do |week,index|
-  %div{:id => "week-#{index}"}
-    %h4= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
-    - if week[:events].empty?
-      .info No events scheduled for this week.
-    - else
-      %ol.week-list
-        - week[:events].each do |event|
-          %li.week-list-item= session_description(event)
+!!!HTML4
+%html
+  %head
+    = stylesheet_link_jquery
+    = javascript_include_jquery
+    :css
+      .ui-button { font-size: 0.6em; }
+      @media print {
+        #controls { display: none; }
+      }
+    :javascript
+      $(function() {
+        $("input:submit").button();
+        $("#print-button").button({icons:{primary:'ui-icon-print'}});
+        $("#return-button").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
+      });
+  %body
+    #controls
+      - form_tag agenda_path do
+        = link_to "Return", calendar_path, :id => "return-button"
+        = link_to "Print", "javascript:window.print()", :id => "print-button"
+        = text_field_tag 'number_of_weeks', @number_of_weeks
+        = submit_tag "Refesh"
+    %h2= "Agenda for #{@date_range}"
+    %hr
+    - if @weeks.empty?
+      .info There are no events scheduled.
+    - @weeks.each_with_index do |week,index|
+      %div{:id => "week-#{index}"}
+        %h4= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
+        - if week[:events].empty?
+          .info No events scheduled for this week.
+        - else
+          %ol.week-list
+            - week[:events].each do |event|
+              %li.week-list-item= session_description(event)

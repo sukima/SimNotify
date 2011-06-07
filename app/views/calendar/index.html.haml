@@ -3,6 +3,8 @@
 - stylesheet 'fullcalendar'
 - stylesheet "calendar-fixes"
 - wide_content
+:css
+  #controls-box { margin: 0 0 10px 0; }
 :javascript
   $(document).ready(function () {
     $("#calendar").fullCalendar({
@@ -18,9 +20,10 @@
 
     $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
         addClass("ui-corner-all ui-helper-clearfix");
+    $("#print-button").button({icons:{primary:'ui-icon-print'}});
   });
-%div
-  = link_to "Current Agenda", agenda_path, :class => "button"
+#controls-box
+  = link_to "Print Agenda", agenda_path, :id => "print-button"
 #calendar-header.calendar-home-link
 #calendar
 #calendar-footer.calendar-home-link
