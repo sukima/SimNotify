@@ -77,6 +77,9 @@ class Event < ActiveRecord::Base
   end
 
   def self.find_upcomming_approved(number_of_days=2)
+    number_of_days = number_of_days.to_i if number_of_days.kind_of? String
+    throw :argument_error unless number_of_days.kind_of? Integer
+
     event_start_time = Time.now.beginning_of_day
     event_end_time = event_start_time + number_of_days.days
     conditions = [ "approved = ? AND start_time > ? AND start_time < ?", true, event_start_time, event_end_time ]

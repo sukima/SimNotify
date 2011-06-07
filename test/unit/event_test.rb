@@ -139,6 +139,16 @@ class EventTest < ActiveSupport::TestCase
     should "not include unapproved event" do
       assert ! @upcomming.include?(@event)
     end
+    should "handle a string parameter" do
+      assert_nothing_thrown do
+        Event.find_upcomming_approved("5")
+      end
+    end
+    should "throw error on invalid parameter" do
+      assert_throws :argument_error do
+        Event.find_upcomming_approved(nil)
+      end
+    end
   end
 
   context "send_notification" do
