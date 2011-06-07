@@ -33,4 +33,4 @@
         - else
           %ol.week-list
             - week[:events].each do |event|
-              %li.week-list-item= session_description(event)
+              %li.week-list-item= agenda_event_descrition_for(event)
