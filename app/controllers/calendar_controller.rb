@@ -1,11 +1,40 @@
 class CalendarController < ApplicationController
   before_filter :login_required
+  before_filter :login_admin, :only => :agenda
+  helper :events
 
   def index
     @is_calendar = true
     # respond_to do |format|
       # format.html
     # end
+  end
+
+  def agenda
+    @time_format = "%a, %B %d"
+    today = Time.now
+
+    @number_of_weeks = ( (params[:number_of_weeks].blank?) ? "3" : params[:number_of_weeks] ).to_i
+    @weeks = [ ]
+    for x in 1..@number_of_weeks do
+      the_week = {
+        :week_start => today.beginning_of_week + x.weeks,
+        :week_end => today.end_of_week + x.weeks,
+        :events => [ ]
+      }
+      conditions = { :start_time => (the_week[:week_start]..the_week[:week_end]) }
+      the_week[:events] = Event.find(:all, :conditions => conditions) +
+        SpecialEvent.find(:all, :conditions => conditions)
+      the_week[:events].sort! { |a,b| a.start_time <=> b.start_time }
+
+      @weeks << the_week
+    end
+
+    date_range_start = today.beginning_of_week
+    date_range_end = (today.end_of_week) + (@number_of_weeks.weeks)
+    @date_range = "#{date_range_start.strftime(@time_format)} - #{date_range_end.strftime(@time_format)}"
+
+    render :layout => false
   end
 
   def events
