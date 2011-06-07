@@ -1,20 +1,25 @@
 - title "Notifications Sent"
-%table
-  %thead
-    %tr
-      %th Session
-      %th Instructors
-      %th Notification Sent
-      %th Actions
-  %tbody
-    - @events.each do |e|
+- if @events.empty?
+  %div.notification
+    No upcomming sessions yet.
+  = link_to "Return to home", root_path, :class => "button"
+- else
+  %table
+    %thead
       %tr
-        %td= link_to e.title, e
-        %td
-          =h e.instructor.name
-          - e.instructors.each do |i|
-            = ", #{h i.name}"
-        %td= (e.notification_sent_on.nil?) ? "None sent" : dt(e.notification_sent_on)
-        %td= link_icon_to "mail-closed", "Send notification now", send_notice_path(e.id)
-%div
-  = link_to "Send all unsent notifications", batch_send_path, :class => "button"
+        %th Session
+        %th Instructors
+        %th Notification Sent
+        %th Actions
+    %tbody
+      - @events.each do |e|
+        %tr
+          %td= link_to e.title, e
+          %td
+            =h e.instructor.name
+            - e.instructors.each do |i|
+              = ", #{h i.name}"
+          %td= (e.notification_sent_on.nil?) ? "None sent" : dt(e.notification_sent_on)
+          %td= link_icon_to "mail-closed", "Send notification now", send_notice_path(e.id)
+  %div
+    = link_to "Send all unsent notifications", batch_send_path, :class => "button"
