@@ -77,8 +77,8 @@ class CalendarController < ApplicationController
   def build_json_event(e, opt={ :eventMethod => :event_path, :allDay => :live_in? })
       json_event = {
         :title => e.title, # add submitted specials
-        :start => e.start_time.to_i,
-        :end => e.end_time.to_i,
+        :start => e.start_time,
+        :end => e.end_time,
         :url => send(opt[:eventMethod], e),
         :allDay => e.send(opt[:allDay])
       }
