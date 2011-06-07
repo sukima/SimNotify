@@ -16,7 +16,7 @@ jQuery.fn.submitWithAjax = function() {
 };
 
 // Application object {{{1
-var APP = { config: {
+var APP = { cache: {}, config: {
     debug: false,
     jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
 }};
@@ -245,15 +245,40 @@ $(document).ready(function() {
     });
 
     // Buttons {{{2
-    $("#navigation a, input.create, input.update").button();
+    // Setup default buttons.
+    $("#navigation a, input.create, input.update, .button").button();
 
     $(".button_box").addClass("ui-widget");
 
-    $(".button").button();
-
+    // Add a new user icon to the help button.
     if (APP.config.new_user) {
         $("#nav_help_link").button("option", "icons", {primary:'ui-icon-info'});
     }
+
+    // Cache the form that needs to be interacted with.
+    APP.cache.event_form = $("form#new_event");
+    // Setup the #confirm_auto_approve_text dialog box.
+    APP.cache.confirm_auto_approve_dialog = $("#confirm_auto_approve_text").dialog({
+        modal: true,
+        autoOpen: false,
+        buttons: {
+            "Auto Approve Session": function() {
+                $(this).dialog("close");
+                $("input#auto_approve").val("yes");
+                APP.cache.event_form.submit();
+            },
+            "Save and do not approve": function() {
+                $(this).dialog("close");
+                $("input#auto_approve").val("");
+                APP.cache.event_form.submit();
+            }
+        }
+    });
+    // Setup the submit button to use the above dialog box.
+    $(".confirm_auto_approve").click(function() {
+        APP.cache.confirm_auto_approve_dialog.dialog("open");
+        return false;
+    });
 
     // Notifications {{{2
     APP.initNotifications();
