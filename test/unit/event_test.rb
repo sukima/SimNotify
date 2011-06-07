@@ -53,18 +53,26 @@ class EventTest < ActiveSupport::TestCase
   end
 
   context "class find method" do
-    context "self.submitted" do
+    context "self.find_submitted" do
       setup { assert @submitted = Factory(:submitted) }
       should "find all submitted" do
-        @query = Event.submitted(:all)
+        @query = Event.find_submitted(:all)
         assert @query.count == 1
       end
     end
-    context "self.approved" do
+    context "self.find_approved" do
       setup { assert @approved = Factory(:approved) }
+      should "find all approved" do
+        @query = Event.find_approved(:all)
+        assert @query.count == 1
+      end
     end
-    context "self.outdated" do
+    context "self.find_outdated" do
       setup { assert @outdated = Factory(:outdated) }
+      should "find all outdated" do
+        @query = Event.find_outdated(:all)
+        assert @query.count == 1
+      end
     end
   end
 

@@ -2,10 +2,10 @@ class MainController < ApplicationController
   before_filter :login_required, :except => [:autocomplete_map]
 
   def index
-    @events_in_queue = Event.in_queue(@current_instructor)
-    @events_submitted = Event.submitted(@current_instructor)
-    @events_approved = Event.approved(@current_instructor)
-    @events_needs_approval = Event.submitted(:all) if is_admin?
+    @events_in_queue = Event.find_in_queue(@current_instructor)
+    @events_submitted = Event.find_submitted(@current_instructor)
+    @events_approved = Event.find_approved(@current_instructor)
+    @events_needs_approval = Event.find_submitted(:all) if is_admin?
   end
 
   def help
