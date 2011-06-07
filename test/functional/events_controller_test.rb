@@ -82,6 +82,17 @@ class EventsControllerTest < ActionController::TestCase
           should respond_with :success
           should render_template :new
         end
+        context "with :auto_approve parameter" do
+          setup do
+            @newevent = Factory.build(:event, :instructor => @instructor)
+            post :create, { :event => @newevent.attributes, :auto_approve => "yes" }
+          end
+          should "not auto approve" do
+            assert event = Event.find(:last)
+            assert !event.approved?
+            assert !event.submitted?
+          end
+        end
       end
 
       context "GET :edit" do
@@ -195,6 +206,31 @@ class EventsControllerTest < ActionController::TestCase
           get :new
         end
         should assign_to(:technicians)
+      end
+
+      context "POST :create" do
+        context "with :auto_approve parameter" do
+          setup do
+            @newevent = Factory.build(:event, :instructor => @instructor)
+            post :create, { :event => @newevent.attributes, :auto_approve => "yes" }
+          end
+          should "auto approve" do
+            assert event = Event.find(:last)
+            assert event.approved?
+            assert event.submitted?
+          end
+        end
+        context "without :auto_approve parameter" do
+          setup do
+            @newevent = Factory.build(:event, :instructor => @instructor)
+            post :create, :event => @newevent.attributes
+          end
+          should "not auto approve" do
+            assert event = Event.find(:last)
+            assert !event.approved?
+            assert !event.submitted?
+          end
+        end
       end
 
       context "GET :edit" do
