@@ -156,7 +156,7 @@ module LayoutHelper
   end
 
   def dt(the_datetime)
-    the_datetime.strftime("%A, %b %d %H:%m")
+    the_datetime.strftime("%A, %b %d %H:%M")
   end
 
   # }}}1
