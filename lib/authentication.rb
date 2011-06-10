@@ -42,20 +42,31 @@ module Authentication
   def is_admin?
     logged_in? && current_instructor.admin?
   end
+
+  def redirect_to_login
+    store_target_location
+    redirect_to login_url
+  end
+
+  def login_required_no_flash
+    unless logged_in?
+      redirect_to_login
+    end
+  end
   
   def login_required
     unless logged_in?
       flash[:error] = t(:login_required)
-      store_target_location
-      redirect_to login_url
+      redirect_to_login
     end
   end
 
   def login_admin
-    unless logged_in? && current_instructor.admin?
+    if !logged_in?
+      login_required
+    elsif !current_instructor.admin?
       flash[:error] = t(:admin_required)
-      store_target_location
-      redirect_to root_url
+      redirect_to_login
     end
   end
   

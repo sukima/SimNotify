@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  before_filter :login_required, :except => [:autocomplete_map]
+  before_filter :login_required_no_flash, :except => [:autocomplete_map]
 
   def index
     @events_in_queue = Event.find_in_queue(@current_instructor)
