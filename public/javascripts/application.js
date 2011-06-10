@@ -182,6 +182,18 @@ $(document).ready(function() {
         });
     });
 
+    // Navigation bar {{{2
+    $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
+    $("#navigation .dropdown").append("<span class='ui-icon ui-icon-triangle-1-s'></span>");
+    $("#navigation>ul").addClass("nav-list");
+    $("#navigation>ul li>ul").addClass("sub-nav-list ui-widget ui-widget-content ui-corner-all ui-helper-clearfix").hide();
+    $(".nav-list li").hover(function() {
+        $('ul', this).slideDown(100);
+    }, function() {
+        $('ul', this).slideUp(100);
+    });
+
+
     // Datepicker / Timepicker {{{2
     // Define the dateFormat for the datepicker
     // $.datepicker._defaults.dateFormat = 'M dd yy';

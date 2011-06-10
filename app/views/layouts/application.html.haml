@@ -23,20 +23,23 @@
           %br/
           %span#subtitle= h yield(:title)
       - if logged_in?
-        #navigation
+        #navigation.side-navigation
           %ul
             %li= link_to_home
             = nav_link_to_calendar if (!@is_calendar)
             - if is_admin?
-              = nav_link_to "System Options", options_path
-              = nav_link_to "Notifications", notifications_path
-              = nav_link_to "Instructors", instructors_path
-              = nav_link_to "Facilities", facilities_path
-              = nav_link_to "Manikins", manikins_path
-              = nav_link_to "Location Suggestions", location_suggestions_path
-              = nav_link_to "View Sessions", events_path
-            = nav_link_to "Special Events", special_events_path
+              %li
+                = link_to "Administration", "#", :class => "dropdown"
+                %ul
+                  = nav_link_to "System Options", options_path
+                  = nav_link_to "Notifications", notifications_path
+                  = nav_link_to "Instructors", instructors_path
+                  = nav_link_to "Facilities", facilities_path
+                  = nav_link_to "Manikins", manikins_path
+                  = nav_link_to "Location Suggestions", location_suggestions_path
+                  = nav_link_to "View Sessions", events_path
             = nav_link_to "Start new session", new_event_path
+            = nav_link_to "Special Events", special_events_path
             = yield :nav_list
             = nav_link_to_help if (!@is_help)
       - if wide_content?
