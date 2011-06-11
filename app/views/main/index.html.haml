@@ -1,11 +1,5 @@
 - title "Home"
 - name = @current_instructor.name_hash
-%p.user_control
-  = link_to "Log Out", logout_path
-  | #{link_to "Edit Profile", edit_instructor_path(@current_instructor)}
-  - if @current_instructor.admin?
-    | #{link_to "View Users", instructors_path}
-    | #{link_to "Edit Manikins", manikins_path}
 %div
   %p
     Welcome back
