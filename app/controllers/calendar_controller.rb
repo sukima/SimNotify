@@ -5,6 +5,7 @@ class CalendarController < ApplicationController
 
   def index
     @is_calendar = true
+    @facilities = Facility.find(:all)
     # respond_to do |format|
       # format.html
     # end
