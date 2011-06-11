@@ -18,6 +18,8 @@
       %a{:href=>"#calendar"} Calendar
     %li
       %a{:href=>"#special_events"} Special Events
+    %li
+      %a{:href=>"#credits"} Credits
   #intro
     %h2 Introduction
     %p
@@ -106,4 +108,60 @@
     %h2 Special Events
     .help-buttons
       %a.help-button{:href=>"#calendar"}
+        %span.ui-icon.ui-icon-seek-prev Previous
+      %a.help-button{:href=>"#credits"}
+        %span.ui-icon.ui-icon-seek-next Next
+  #credits
+    %h2 Credits
+    %p
+      = "#{APP_CONFIG[:application_name]} by "
+      %a{:href=>"http://github.com/sukima",:target=>"_blank"} Devin Weaver
+    %p
+      Current source code is available for peer review on
+      %a{:href=>"https://github.com/sukima/SimNotify",:target=>"_blank"} GitHub.
+    %p The following tools and plugins were used to build this applicaiton:
+    %ul
+      %li
+        %a{:href=>"http://rubyonrails.org/",:target=>"_blank"} Ruby on Rails
+        %ul
+          %li
+            %a{:href=>"http://gembundler.com/",:target=>"_blank"} Bundler
+          %li
+            %a{:href=>"http://thoughtbot.com/community/",:target=>"_blank"} Factory Girl
+          %li
+            %a{:href=>"http://thoughtbot.com/community/",:target=>"_blank"} Shoulda
+          %li
+            %a{:href=>"http://thoughtbot.com/community/",:target=>"_blank"} Paperclip
+          %li
+            %a{:href=>"http://haml-lang.com/",:target=>"_blank"} Haml
+          %li
+            %a{:href=>"https://github.com/justinfrench/formtastic",:target=>"_blank"} Formtastic
+          %li
+            %a{:href=>"https://github.com/binarylogic/authlogic",:target=>"_blank"} Authlogic
+          %li
+            %a{:href=>"https://github.com/redinger/validation_reflection",:target=>"_blank"} Validation Reflection
+          %li
+            %a{:href=>"https://github.com/josevalim/rails-footnotes",:target=>"_blank"} Rails Footnotes
+      %li
+        %a{:href=>"http://jquery.com/",:target=>"_blank"} jQuery
+        %ul
+          %li
+            %a{:href=>"http://jqueryui.com/",:target=>"_blank"} jQuery-UI
+          %li
+            %a{:href=>"http://arshaw.com/fullcalendar/",:target=>"_blank"} FullCalendar
+          %li
+            %a{:href=>"http://plugins.jquery.com/project/bgiframe",:target=>"_blank"} bgiframe
+          %li
+            %a{:href=>"http://www.supersite.me/index.php?p=2_1",:target=>"_blank"} iColorPicker
+          %li
+            %a{:href=>"http://www.erichynds.com/jquery/jquery-multiselect-plugin-with-themeroller-support/",:target=>"_blank"} MultiSelect
+          %li
+            %a{:href=>"http://tablesorter.com",:target=>"_blank"} TableSorter
+          %li
+            %a{:href=>"https://github.com/trentrichardson/jQuery-Timepicker-Addon",:target=>"_blank"} TimePicker
+    %p
+      Original Theme Design by
+      %a{:href => "http://nicolas.freezee.org", :target => "_BLANK"} Nicolas Fafchamps
+    .help-buttons
+      %a.help-button{:href=>"#special_events"}
         %span.ui-icon.ui-icon-seek-prev Previous
