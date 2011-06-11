@@ -10,6 +10,11 @@ class ApplicationFormtasticBuilder < Formtastic::SemanticFormBuilder
     select_input method, options
   end
 
+  def colorpicker_input(method, options = {})
+    options[:input_html] = merge_input_html(options[:input_html], 'iColorPicker')
+    input method, options
+  end
+
   private
   def merge_input_html(input_html, html_class)
     input_html ||= {}

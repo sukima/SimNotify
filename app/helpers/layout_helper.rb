@@ -47,6 +47,7 @@ module LayoutHelper
     end
     ret += javascript_include_tag "jquery-ui-timepicker-addon"
     ret += javascript_include_tag "jquery.multiselect"
+    ret += javascript_include_tag "jquery.icolorpicker.min"
     return ret
   end
 
