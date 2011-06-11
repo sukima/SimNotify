@@ -62,55 +62,69 @@ module LayoutHelper
   # Navigation buttons {{{1
   # See app/views/layouts/application.html.erb comments for why we are using
   # this helper method.
-  def nav_link_to(*args)
+  def nav_link_to(title, path, opts=nil)
+    opts ||= {}
     rtn = "<li>"
-    rtn += link_to_confirm *args
+    rtn += link_to_confirm title, path, opts.merge({:is_button=>true})
     rtn += "</li>"
     return rtn
   end
 
-  def add_nav_link(*args)
+  def link_to_sub_menu(name)
+    return "<a href=\"#\" class=\"dropdown\">#{name}</a>"
+  end
+
+  def add_nav_link(title, path, opts=nil)
     content_for(:nav_list) do
-      nav_link_to *args
+      nav_link_to title, path, opts
     end
   end
 
   def nav_link_to_calendar
-    nav_link_to "Calendar", calendar_path
+    nav_link_to "Calendar", calendar_path, { :icon => 'calendar' }
   end
 
   # Links {{{1
+  def link_to_with_icon(title, path, opts=nil)
+    if opts[:icon]
+      if opts[:is_button]
+        opts["data-button-icon"] = "ui-icon-#{opts[:icon]}"
+      else
+        title = "<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>#{title}"
+      end
+    end
+    opts.delete(:is_button)
+    opts.delete(:icon)
+    return link_to title, path, opts
+  end
+
   # builds a link that is dynamic for confirmation or not
   def link_to_confirm(title, path, opts=nil)
     opts = {} if opts.nil?
-    if opts[:confirm].nil? && (@confirm_exit.nil? || !@confirm_exit)
-      return link_to title, path, opts
-    else
-      opts[:confirm] = t(:cancel_confirm) if opts[:confirm].nil?
+    if opts[:confirm] || @confirm_exit
+      opts[:confirm] ||= t(:cancel_confirm)
       opts[:confirm_message] = opts[:confirm]
-      return link_to title, path, opts
     end
+    return link_to_with_icon title, path, opts
   end
 
   def link_icon_to(icon, title, path, opts=nil)
     opts = {} if opts.nil?
-    opts[:class] = "" if opts[:class].nil?
+    opts[:class] ||= ""
     opts[:class] = "ui-icon ui-icon-#{icon} #{opts[:class]}"
     opts[:title] = title if opts[:title].nil?
+    opts.delete(:icon) # Prevent redundant icons
     return link_to_confirm title, path, opts
   end
 
   def nav_link_to_help(title = nil)
-    title = t(:help) if title.nil?
-    rtn = "<li>"
-    rtn += link_to title, help_path, {:id => 'nav_help_link'}
-    rtn += "</li>"
-    return rtn
+    title ||= t(:help)
+    return nav_link_to title, help_path, {:id => 'nav_help_link', :icon => 'help'}
   end
 
   def link_to_home(title = nil)
     title = t(:home) if title.nil?
-    link_to_confirm title, root_url
+    link_to_confirm title, root_url, { :icon => 'home', :is_button => true }
   end
 
   def link_to_event_submit(title, event, use_icon=false)

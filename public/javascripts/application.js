@@ -193,7 +193,6 @@ $(document).ready(function() {
         $('ul', this).slideUp(100);
     });
 
-
     // Datepicker / Timepicker {{{2
     // Define the dateFormat for the datepicker
     // $.datepicker._defaults.dateFormat = 'M dd yy';
@@ -258,13 +257,29 @@ $(document).ready(function() {
 
     // Buttons {{{2
     // Setup default buttons.
-    $("#navigation a, input.create, input.update, .button").button();
+    $("#navigation a.dropdown").button({icons:{secondary:'ui-icon-triangle-1-s'}});
+    $("#navigation a").each(function() {
+        if ($(this).hasClass("dropdown"))
+        {
+            $(this).button({icons:{secondary:'ui-icon-triangle-1-s'}});
+        }
+        else if ($(this).data('button-icon') !== undefined)
+        {
+            $(this).button({icons:{primary:$(this).data('button-icon')}});
+        }
+        else
+        {
+            $(this).button();
+        }
+    });
+
+    $("input.create, input.update, .button").button();
 
     $(".button_box").addClass("ui-widget");
 
     // Add a new user icon to the help button.
     if (APP.config.new_user) {
-        $("#nav_help_link").button("option", "icons", {primary:'ui-icon-info'});
+        $("#nav_help_link").button("option", "icons", {secondary:'ui-icon-info'});
     }
 
     // Cache the form that needs to be interacted with.
