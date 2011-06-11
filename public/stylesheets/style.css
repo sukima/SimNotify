@@ -99,6 +99,7 @@ p {
 /* Make a horizontal navigation bar */
 div.nav-widget {
   padding: 0 2px;
+  font-size: 1.0em;
 }
 
 ul.nav-list {
@@ -146,11 +147,18 @@ ul.sub-nav-list li {
 #content {
   float: left;
   text-align: left;
-  width: 535px;
   font-size: 0.9em;
   margin-right: 0px;
   margin-bottom: 0.5em; /* pushed #footer down some */
   padding: 1em 3em 3em;
+}
+
+#content.side-nav-width {
+  width: 535px;
+}
+
+#content.top-nav-width {
+  width: 725px;
 }
 
 #content h2 {
