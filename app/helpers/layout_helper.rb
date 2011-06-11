@@ -101,9 +101,13 @@ module LayoutHelper
   # builds a link that is dynamic for confirmation or not
   def link_to_confirm(title, path, opts=nil)
     opts = {} if opts.nil?
-    if opts[:confirm] || @confirm_exit
-      opts[:confirm] ||= t(:cancel_confirm)
-      opts[:confirm_message] = opts[:confirm]
+    if !opts[:no_confirm]
+      if opts[:confirm] || @confirm_exit
+        opts[:confirm] ||= t(:cancel_confirm)
+        opts[:confirm_message] = opts[:confirm]
+      end
+    else
+      opts.delete(:no_confirm)
     end
     return link_to_with_icon title, path, opts
   end
@@ -119,7 +123,7 @@ module LayoutHelper
 
   def nav_link_to_help(title = nil)
     title ||= t(:help)
-    return nav_link_to title, help_path, {:id => 'nav_help_link', :icon => 'help'}
+    return nav_link_to title, help_path, {:id => 'nav_help_link', :icon => 'help', :no_confirm => true}
   end
 
   def link_to_home(title = nil)
