@@ -353,7 +353,8 @@ $(document).ready(function() {
             });
             help_dialog.dialog({
                 title: "Help",
-                width: 550
+                width: 750,
+                height: 500
             });
             help_link.click(function () {
                 e.preventDefault();
