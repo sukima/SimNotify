@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110601214228) do
+ActiveRecord::Schema.define(:version => 20110611205112) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -53,9 +53,10 @@ ActiveRecord::Schema.define(:version => 20110601214228) do
   end
 
   create_table "facilities", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "agenda_color"
   end
 
   create_table "instructors", :force => true do |t|
