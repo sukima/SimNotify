@@ -15,6 +15,8 @@ en:
       instructor:
         phone: "Phone Number"
         email: "E-Mail"
+      facility:
+        agenda_color: "Color on calendar"
   home: "Home"
   help: "Help"
   submit: "Submit for approval"
@@ -85,6 +87,8 @@ en:
         moulage: "Will there be wounds / makeup (wigs, special procedures, wounds, blood, etc.) <strong>Describe in notes</strong>"
         support_material: "Are there support materials such as x-rays, labs, etc.? <strong>Describe in notes</strong>"
         manikin_req_type: "What kind of manikin will you need?"
+      facility:
+        agenda_color: "Pick the color you would like to show up when you view sessions from this facility in the calendar."
     actions:
       login: "Login"
       save: "Save"
