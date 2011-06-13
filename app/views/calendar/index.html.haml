@@ -1,6 +1,7 @@
 - title "Event Calendar"
 - javascript (APP_CONFIG[:use_minified_js] ? 'fullcalendar.min' : 'fullcalendar')
 - stylesheet 'fullcalendar'
+- stylesheet 'fullcalendar.print', :media => :print
 - stylesheet "calendar-fixes"
 - add_nav_link "Print Agenda", agenda_path, { :icon => 'print', :is_button => true }
 - wide_content
@@ -30,7 +31,7 @@
     - @facilities.each do |f|
       %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{h f.agenda_color};"}
         =h f.name
-    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right.in-queue
+    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("not_approved_color").value};"}
       %strong Not Approved
-    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right.special-event
+    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("special_event_color").value};"}
       %strong Special Event
