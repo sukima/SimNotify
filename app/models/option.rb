@@ -25,7 +25,9 @@ class Option < ActiveRecord::Base
   def self.set_all_defaults!(options={})
     [
       "system_email_recipients",
-      "days_to_send_event_notifications"
+      "days_to_send_event_notifications",
+      "not_approved_color",
+      "special_event_color"
     ].each do |o|
       options[o] ||= self.create_default_for(o)
     end
@@ -41,6 +43,12 @@ class Option < ActiveRecord::Base
     when "days_to_send_event_notifications"
       # Number of days to look for upcomming events.
       return Option.create(:name =>"days_to_send_event_notifications", :value => 2)
+    when "not_approved_color"
+      # The color for not approved events in calendar
+      return Option.create(:name => "not_approved_color", :value => "#f00")
+    when "special_event_color"
+      # The color for special events in calendar
+      return Option.create(:name => "special_event_color", :value => "#f90")
     else
       return Option.new(:name => option_name)
     end

@@ -1,13 +1,18 @@
 class ApplicationFormtasticBuilder < Formtastic::SemanticFormBuilder
   def autocomplete_input(method, options = {})
     options[:input_html] = merge_input_html(options[:input_html], 'autocomplete')
-    input method, options
+    string_input method, options
   end
 
   def multiselect_input(method, options = {})
     options[:multiple] = true
     options[:input_html] = merge_input_html(options[:input_html], 'multiselect')
     select_input method, options
+  end
+
+  def colorpicker_input(method, options = {})
+    options[:input_html] = merge_input_html(options[:input_html], 'iColorPicker')
+    string_input method, options
   end
 
   private

@@ -12,3 +12,17 @@
       :label => "Number of days ahead a notfication is sent",
       :hint => "The number of days that notification emails should be sent prior to the session starting."
   = f.buttons
+- semantic_form_for @options["not_approved_color"], :namespace => "not_approved_color" do |f|
+  - f.inputs do
+    = f.input :value,
+      :label => "Not Approved Color",
+      :hint => "The color to display an event that is not approved yet in the calendar",
+      :as => :colorpicker
+  = f.buttons
+- semantic_form_for @options["special_event_color"], :namespace => "special_event_color" do |f|
+  - f.inputs do
+    = f.input :value,
+      :label => "Special Event Color",
+      :hint => "The color to display a special event in the calendar",
+      :as => :colorpicker
+  = f.buttons

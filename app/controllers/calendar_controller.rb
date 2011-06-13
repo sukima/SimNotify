@@ -5,6 +5,7 @@ class CalendarController < ApplicationController
 
   def index
     @is_calendar = true
+    @facilities = Facility.find(:all)
     # respond_to do |format|
       # format.html
     # end
@@ -47,11 +48,7 @@ class CalendarController < ApplicationController
     end_time = Time.at(params[:end].to_i)
     conditions = { :start_time => (start_time..end_time) }
 
-    if (is_admin?)
-      @events = Event.find(:all, :conditions => conditions)
-    else
-      @events = @current_instructor.events.find(:all, :conditions => conditions)
-    end
+    @events = Event.find(:all, :conditions => conditions)
 
     @special_events = SpecialEvent.find(:all,
         :conditions => conditions.except(:submitted))
@@ -64,10 +61,7 @@ class CalendarController < ApplicationController
     end
 
     @special_events.each do |e|
-      json_events << build_json_event(e, {
-        :eventMethod => :special_event_path,
-        :allDay => :all_day?
-      })
+      json_events << build_json_event(e)
     end
 
     render :json => json_events.to_json
@@ -76,14 +70,31 @@ class CalendarController < ApplicationController
   private
   def build_json_event(e, opt={ :eventMethod => :event_path, :allDay => :live_in? })
       json_event = {
-        :title => e.title, # add submitted specials
         :start => e.start_time,
         :end => e.end_time,
-        :url => send(opt[:eventMethod], e),
-        :allDay => e.send(opt[:allDay])
       }
-      className = e.status_as_class
-      json_event[:className] = className unless className.nil?
+      if e.kind_of? Event
+        if (e.instructor == current_instructor || is_admin?)
+          json_event[:title] = e.title
+          json_event[:url] = event_path(e)
+        else
+          json_event[:title] = "Session Scheduled"
+        end
+        json_event[:allDay] = e.live_in?
+        if e.approved? && !e.facility.nil?
+          json_event[:color] = e.facility.agenda_color
+        elsif !e.approved
+          # className = e.status_as_class
+          # json_event[:className] = className unless className.nil?
+          json_event[:color] = Option.find_option_for("not_approved_color").value
+        end
+      elsif e.kind_of? SpecialEvent
+        json_event[:title] = e.title
+        json_event[:url] = special_event_path(e)
+        json_event[:allDay] = e.all_day?
+        # json_event[:className] = "special-event"
+        json_event[:color] = Option.find_option_for("special_event_color").value
+      end
       return json_event
   end
 end

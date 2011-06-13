@@ -32,37 +32,35 @@ class CalendarControllerTest < ActionController::TestCase
         should respond_with :not_acceptable
       end
 
-      context "with params" do
+      context "with special event," do
         setup do
-          assert @event = Factory(:special_event)
-          @start = @event.start_time - 5.days
-          @end = @event.end_time + 5.days
-          get :events, :start => @start.to_i, :end => @end.to_i
-          begin
-            @json = ActiveSupport::JSON.decode(@response.body)
-          rescue
-            @json = nil
-          end
+          construct_json_object(:special_event)
         end
-        should respond_with :success
-        should assign_to(:special_events).with(@event)
-        should respond_with_content_type(/json/)
-        context "json object" do
-          should "be valid" do
-            assert_not_nil @json, "possible exception thrown in setup (response: #{@response.body})"
-          end
-          should "have a title" do
-            assert_not_nil @json[0]['title']
-          end
-          should "have a start and end time" do
-            assert_not_nil @json[0]['start']
-            assert_not_nil @json[0]['end']
-          end
-          should "have className == special-event" do
-            assert_match "special-event", @json[0]['className']
+        should_pass_standard_calendar_tests
+        context "the json object" do
+          should "have a color" do
+            assert_not_nil @json[0]['color']
           end
           should "have a allDay field" do
             assert_not_nil @json[0]['allDay']
+          end
+        end
+      end
+
+      context "with a normal event," do
+        setup do
+          construct_json_object(:event)
+        end
+        should_pass_standard_calendar_tests
+        context "the json object" do
+          should "show a busy title" do
+            assert_match "Session Scheduled", @json[0]['title']
+          end
+          should "not have url" do
+            assert_nil @json[0]['url']
+          end
+          should "have a color" do
+            assert_not_nil @json[0]['color']
           end
         end
       end
@@ -70,6 +68,32 @@ class CalendarControllerTest < ActionController::TestCase
   end
 
   logged_in_as :admin do
+    context "get :events" do
+      context "with unsubmitted event," do
+        setup do
+          construct_json_object(:event)
+        end
+        should_pass_standard_calendar_tests
+        context "json object" do
+          should "have a color" do
+            assert_not_nil @json[0]['color']
+          end
+        end
+      end
+
+      context "with approved event," do
+        setup do
+          construct_json_object(:event_with_facility)
+        end
+        should_pass_standard_calendar_tests
+        context "the json object" do
+          should "have color == #36c" do
+            assert_match "#36c", @json[0]['color']
+          end
+        end
+      end
+    end
+
     context "get :agenda" do
       setup do
         get :agenda
@@ -81,5 +105,19 @@ class CalendarControllerTest < ActionController::TestCase
       should assign_to(:time_format)
       should render_template :agenda
     end
+  end
+
+  private
+  def construct_json_object(event_type)
+    assert @event = Factory(event_type)
+    @start = @event.start_time - 5.days
+    @end = @event.end_time + 5.days
+    get :events, :start => @start.to_i, :end => @end.to_i
+    begin
+      @json = ActiveSupport::JSON.decode(@response.body)
+    rescue
+      @json = nil
+    end
+    @json = [{}] if (@json.nil? || @json[0].nil?)
   end
 end
