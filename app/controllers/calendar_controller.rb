@@ -82,16 +82,18 @@ class CalendarController < ApplicationController
         end
         json_event[:allDay] = e.live_in?
         if e.approved? && !e.facility.nil?
-          json_event[:backgroundColor] = e.facility.agenda_color
-        else
-          className = e.status_as_class
-          json_event[:className] = className unless className.nil?
+          json_event[:color] = e.facility.agenda_color
+        elsif !e.approved
+          # className = e.status_as_class
+          # json_event[:className] = className unless className.nil?
+          json_event[:color] = Option.find_option_for("not_approved_color").value
         end
       elsif e.kind_of? SpecialEvent
         json_event[:title] = e.title
         json_event[:url] = special_event_path(e)
         json_event[:allDay] = e.all_day?
-        json_event[:className] = "special-event"
+        # json_event[:className] = "special-event"
+        json_event[:color] = Option.find_option_for("special_event_color").value
       end
       return json_event
   end

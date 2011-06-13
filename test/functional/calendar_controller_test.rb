@@ -38,8 +38,8 @@ class CalendarControllerTest < ActionController::TestCase
         end
         should_pass_standard_calendar_tests
         context "the json object" do
-          should "have className == special-event" do
-            assert_match "special-event", @json[0]['className']
+          should "have a color" do
+            assert_not_nil @json[0]['color']
           end
           should "have a allDay field" do
             assert_not_nil @json[0]['allDay']
@@ -56,14 +56,11 @@ class CalendarControllerTest < ActionController::TestCase
           should "show a busy title" do
             assert_match "Session Scheduled", @json[0]['title']
           end
-          should "have className" do
-            assert_not_nil @json[0]['className']
-          end
           should "not have url" do
             assert_nil @json[0]['url']
           end
-          should "have backgroundColor" do
-            assert_nil @json[0]['backgroundColor']
+          should "have a color" do
+            assert_not_nil @json[0]['color']
           end
         end
       end
@@ -78,8 +75,8 @@ class CalendarControllerTest < ActionController::TestCase
         end
         should_pass_standard_calendar_tests
         context "json object" do
-          should "have className == approved" do
-            assert_match "in-queue", @json[0]['className']
+          should "have a color" do
+            assert_not_nil @json[0]['color']
           end
         end
       end
@@ -90,8 +87,8 @@ class CalendarControllerTest < ActionController::TestCase
         end
         should_pass_standard_calendar_tests
         context "the json object" do
-          should "backgroundColor == #36c" do
-            assert_match "#36c", @json[0]['backgroundColor']
+          should "have color == #36c" do
+            assert_match "#36c", @json[0]['color']
           end
         end
       end
