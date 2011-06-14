@@ -16,10 +16,3 @@
     = f.input :live_in
   - f.buttons do
     = (is_admin?) ? f.commit_button(:button_html => { :class => "confirm_auto_approve" }) : f.commit_button
-- if is_admin?
-  #confirm_auto_approve_text{:style => "display:none;", :title => "Do you want to auto approve this session?"}
-    %p
-      %span.ui-icon.ui-icon-alert{:style=>"float:left;margin:0 7px 20px 0;"}
-      Since you are an administrator you can skip the approval process. Or you
-      have the option to save your changes to be submitted and approved manually
-      later. Do you wish to auto approve this session?

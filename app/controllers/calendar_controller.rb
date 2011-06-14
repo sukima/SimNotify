@@ -17,7 +17,7 @@ class CalendarController < ApplicationController
 
     @number_of_weeks = ( (params[:number_of_weeks].blank?) ? "3" : params[:number_of_weeks] ).to_i
     @weeks = [ ]
-    for x in 1..@number_of_weeks do
+    for x in 0..@number_of_weeks-1 do
       the_week = {
         :week_start => today.beginning_of_week + x.weeks,
         :week_end => today.end_of_week + x.weeks,

@@ -285,27 +285,34 @@ $(document).ready(function() {
     // Cache the form that needs to be interacted with.
     APP.cache.event_form = $("form#new_event");
     // Setup the #confirm_auto_approve_text dialog box.
-    APP.cache.confirm_auto_approve_dialog = $("#confirm_auto_approve_text").dialog({
-        modal: true,
-        autoOpen: false,
-        buttons: {
-            "Auto Approve Session": function() {
-                $(this).dialog("close");
-                $("input#auto_approve").val("yes");
-                APP.cache.event_form.submit();
-            },
-            "Save and do not approve": function() {
-                $(this).dialog("close");
-                $("input#auto_approve").val("");
-                APP.cache.event_form.submit();
+    APP.cache.confirm_auto_approve_dialog = $("#confirm_auto_approve_text");
+    if (APP.cache.event_form.length > 0)
+    {
+        APP.cache.confirm_auto_approve_dialog.dialog({
+            modal: true,
+            autoOpen: false,
+            buttons: {
+                "Auto Approve Session": function() {
+                    $(this).dialog("close");
+                    $("input#auto_approve").val("yes");
+                    APP.cache.event_form.submit();
+                },
+                "Save and do not approve": function() {
+                    $(this).dialog("close");
+                    $("input#auto_approve").val("");
+                    APP.cache.event_form.submit();
+                }
             }
-        }
-    });
+        });
+    }
     // Setup the submit button to use the above dialog box.
-    $(".confirm_auto_approve").click(function() {
-        APP.cache.confirm_auto_approve_dialog.dialog("open");
-        return false;
-    });
+    if (APP.cache.confirm_auto_approve_dialog.length > 0)
+    {
+        $(".confirm_auto_approve").click(function() {
+            APP.cache.confirm_auto_approve_dialog.dialog("open");
+            return false;
+        });
+    }
 
     // Notifications {{{2
     APP.initNotifications();
