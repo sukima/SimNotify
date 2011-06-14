@@ -1,8 +1,21 @@
 - title "Facilities"
-%ol
+:css
+  span.color {
+    width: 75px;
+    display: inline-block;
+  }
+%table
+  %thead
+    %tr
+      %th Name
+      %th Color
+      %th Actions
   - @facilities.each do |f|
-    %li
-      = link_to f.name, edit_facility_path(f)
-      = link_icon_to "pencil", t(:edit), edit_facility_path(f)
-      = link_icon_to "trash", t(:destroy), delete_facility_path(f), :confirm => t(:destroy_confirm)
+    %tr
+      %td= link_to f.name, edit_facility_path(f)
+      %td
+        %span.color{:style=>"background-color:#{f.agenda_color};"}= "#{f.agenda_color}"
+      %td
+        = link_icon_to "pencil", t(:edit), edit_facility_path(f)
+        = link_icon_to "trash", t(:destroy), delete_facility_path(f), :confirm => t(:destroy_confirm)
 = link_to "New Facility", new_facility_path

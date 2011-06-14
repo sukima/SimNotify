@@ -33,6 +33,8 @@ ActionController::Routing::Routes.draw do |map|
     :member => { :delete => :get }
 
   map.resources :facilities, :except => :show, :member => { :delete => :get }
+
+  map.resources :options, :only=> [:index, :update]
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -72,9 +74,13 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "main/autocomplete_map.:format", :controller => "main", :action => "autocomplete_map"
 
   map.calendar 'calendar', :controller => 'calendar'
+  map.agenda 'calendar/agenda', :controller => 'calendar', :action => 'agenda'
   map.connect 'calendar/:action', :controller => 'calendar'
   map.connect 'calendar/:action.:format', :controller => 'calendar'
 
+  map.notifications 'notifications', :controller => 'notifications'
+  map.send_notice 'notifications/send/:event_id', :controller => 'notifications', :action => 'send_notice'
+  map.batch_send 'notifications/batch_send', :controller => 'notifications', :action => 'batch_send'
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.

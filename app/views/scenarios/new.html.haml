@@ -2,5 +2,3 @@
 = render :partial => 'form'
 %p
   = link_to_confirm "Cancel", root_url
-  - if @current_instructor.admin?
-    | #{link_to_confirm "View All scenarios", scenarios_path}

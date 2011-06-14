@@ -30,3 +30,7 @@ Factory.define :outdated, :parent => :event do |e|
   e.start_time DateTime.now - 2.days
   e.end_time DateTime.now + 1.hour - 2.days
 end
+
+Factory.define :event_with_facility, :parent => :approved do |e|
+  e.association :facility
+end

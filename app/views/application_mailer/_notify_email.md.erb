@@ -1,0 +1,20 @@
+Dear <%=h @event.instructor.name %><%- if !@event.instructors.empty? -%> and others<%- end -%>:
+
+The _<%=h @event.title %>_ session is fast approaching
+
+Requested for *<%=d @event.start_time %>*.
+Lasting <%=h distance_of_time_in_words(@event.start_time, @event.end_time) %>.
+Located at __<%=h @event.location %>__.
+<%- if @event.live_in? -%>For a long term stay<%- end -%>
+<%- unless @event.technician.nil? -%>
+
+Your technician will be <%=h @event.technician.name %>.
+
+<%- end -%>
+
+View [event details][1].
+
+You may [edit the session][2] if you need cancel or make further changes.
+
+[1]: <%= event_url(@event) %>
+[2]: <%= edit_event_url(@event) %>

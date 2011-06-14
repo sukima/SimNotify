@@ -16,7 +16,7 @@ jQuery.fn.submitWithAjax = function() {
 };
 
 // Application object {{{1
-var APP = { config: {
+var APP = { cache: {}, config: {
     debug: false,
     jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
 }};
@@ -152,7 +152,7 @@ $(document).ready(function() {
     // Reusable Resources {{{2
     var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
 
-    // Autocomplete {{{2
+    // Autocomplete / Multiselect {{{2
     $.getJSON('/main/autocomplete_map', function(data) {
         APP.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
@@ -180,6 +180,17 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+
+    // Navigation bar {{{2
+    $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
+    $("#content").removeClass("side-nav-width").addClass("top-nav-width");
+    $("#navigation>ul").addClass("nav-list");
+    $("#navigation>ul li>ul").addClass("sub-nav-list ui-widget ui-widget-content ui-corner-all ui-helper-clearfix").hide();
+    $(".nav-list li").hover(function() {
+        $('ul', this).slideDown(100);
+    }, function() {
+        $('ul', this).slideUp(100);
     });
 
     // Datepicker / Timepicker {{{2
@@ -245,14 +256,62 @@ $(document).ready(function() {
     });
 
     // Buttons {{{2
-    $("#navigation a, input.create, input.update").button();
+    // Setup default buttons.
+    $("#navigation a.dropdown").button({icons:{secondary:'ui-icon-triangle-1-s'}});
+    $("#navigation a").each(function() {
+        if ($(this).hasClass("dropdown"))
+        {
+            $(this).button({icons:{secondary:'ui-icon-triangle-1-s'}});
+        }
+        else if ($(this).data('button-icon') !== undefined)
+        {
+            $(this).button({icons:{primary:$(this).data('button-icon')}});
+        }
+        else
+        {
+            $(this).button();
+        }
+    });
+
+    $("input.create, input.update, .button").button();
 
     $(".button_box").addClass("ui-widget");
 
-    $(".button").button();
-
+    // Add a new user icon to the help button.
     if (APP.config.new_user) {
-        $("#nav_help_link").button("option", "icons", {primary:'ui-icon-info'});
+        $("#nav_help_link").button("option", "icons", {secondary:'ui-icon-info'});
+    }
+
+    // Cache the form that needs to be interacted with.
+    APP.cache.event_form = $("form#new_event");
+    // Setup the #confirm_auto_approve_text dialog box.
+    APP.cache.confirm_auto_approve_dialog = $("#confirm_auto_approve_text");
+    if (APP.cache.event_form.length > 0)
+    {
+        APP.cache.confirm_auto_approve_dialog.dialog({
+            modal: true,
+            autoOpen: false,
+            buttons: {
+                "Auto Approve Session": function() {
+                    $(this).dialog("close");
+                    $("input#auto_approve").val("yes");
+                    APP.cache.event_form.submit();
+                },
+                "Save and do not approve": function() {
+                    $(this).dialog("close");
+                    $("input#auto_approve").val("");
+                    APP.cache.event_form.submit();
+                }
+            }
+        });
+    }
+    // Setup the submit button to use the above dialog box.
+    if (APP.cache.confirm_auto_approve_dialog.length > 0)
+    {
+        $(".confirm_auto_approve").click(function() {
+            APP.cache.confirm_auto_approve_dialog.dialog("open");
+            return false;
+        });
     }
 
     // Notifications {{{2
@@ -301,7 +360,8 @@ $(document).ready(function() {
             });
             help_dialog.dialog({
                 title: "Help",
-                width: 550
+                width: 750,
+                height: 500
             });
             help_link.click(function () {
                 e.preventDefault();

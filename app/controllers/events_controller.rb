@@ -36,12 +36,20 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
     @event.instructor = @current_instructor
+    if !params[:auto_approve].blank? && is_admin?
+      @event.submitted = true
+      @event.approved = true
+      flash_extra = " Session has been submitted and approved."
+    else
+      flash_extra = " This session has been saved HOWEVER it has not been submitted for approval. Visit the home page to submit this session when you are ready to do so."
+    end
+
     if technician_assignment_allowed && @event.save
       if @current_instructor.new_user?
         @current_instructor.new_user = false
         @current_instructor.save
       end
-      flash[:notice] = "Successfully created event."
+      flash[:notice] = "Successfully created session.#{flash_extra}"
       redirect_to new_event_asset_path(@event)
       return
     end

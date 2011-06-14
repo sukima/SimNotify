@@ -12,7 +12,7 @@ set :scm_passphrase, "YE0wX8Kh" #This is the passphrase for the ssh key on the s
 set :branch, "master"
 set :scm_verbose, true
 #########################################################################################################
-set :user, 'simulat1' #Dreamhost username
+set :user, 'simnotify' #Dreamhost username
 set :domain, 'delphinus.dreamhost.com'  # Dreamhost servername where your account is located 
 set :project, 'SimNotify'  # Your application as its called in the repository
 set :application, 'schedulesimulation.com'  # Your app's location (domain or sub-domain name as setup in panel)
@@ -80,6 +80,7 @@ after "deploy:update_code" do
   run "ln -s #{shared_path}/logo.png #{release_path}/public/images"
   run "ln -s #{shared_path}/htaccess #{release_path}/public/.htaccess"
   #run "ln -s #{shared_path}/environment.rb #{release_path}/config"
+  run("cd #{release_path} && /usr/bin/env bundle exec rake mailer:views RAILS_ENV=production")
 end
 
 # vim:set ft=ruby sw=2 et:

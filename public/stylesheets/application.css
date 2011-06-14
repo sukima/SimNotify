@@ -88,6 +88,10 @@ a {
   text-align: left;
 }
 
+#help #credits ul ul {
+  padding-left: 15px;
+}
+
 .help-buttons {
   clear: both;
   float: right;

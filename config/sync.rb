@@ -34,7 +34,7 @@ Capistrano::Configuration.instance.load do
   DESC
     task :setup do
       run "cd #{shared_path}; mkdir -p sync"
-      Dir.mkdir "sync"
+      Dir.mkdir "sync" unless File.exists? "sync"
     end
  
     namespace :down do

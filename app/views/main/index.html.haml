@@ -1,11 +1,5 @@
 - title "Home"
 - name = @current_instructor.name_hash
-%p.user_control
-  = link_to "Log Out", logout_path
-  | #{link_to "Edit Profile", edit_instructor_path(@current_instructor)}
-  - if @current_instructor.admin?
-    | #{link_to "View Users", instructors_path}
-    | #{link_to "Edit Manikins", manikins_path}
 %div
   %p
     Welcome back
@@ -15,7 +9,20 @@
       \.
 - if @events_in_queue.count > 0
   %p.notification #{pluralize @events_in_queue.count, 'session'} #{(@events_in_queue.count==1)?'has':'have'} not been submitted for approval yet.
-%h2 Sessions:
+- if is_admin?
+  %h2 Administrative Attention Needed:
+  .accordion
+    .accordion-header
+      %a
+        = "Needing approval (#{pluralize @events_needs_approval.count, 'session'})"
+    .accordion-content
+      - if @events_needs_approval.empty?
+        No sessions need your attention now.
+      - else
+        You have the following sessions that need approval:
+        %ol
+          = render :partial => 'event', :collection => @events_needs_approval
+%h2 Your Sessions:
 .accordion
   .accordion-header
     %a

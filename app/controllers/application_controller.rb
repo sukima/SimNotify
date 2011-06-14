@@ -18,5 +18,9 @@ class ApplicationController < ActionController::Base
       return true
     end
   end
+
+  def load_options
+    @options = Option.find_all_as_hash
+  end
 end
 # vim:set ft=ruby:

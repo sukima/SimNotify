@@ -1,6 +1,7 @@
 - confirm_on_exit
 - semantic_form_for @event do |f|
   - f.inputs do
+    = hidden_field_tag "auto_approve", ""
     = f.input :title
     - if Facility.count > 0
       = f.input :facility
@@ -13,4 +14,5 @@
     - if is_admin?
       = f.input :technician,  :as => :select,      :collection => @technicians
     = f.input :live_in
-  = f.buttons
+  - f.buttons do
+    = (is_admin?) ? f.commit_button(:button_html => { :class => "confirm_auto_approve" }) : f.commit_button
