@@ -35,7 +35,7 @@ APP.locale = {
         // console.log(msg);
         // alert_needed = false;
     // }
-    // if ( $("#general_debug_info").length > 0 ) {
+    // if ( $("#general_debug_info").length ) {
         // $("#general_debug_info").append(str);
         // alert_needed = false;
     // }
@@ -57,7 +57,7 @@ APP.getDateValues = function(dateTimeStr) {
     return { month: d[0], day: d[1], year: d[2] };
 };
 
-// Function: getDateTimeStringFromHashes() {{{2
+// Function: getDateTimeStringFromHash() {{{2
 APP.getDateTimeStringFromHash = function(d) {
     return d.month + "/" + d.day + "/" + d.year + " " + d.hour + ":" + d.minute;
 };
@@ -142,7 +142,7 @@ APP.initThemePicker = function () {
 // Document Ready {{{1
 $(document).ready(function() {
     // Flag Detection {{{2
-    if ( $("#NewUserFlag").length > 0 ) {
+    if ( $("#NewUserFlag").length ) {
         APP.config.new_user = true;
         if (APP.config.debug) $("NewUserFlag").append("NewUserFlag set").show();
     } else {
@@ -314,26 +314,28 @@ $(document).ready(function() {
     // This is a bit of a hack to override the :confirm option in link_to but
     // it degrades nicely.
     $("a[confirm_message]").each(function () {
-        // OPTIMIZE: Use this blog to optimize
+        // TODO: Use this blog to optimize
         // http://blog.nemikor.com/2009/04/08/basic-usage-of-the-jquery-ui-dialog/
         $(this).removeAttr('onclick');
         $(this).unbind('click', false);
         $(this).click(function (e) {
             var anchor = this;
-            $("<div>" + $(this).attr('confirm_message') + "</div>").dialog({
-                resizable: false,
-                modal: true,
-                title: $(this).text(),
-                buttons: {
-                    Ok: function() {
-                        window.location.href = $(anchor).attr('href');
-                    },
-                    Cancel: function() {
-                        $(this).dialog('close');
-                        $(this).remove();
+            $("<div></div>")
+                .text($(this).attr('confirm_message'))
+                .dialog({
+                    resizable: false,
+                    modal: true,
+                    title: $(this).text(),
+                    buttons: {
+                        Ok: function() {
+                            window.location.href = $(anchor).attr('href');
+                        },
+                        Cancel: function() {
+                            $(this).dialog('close');
+                            $(this).remove();
+                        }
                     }
-                }
-            });
+                });
             return false;
         });
     });
@@ -366,7 +368,7 @@ $(document).ready(function() {
     });
 
     // Deprecated in favor of #NewUserFlag
-    if ( $("#force_display_help").length > 0 ) {
+    if ( $("#force_display_help").length ) {
         $("#nav_help_link").trigger('click');
     }
 
@@ -375,7 +377,7 @@ $(document).ready(function() {
 
     // Submit Event Form {{{2
     var no_scenario_link = $("#no-scenario-link");
-    if (no_scenario_link.length > 0) {
+    if (no_scenario_link.length) {
         no_scenario_link.click(function (e) {
             $(this).hide();
             $("form.submit_note").show();
