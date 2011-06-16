@@ -60,6 +60,8 @@
         - if APP_CONFIG[:include_designer_credit]
           | Design by
           %a{:href => "http://nicolas.freezee.org", :target => "_BLANK"} Nicolas Fafchamps
+        #test_link
+          %a{:href => "javascripts/test/index.html"} &nbsp;
       = ie_footer
     / Design Created By Nicolas Fafchamps (2006) - Public domain
     - if @current_instructor && @current_instructor.new_user?
