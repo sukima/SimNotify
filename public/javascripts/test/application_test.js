@@ -16,6 +16,8 @@ test("should get time values from string", function()  { // {{{2
   deepEqual(APP.getTimeValues("12:30"), {hour:"12",minute:"30"}, "should return parsed time with '12:30'");
   deepEqual(APP.getTimeValues("1230"), {hour:"12",minute:"30"}, "should return parsed time with '1230'");
   deepEqual(APP.getTimeValues("230"), {hour:"2",minute:"30"}, "should return parsed time with '230'");
+  deepEqual(APP.getTimeValues("230"), {hour:"2",minute:"30"}, "should return parsed time with '230'");
+  deepEqual(APP.getTimeValues("2"), {hour:"2",minute:"0"}, "should return parsed time with '2'");
 });
 
 module("APP.getDateValues()"); // {{{1

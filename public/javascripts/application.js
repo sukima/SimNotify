@@ -44,12 +44,21 @@ APP.locale = {
 
 // Function: getTimeValues() {{{2
 APP.getTimeValues = function(dateTimeStr) {
-    var t = dateTimeStr.replace(/^.*\s+/, '').split(":");
-    if (t.length < 2) {
-        var re = /(\d?\d)(\d\d)$/;
-        var result = re.exec(t[0]);
-        t[0] = result[1];
-        t[1] = result[2];
+    var t;
+    if (dateTimeStr.length < 3)
+    {
+        t = [ dateTimeStr, "0" ];
+    }
+    else
+    {
+        t = dateTimeStr.replace(/^.*\s+/, '').split(":");
+        if (t.length < 2)
+        {
+            var re = /(\d?\d)(\d\d)$/;
+            var result = re.exec(t[0]);
+            t[0] = (result[1]) ? result[1] : "0";
+            t[1] = (result[2]) ? result[2] : "0";
+        }
     }
     return { hour: t[0], minute: t[1] };
 };
