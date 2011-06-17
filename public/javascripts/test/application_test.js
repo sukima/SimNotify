@@ -12,9 +12,10 @@ module("APP.getTimeValues()"); // {{{1
 test("should get time values from string", function()  { // {{{2
   deepEqual(APP.getTimeValues("02/03/11 12:30"), {hour:"12",minute:"30"}, "should return parsed time with '12/03/11 12:30'");
   deepEqual(APP.getTimeValues("12/03/11 1230"), {hour:"12",minute:"30"}, "should return parsed time with '12/03/11 1230'");
+  deepEqual(APP.getTimeValues("12/03/111230"), {hour:"12",minute:"30"}, "should return parsed time with '12/03/111230'");
   deepEqual(APP.getTimeValues("12:30"), {hour:"12",minute:"30"}, "should return parsed time with '12:30'");
   deepEqual(APP.getTimeValues("1230"), {hour:"12",minute:"30"}, "should return parsed time with '1230'");
-  // equal(APP.getTimeValues("02/03/1112:30"), null, "should return null with '02/03/1112:30'");
+  deepEqual(APP.getTimeValues("230"), {hour:"2",minute:"30"}, "should return parsed time with '230'");
 });
 
 module("APP.getDateValues()"); // {{{1
