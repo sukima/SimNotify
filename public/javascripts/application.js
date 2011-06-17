@@ -96,7 +96,7 @@ APP.syncStartEndDates = function () {
     var end_date = $("#event_end_time_input .ui-date-text");
     var d1 = $(this).val().replace(/[^\d]/g, '');
     var d2 = (end_date.val() == APP.locale.pick_datetime) ?
-        0 : end_date.val().replace(/[^\d]/g, '');
+        "0" : end_date.val().replace(/[^\d]/g, '');
     if  (d2 < d1)
         end_date.val($(this).val()).trigger('change').effect('highlight');
 };
@@ -258,7 +258,7 @@ $(document).ready(function() {
      * Sets the date for each select with the date selected with datepicker
      */
     // Input change events {{{3
-    $('input.ui-date-text').live('change', APP.saveDateValues);
+    $('input.ui-date-text').bind('change', APP.saveDateValues);
 
     // }}}3
 
