@@ -152,18 +152,21 @@ APP.initThemePicker = function () {
     });
 };
 
-// }}}1
-
-// Document Ready {{{1
-$(document).ready(function() {
-    // Flag Detection {{{2
+// Function: flagDetection() {{{2
+APP.flagDetection = function() {
     if ( $("#NewUserFlag").length ) {
         APP.config.new_user = true;
         if (APP.config.debug) $("NewUserFlag").append("NewUserFlag set").show();
     } else {
         APP.config.new_user = false;
     }
+}
 
+// }}}1
+
+// Document Ready {{{1
+$(document).ready(function() {
+    APP.flagDetection();
     // Reusable Resources {{{2
     var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
 

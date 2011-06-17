@@ -162,4 +162,13 @@ test("should attach change event to #instructor_gui_theme", function() { // {{{2
   $("#instructor_gui_theme").trigger("change");
   ok($("link.theme").attr("href").match(/test_value_set/), "change event sets correct url to link href");
 });
+
+module("APP.flagDetection()"); // {{{1
+test("should detect if new user", function() {
+  APP.flagDetection();
+  ok(!APP.config.new_user, "new user is false if no #NewUserFlag found");
+  $("<div id='NewUserFlag' />").appendTo("#qunit-fixture");
+  APP.flagDetection();
+  ok(APP.config.new_user, "new user is true if #NewUserFlag found");
+});
 /* vim:set sw=2 et fdm=marker: */
