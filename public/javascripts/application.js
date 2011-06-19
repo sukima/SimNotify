@@ -16,10 +16,15 @@ jQuery.fn.submitWithAjax = function() {
 };
 
 // Application object {{{1
-var APP = { cache: {}, config: {
-    debug: false,
-    jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
-}};
+var APP = {
+    cache: {
+        loading: $("<img src=\"/images/loading.gif\" alt=\"loading\" />")
+    },
+    config: {
+        debug: false,
+        jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
+    }
+};
 
 // Locale text {{{2
 APP.locale = {
@@ -364,7 +369,7 @@ $(document).ready(function() {
 
     $("#nav_help_link").each(function () {
         var help_href = $(this).attr('href') + "?partial=1";
-        var help_dialog = $("<div />").append($loading.clone());
+        var help_dialog = $("<div />").append(APP.cache.loading.clone());
         var help_link = $(this).one('click', function (e) {
             e.preventDefault();
             help_dialog.load(help_href, function () {

@@ -2,6 +2,7 @@ module("Application Object"); // {{{1
 test("APP contents should be defined correctly", function() { // {{{2
   ok(APP !== undefined, "APP should be defined");
   ok(APP.cache !== undefined, "APP.cache should be definded");
+  ok(APP.cache.loading !== undefined, "APP.cache.loading should be defined");
   ok(APP.config !== undefined, "APP.config should be defined");
   ok(APP.config.debug !== undefined, "APP.config.debug should be defined");
   ok(APP.config.jquery_theme_path !== undefined, "APP.config.jquery_theme_path should be defined");
