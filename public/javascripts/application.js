@@ -165,46 +165,52 @@ APP.flagDetection = function() {
     } else {
         APP.config.new_user = false;
     }
-}
+};
 
+// Function: autocomplete() {{{2
+APP.autocomplete = {
+    init: function(data) {
+        APP.cache.autocomplete_map = data;
+        $('input.autocomplete').each(function(index) {
+            $(this).autocomplete({ source: APP.cache.autocomplete_map[$(this).attr('id')] });
+        });
+    },
+    load: function() {
+        $.getJSON('/main/autocomplete_map', this.init);
+    }
+};
+
+// Function: loadMultiselect() {{{2
+APP.loadMultiselect = function() {
+    $("select.multiselect").each(function () {
+        if ( $(this).attr("multiple") === undefined )
+        {
+            $(this).multiSelect({
+                multiple: false,
+                showHeader: false,
+                minWidth: 200,
+                selectedText: function (numChecked, numTotal, checkedItem) {
+                    return $(checkedItem).attr("title");
+                }
+            });
+        }
+        else
+        {
+            $(this).multiSelect({
+                minWidth: 300,
+                selectedList: 2,
+                showHeader: false
+            });
+        }
+    });
+};
 // }}}1
 
 // Document Ready {{{1
 $(document).ready(function() {
     APP.flagDetection();
-    // Reusable Resources {{{2
-    var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
-
-    // Autocomplete / Multiselect {{{2
-    $.getJSON('/main/autocomplete_map', function(data) {
-        APP.autocomplete_map = data;
-        $('input.autocomplete').each(function(index) {
-            $(this).autocomplete({ source: APP.autocomplete_map[$(this).attr('id')] });
-        });
-
-        $("select.multiselect").each(function () {
-            if ( $(this).attr("multiple") === undefined )
-            {
-                $(this).multiSelect({
-                    multiple: false,
-                    showHeader: false,
-                    minWidth: 200,
-                    selectedText: function (numChecked, numTotal, checkedItem) {
-                        return $(checkedItem).attr("title");
-                    }
-                });
-            }
-            else
-            {
-                $(this).multiSelect({
-                    minWidth: 300,
-                    selectedList: 2,
-                    showHeader: false
-                });
-            }
-        });
-    });
-
+    APP.autocomplete.load();
+    APP.loadMultiselect();
     // Navigation bar {{{2
     $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");

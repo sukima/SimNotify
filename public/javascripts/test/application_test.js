@@ -172,4 +172,30 @@ test("should detect if new user", function() {
   APP.flagDetection();
   ok(APP.config.new_user, "new user is true if #NewUserFlag found");
 });
+
+module("APP.autocomplete.init()", { // {{{1
+  setup: function() { // {{{2
+    // set up autocomplete input
+    this.input = $("<input type='text' class='autocomplete' id='test_autocomplete_input' />").appendTo("#qunit-userAgent");
+    // set up mock json response from ajax
+    this.json = { "test_autocomplete_input": "/test_url/path" };
+    // No need to test APP.autocomplete.load(); only calls getJSON.
+    APP.autocomplete.init(this.json);
+  }
+});
+test("Create autocomplete widgets", function() { // {{{2
+  ok(APP.cache.autocomplete_map !== undefined, "APP.cache.autocomplete_map is assiged a value");
+  ok(this.input.hasClass("ui-autocomplete-input"), "#test_autocomplete_input should be an autocomplete widget");
+  equals(this.input.autocomplete("option", "source"), "/test_url/path", "source should be set to correct test path");
+});
+
+module("APP.loadMultiselect()", { // {{{1
+  setup: function() { // {{{2
+    // TODO: Setup DOM for multiselect
+    APP.loadMultiselect();
+  }
+});
+test("test not done yet", function() { // {{{2
+  // TODO: Write multiselect tests
+});
 /* vim:set sw=2 et fdm=marker: */
