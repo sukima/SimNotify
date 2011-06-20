@@ -183,7 +183,15 @@ APP.autocomplete = {
 // Function: loadMultiselect() {{{2
 APP.loadMultiselect = function() {
     $("select.multiselect").each(function () {
-        if ( $(this).attr("multiple") === undefined )
+        if ( $(this).attr("multiple") )
+        {
+            $(this).multiSelect({
+                minWidth: 300,
+                selectedList: 2,
+                showHeader: false
+            });
+        }
+        else
         {
             $(this).multiSelect({
                 multiple: false,
@@ -192,14 +200,6 @@ APP.loadMultiselect = function() {
                 selectedText: function (numChecked, numTotal, checkedItem) {
                     return $(checkedItem).attr("title");
                 }
-            });
-        }
-        else
-        {
-            $(this).multiSelect({
-                minWidth: 300,
-                selectedList: 2,
-                showHeader: false
             });
         }
     });

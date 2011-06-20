@@ -176,7 +176,7 @@ test("should detect if new user", function() {
 module("APP.autocomplete.init()", { // {{{1
   setup: function() { // {{{2
     // set up autocomplete input
-    this.input = $("<input type='text' class='autocomplete' id='test_autocomplete_input' />").appendTo("#qunit-userAgent");
+    this.input = $("<input type='text' class='autocomplete' id='test_autocomplete_input' />").appendTo("#qunit-fixture");
     // set up mock json response from ajax
     this.json = { "test_autocomplete_input": "/test_url/path" };
     // No need to test APP.autocomplete.load(); only calls getJSON.
@@ -191,11 +191,19 @@ test("Create autocomplete widgets", function() { // {{{2
 
 module("APP.loadMultiselect()", { // {{{1
   setup: function() { // {{{2
-    // TODO: Setup DOM for multiselect
+    this.select1 = $("<select class='multiselect'><option value='1' title='foo'>1</option><option vlaue='2' title='bar'>2</option></select>")
+      .attr("name", "select0")
+      .appendTo("#qunit-fixture");
+    this.select2 = $("<select class='multiselect'><option value='1' title='foo'>1</option><option vlaue='2' title='bar'>2</option></select>")
+      .clone()
+      .attr("name", "select1")
+      .attr("multiple", true)
+      .appendTo("#qunit-fixture");
     APP.loadMultiselect();
   }
 });
-test("test not done yet", function() { // {{{2
-  // TODO: Write multiselect tests
+test("should create multiselect for select elements", function() { // {{{2
+  ok($("#ui-multiselect-ui-multiselect-0-option-0").attr("type") == "radio", "non-multiple select uses radio buttons");
+  ok($("#ui-multiselect-ui-multiselect-1-option-0").attr("type") == "checkbox", "multiple select uses checkboxes buttons");
 });
 /* vim:set sw=2 et fdm=marker: */
