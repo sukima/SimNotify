@@ -204,14 +204,9 @@ APP.loadMultiselect = function() {
         }
     });
 };
-// }}}1
 
-// Document Ready {{{1
-$(document).ready(function() {
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    // Navigation bar {{{2
+// Function: initNavBar() {{{1
+APP.initNavBar = function() {
     $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");
     $("#navigation>ul").addClass("nav-list");
@@ -221,6 +216,15 @@ $(document).ready(function() {
     }, function() {
         $('ul', this).slideUp(100);
     });
+};
+// }}}1
+
+// Document Ready {{{1
+$(document).ready(function() {
+    APP.flagDetection();
+    APP.autocomplete.load();
+    APP.loadMultiselect();
+    APP.initNavBar();
 
     // Datepicker / Timepicker {{{2
     // Define the dateFormat for the datepicker

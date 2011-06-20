@@ -206,4 +206,21 @@ test("should create multiselect for select elements", function() { // {{{2
   ok($("#ui-multiselect-ui-multiselect-0-option-0").attr("type") == "radio", "non-multiple select uses radio buttons");
   ok($("#ui-multiselect-ui-multiselect-1-option-0").attr("type") == "checkbox", "multiple select uses checkboxes buttons");
 });
+
+module("APP.initNavBar()", { // {{{1
+  setup: function() { // {{{2
+    this.navdiv = $("<div id='navigation' class='side-navigation'><ul><li><ul><li></li></ul></li></ul></div>")
+      .appendTo("#qunit-fixture");
+    this.content = $("<div id='content' class='side-nav-width'></div>").appendTo("#qunit-fixture");
+    APP.initNavBar();
+  }
+});
+test("should reconfigure nav bar", function() { // {{{2
+  ok(!this.navdiv.hasClass("side-navigation"), "#navigation should not have class 'side-navigation'");
+  ok(this.navdiv.hasClass("nav-widget"), "#navigation should have class 'nav-widget'");
+  ok(!this.content.hasClass("side-nav-width"), "#content should not have class 'side-nav-width'");
+  ok(this.content.hasClass("top-nav-width"), "#content should have class 'top-nav-width'");
+  ok(this.navdiv.find("ul").hasClass("nav-list"), "#navigation>ul should have 'class nav-list'");
+  ok(this.navdiv.find("ul li>ul").hasClass("sub-nav-list"), "#navigation>ul li>ul should have class 'sub-nav-list'");
+});
 /* vim:set sw=2 et fdm=marker: */
