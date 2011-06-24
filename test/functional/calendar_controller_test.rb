@@ -96,11 +96,25 @@ class CalendarControllerTest < ActionController::TestCase
 
     context "get :agenda" do
       setup do
-        get :agenda
+        get :agenda, { :weeks => 3 }
       end
       should respond_with :success
       should assign_to(:number_of_weeks).with(3) # default
       should assign_to(:weeks)
+      should assign_to(:date_range)
+      should assign_to(:time_format)
+      should render_template :agenda
+    end
+
+    context "get :agenda with tech" do
+      setup do
+        @event = Factory(:event)
+        get :agenda, { :tech => 2 }
+      end
+      should respond_with :success
+      should assign_to(:number_of_weeks)
+      should assign_to(:weeks)
+      should assign_to(:tech)
       should assign_to(:date_range)
       should assign_to(:time_format)
       should render_template :agenda

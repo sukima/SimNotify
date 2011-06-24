@@ -34,3 +34,7 @@ end
 Factory.define :event_with_facility, :parent => :approved do |e|
   e.association :facility
 end
+
+Factory.define :event_with_tech , :parent => :approved do |e|
+  e.association :technician
+end
