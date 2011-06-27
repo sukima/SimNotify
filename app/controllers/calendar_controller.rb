@@ -47,22 +47,35 @@ class CalendarController < ApplicationController
       return
     end
 
+    if (params[:facility])
+      f = params[:facility].downcase
+    else
+      f = "all"
+    end
+
     start_time = Time.at(params[:start].to_i)
     end_time = Time.at(params[:end].to_i)
     conditions = { :start_time => (start_time..end_time) }
 
-    @events = Event.find(:all, :conditions => conditions)
+    if (f == "all" || f == "special")
+      @special_events = SpecialEvent.find(:all, :conditions => conditions)
+    else
+      @special_events = [ ]
+    end
 
-    @special_events = SpecialEvent.find(:all,
-        :conditions => conditions.except(:submitted))
+    if (f != "special")
+      if (f != "all")
+        conditions[:facility_id] = f.to_i
+      end
+      @events = Event.find(:all, :conditions => conditions) if @events.nil?
+    else
+      @events = [ ]
+    end
 
     json_events = [ ]
-
-
     @events.each do |e|
       json_events << build_json_event(e)
     end
-
     @special_events.each do |e|
       json_events << build_json_event(e)
     end
