@@ -19,19 +19,17 @@
             right: 'month,agendaWeek,agendaDay'
         }
     });
-
-    $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
-        addClass("ui-corner-all ui-helper-clearfix");
   });
 #calendar-header.calendar-home-link
 #calendar
 #calendar-footer.calendar-home-link
   = link_to "Home", root_path
-  #calendar-legend
-    - @facilities.each do |f|
-      %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{h f.agenda_color};"}
-        =h f.name
-    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("not_approved_color").value};"}
-      %strong Not Approved
-    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("special_event_color").value};"}
-      %strong Special Event
+  .ui-widget
+    #calendar-legend.ui-widget-content.ui-corner-all.ui-helper-clearfix
+      - @facilities.each do |f|
+        %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{h f.agenda_color};"}
+          =h f.name
+      %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("not_approved_color").value};"}
+        %strong Not Approved
+      %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("special_event_color").value};"}
+        %strong Special Event
