@@ -5,22 +5,23 @@ CAL.calendar_path = '/calendar/events';
 
 // cache object {{{1
 CAL.cache = {
-    facility_urls: [ ],
-    // Function: sync() {{{2
-    sync: function() {
-        CAL.cache.facility_urls = [ ];
-        $(".facility").each(function() {
-            if (this.checked)
-            {
-                CAL.cache.facility_urls.push(CAL.buildURL($(this).val()));
-            }
-        });
-    } // }}}2
+    facility_urls: [ ]
 };
 
 // Function: buildURL() {{{1
 CAL.buildURL = function(param) {
     return CAL.calendar_path + '?facility=' + param;
+};
+
+// Function: cache.sync() {{{1
+CAL.cache.sync = function() {
+    CAL.cache.facility_urls = [ ];
+    $(".facility").each(function() {
+        if (this.checked)
+        {
+            CAL.cache.facility_urls.push(CAL.buildURL($(this).val()));
+        }
+    });
 };
 
 // Function: scanFacilityOptions() {{{1
