@@ -73,4 +73,8 @@ class Instructor < ActiveRecord::Base
     # TODO: This should check for event dependencies and allow them to be moved/detroyed first.
     false
   end
+
+  def self.technicians
+    self.find(:all, :conditions => { :is_tech => true })
+  end
 end

@@ -34,7 +34,8 @@ class CalendarControllerTest < ActionController::TestCase
 
       context "with special event," do
         setup do
-          construct_json_object(:special_event)
+          construct_params :special_event
+          construct_json_object
         end
         should_pass_standard_calendar_tests
         context "the json object" do
@@ -49,7 +50,8 @@ class CalendarControllerTest < ActionController::TestCase
 
       context "with a normal event," do
         setup do
-          construct_json_object(:event)
+          construct_params :event
+          construct_json_object
         end
         should_pass_standard_calendar_tests
         context "the json object" do
@@ -71,7 +73,8 @@ class CalendarControllerTest < ActionController::TestCase
     context "get :events" do
       context "with unsubmitted event," do
         setup do
-          construct_json_object(:event)
+          construct_params :event
+          construct_json_object
         end
         should_pass_standard_calendar_tests
         context "json object" do
@@ -83,7 +86,8 @@ class CalendarControllerTest < ActionController::TestCase
 
       context "with approved event," do
         setup do
-          construct_json_object(:event_with_facility)
+          construct_params :event_with_facility
+          construct_json_object
         end
         should_pass_standard_calendar_tests
         context "the json object" do
@@ -92,11 +96,47 @@ class CalendarControllerTest < ActionController::TestCase
           end
         end
       end
+
+      context "with facility param" do
+        setup do
+          assert @special = Factory(:special_event)
+          construct_params :event_with_facility
+          construct_json_object({ :facility => @event.facility.id })
+        end
+        should_pass_standard_calendar_tests
+        should "not have special event included" do
+          assert @json.length == 1
+        end
+      end
+
+      context "with facility 'special' param" do
+        setup do
+          assert @special = Factory(:special_event)
+          construct_params :event_with_facility
+          construct_json_object({ :facility => "special" })
+        end
+        should_pass_standard_calendar_tests
+        should "not have event included" do
+          assert @json.length == 1
+        end
+      end
+
+      context "with facility 'all' param" do
+        setup do
+          assert @special = Factory(:special_event)
+          construct_params :event_with_facility
+          construct_json_object({ :facility => "all" })
+        end
+        should_pass_standard_calendar_tests
+        should "have special and event included" do
+          assert @json.length == 2
+        end
+      end
     end
 
     context "get :agenda" do
       setup do
-        get :agenda
+        get :agenda, { :weeks => 3 }
       end
       should respond_with :success
       should assign_to(:number_of_weeks).with(3) # default
@@ -105,14 +145,32 @@ class CalendarControllerTest < ActionController::TestCase
       should assign_to(:time_format)
       should render_template :agenda
     end
+
+    context "get :agenda with tech" do
+      setup do
+        @event = Factory(:event)
+        get :agenda, { :tech => 2 }
+      end
+      should respond_with :success
+      should assign_to(:number_of_weeks)
+      should assign_to(:weeks)
+      should assign_to(:tech)
+      should assign_to(:date_range)
+      should assign_to(:time_format)
+      should render_template :agenda
+    end
   end
 
   private
-  def construct_json_object(event_type)
+  def construct_params(event_type)
     assert @event = Factory(event_type)
-    @start = @event.start_time - 5.days
-    @end = @event.end_time + 5.days
-    get :events, :start => @start.to_i, :end => @end.to_i
+    assert @start = @event.start_time - 5.days
+    assert @end = @event.end_time + 5.days
+  end
+
+  def construct_json_object(params={})
+    params.merge!({ :start => @start.to_i, :end => @end.to_i })
+    get :events, params
     begin
       @json = ActiveSupport::JSON.decode(@response.body)
     rescue

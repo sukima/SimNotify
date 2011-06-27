@@ -4,9 +4,15 @@
     = stylesheet_link_jquery
     = javascript_include_jquery
     :css
-      .ui-button { font-size: 0.6em; }
+      div.ui-widget {
+        font-size: 0.6em;
+        padding: 2px;
+        width: 50%;
+      }
       @media print {
-        #controls { display: none; }
+        #controls {
+          display: none;
+        }
       }
     :javascript
       $(function() {
@@ -15,12 +21,14 @@
         $("#return-button").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
       });
   %body
-    #controls
+    #controls.ui-widget.ui-widget-header.ui-corner-all
       - form_tag agenda_path do
         = link_to "Return", calendar_path, :id => "return-button"
         = link_to "Print", "javascript:window.print()", :id => "print-button"
         = text_field_tag 'number_of_weeks', @number_of_weeks
-        = submit_tag "Refesh"
+        = select_tag "tech", "<option value='all'>All Technicians</option>" +                  |
+          options_from_collection_for_select(Instructor.technicians, "id", "name", @tech.to_i) |
+        = submit_tag "Refresh"
     %h2= "Agenda for #{@date_range}"
     %hr
     - if @weeks.empty?
