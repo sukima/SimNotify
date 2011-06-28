@@ -3,6 +3,7 @@ module EventsHelper
     ret = dt event.start_time
     ret += " (#{distance_of_time_in_words(event.start_time, event.end_time)})"
     if event.kind_of? Event
+      ret += " - #{event.facility.name}" if event.facility
       ret += " - #{pluralize(event.scenarios.count, "senario")}"
       ret += h event.need_flags_as_words if event.collective_has_needs
     end
