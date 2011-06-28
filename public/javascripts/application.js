@@ -205,7 +205,7 @@ APP.loadMultiselect = function() {
     });
 };
 
-// Function: initNavBar() {{{1
+// Function: initNavBar() {{{2
 APP.initNavBar = function() {
     $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");
@@ -217,16 +217,10 @@ APP.initNavBar = function() {
         $('ul', this).slideUp(100);
     });
 };
-// }}}1
 
-// Document Ready {{{1
-$(document).ready(function() {
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    APP.initNavBar();
-
-    // Datepicker / Timepicker {{{2
+// Function: initDateTimePickers() {{{2
+APP.initDateTimePickers = function() {
+    // Datepicker / Timepicker 
     // Define the dateFormat for the datepicker
     // $.datepicker._defaults.dateFormat = 'M dd yy';
 
@@ -235,12 +229,10 @@ $(document).ready(function() {
      */
     // Date/Time Picker Init {{{3
     $('.datetime').each(function(i, el) {
-        var input = document.createElement('input');
+        var input = $("<input type='text' class='ui-date-text' />");
         if ($(el).attr('id') == "event_start_time_input")
-            $(input).bind('change', APP.syncStartEndDates);
+            input.bind('change', APP.syncStartEndDates);
 
-        // datepicker field
-        $(input).attr({'type': 'text', 'class': 'ui-date-text'});
         // Insert the input:text before the first select
         $(el).find("select:first").before(input);
         if (!APP.config.debug) $(el).find("select:lt(5)").hide();
@@ -252,7 +244,7 @@ $(document).ready(function() {
         });
         if( values.length > 1 ) {
             d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
-            $(input).val(APP.getDateTimeStringFromHash({
+            input.val(APP.getDateTimeStringFromHash({
                 year: values[0],
                 month: values[1],
                 day: values[2],
@@ -262,15 +254,15 @@ $(document).ready(function() {
         }
         else
         {
-            $(input).val(APP.locale.pick_datetime);
+            input.val(APP.locale.pick_datetime);
         }
 
-        $(input).datetimepicker({
+        input.datetimepicker({
             stepMinute: 15,
             minuteGrid: 15,
             hourGrid: 4
         });
-    });
+    }); // }}}3
 
     /**
      * Sets the date for each select with the date selected with datepicker
@@ -279,7 +271,16 @@ $(document).ready(function() {
     $('input.ui-date-text').bind('change', APP.saveDateValues);
 
     // }}}3
+};
+// }}}1
 
+// Document Ready {{{1
+$(document).ready(function() {
+    APP.flagDetection();
+    APP.autocomplete.load();
+    APP.loadMultiselect();
+    APP.initNavBar();
+    APP.initDateTimePickers();
 
     // Accordions {{{2
     $(".accordion").accordion({

@@ -1,3 +1,21 @@
+// Test Helper {{{1
+if (!test_helper) { var test_helper = {}; }
+test_helper.buildDateTimeInputs = function() {
+    this.datetime = $("<div class='datetime'></div>")
+      .append("<input type='test' id='test_input' />");
+    this.datetime.find("#test_input")
+      .val("1/2/3 4:5");
+    this.select = $("<select><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select>");
+    for (var i = 0; i < 5; i++)
+    {
+      this.select.clone()
+        .attr("id", "select_" + i)
+        .appendTo(this.datetime);
+    }
+    this.datetime.appendTo("#qunit-fixture");
+    this.input = $("#test_input").bind("test", APP.saveDateValues);
+};
+
 module("Application Object"); // {{{1
 test("APP contents should be defined correctly", function() { // {{{2
   ok(APP !== undefined, "APP should be defined");
@@ -38,21 +56,7 @@ test("should create string from hash values", function() { // {{{2
 });
 
 module("APP.saveDateValues()", { // {{{1
-  setup: function() { // {{{2
-    this.datetime = $("<div class='datetime'></div>")
-      .append("<input type='test' id='test_input' />");
-    this.datetime.find("#test_input")
-      .val("1/2/3 4:5");
-    this.select = $("<select><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select>");
-    for (var i = 0; i < 5; i++)
-    {
-      this.select.clone()
-        .attr("id", "select_" + i)
-        .appendTo(this.datetime);
-    }
-    this.datetime.appendTo("#qunit-fixture");
-    this.input = $("#test_input").bind("test", APP.saveDateValues);
-  }
+  setup: test_helper.buildDateTimeInputs
 });
 test("should assign select values from text field", function() { // {{{2
   this.input.trigger("test");
@@ -222,5 +226,13 @@ test("should reconfigure nav bar", function() { // {{{2
   ok(this.content.hasClass("top-nav-width"), "#content should have class 'top-nav-width'");
   ok(this.navdiv.find("ul").hasClass("nav-list"), "#navigation>ul should have 'class nav-list'");
   ok(this.navdiv.find("ul li>ul").hasClass("sub-nav-list"), "#navigation>ul li>ul should have class 'sub-nav-list'");
+});
+
+module("APP.initDateTimePickers()", { // {{{1
+  setup: test_helper.buildDateTimeInputs
+});
+test("should create correctly formed Date Time Picker", function() { // {{{2
+  APP.initDateTimePickers();
+  equal($("input.ui-date-text").length, 1, "should only have one 'ui-date-text' input");
 });
 /* vim:set sw=2 et fdm=marker: */
