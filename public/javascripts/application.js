@@ -272,6 +272,15 @@ APP.initDateTimePickers = function() {
 
     // }}}3
 };
+
+// Function: initAccordions() {{{2
+APP.initAccordions = function() {
+    $(".accordion").accordion({
+      header: '.accordion-header',
+      collapsible: true,
+      clearStyle: true
+    });
+};
 // }}}1
 
 // Document Ready {{{1
@@ -281,13 +290,7 @@ $(document).ready(function() {
     APP.loadMultiselect();
     APP.initNavBar();
     APP.initDateTimePickers();
-
-    // Accordions {{{2
-    $(".accordion").accordion({
-      header: '.accordion-header',
-      collapsible: true,
-      clearStyle: true 
-    });
+    APP.initAccordions();
 
     // Buttons {{{2
     // Setup default buttons.

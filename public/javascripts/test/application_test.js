@@ -235,4 +235,15 @@ test("should create correctly formed Date Time Picker", function() { // {{{2
   APP.initDateTimePickers();
   equal($("input.ui-date-text").length, 1, "should only have one 'ui-date-text' input");
 });
+
+module("APP.initAccordions()", { // {{{1
+  setup: function() { // {{{2
+    $("<div class='accordion'><div class='accordion-header'><a>#</a></div><div class='accordion-content'></div></div>")
+      .appendTo("#qunit-fixture");
+  }
+});
+test("should create jQuery-UI accordion widgets", function() { // {{{2
+  APP.initAccordions();
+  ok($(".accordion").hasClass('ui-accordion'), "jQuery-ui accordian created succesfully");
+});
 /* vim:set sw=2 et fdm=marker: */
