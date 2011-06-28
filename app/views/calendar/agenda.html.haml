@@ -37,7 +37,7 @@
       %div{:id => "week-#{index}"}
         %h4= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
         - if week[:events].empty?
-          .info No events scheduled for this week.
+          .info No sessions scheduled for this week.
         - else
           %ol.week-list
             - week[:events].each do |event|
