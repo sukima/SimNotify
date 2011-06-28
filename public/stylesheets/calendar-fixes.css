@@ -74,6 +74,14 @@
   border-color: #FF9900;
 }
 
+#calendar-header {
+  margin-bottom: 10px;
+}
+
+#calendar-footer {
+  margin-top: 10px;
+}
+
 #calendar-legend {
   float: right;
   border: solid thin black;
