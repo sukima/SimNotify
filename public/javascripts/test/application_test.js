@@ -1,7 +1,7 @@
 // Test Helper {{{1
 if (!test_helper) { var test_helper = {}; }
-test_helper.moduleDateTimeInputConfig = {
-  setup: function() {
+test_helper.moduleDateTimeInputConfig = { // {{{2
+  setup: function() { // {{{3
     this.datetime = $("<div class='datetime'></div>")
       .append("<input type='test' id='test_input' />");
     this.datetime.find("#test_input")
@@ -16,11 +16,16 @@ test_helper.moduleDateTimeInputConfig = {
     this.datetime.appendTo("#qunit-fixture");
     this.input = $("#test_input").bind("test", APP.saveDateValues);
   },
-  teardown: function() {
+  teardown: function() { // {{{3
     // the dateTimePicker() manipulates the DOM outside of #qunit-fixture
     // Clean up litter.
     $("#ui-datepicker-div").remove();
   }
+};
+test_helper.dialogCleanup = function() { // {{{2
+    // dialog() manipulates the DOM outside of #qunit-fixture
+    // Clean up litter.
+    $(".ui-dialog").remove();
 };
 
 module("Application Object"); // {{{1
@@ -303,9 +308,7 @@ module("APP.initAutoApproveDialog()", { // {{{1
   teardown: function() { // {{{2
     delete APP.cache.confirm_auto_approve_dialog;
     delete APP.cache.event_form;
-    // dialog() manipulates the DOM outside of #qunit-fixture
-    // Clean up litter.
-    $(".ui-dialog").remove();
+    test_helper.dialogCleanup();
     $("#confirm_auto_approve_text").remove();
   }
 });
@@ -357,4 +360,22 @@ test("should set ui-widgets for all notification types (fails with IE)", functio
   ok(this.test4.parent().hasClass("ui-widget"), "should turn #flash_error div into a ui-widget");
   ok(this.test4.children("span.ui-icon").length > 0, "#flash_error should have a child span.ui-icon");
 });
+
+module("APP.overideConfirmLinks", { // {{{1
+  setup: function() { // {{{2
+    this.a = $("<a></a>").clone()
+      .attr("confirm_message", "xxxxxx")
+      .attr("onclick", "return false;")
+      .appendTo("#qunit-fixture");
+    APP.overideConfirmLinks();
+  },
+  teardown: test_helper.dialogCleanup // {{{2
+});
+test("should setup confirmation dialog", function() { // {{{2
+  ok(this.a.attr("onclick") == null, "onclick attribute removed");
+  this.a.click();
+  ok($(".ui-dialog").length > 0, "dialog is created");
+  $(".ui-dialog :button")[1].click();
+  ok($(".ui-dialog").length == 0, "dialog is removed");
+})
 /* vim:set sw=2 et fdm=marker: */

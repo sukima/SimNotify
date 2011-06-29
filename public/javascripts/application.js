@@ -337,22 +337,9 @@ APP.initAutoApproveDialog = function() {
         return false;
     });
 };
-// }}}1
 
-// Document Ready {{{1
-$(document).ready(function() {
-    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    APP.initNavBar();
-    APP.initDateTimePickers();
-    APP.initAccordions();
-    APP.initButtons();
-    APP.initAutoApproveDialog();
-    APP.initNotifications();
-
-    // Override confirm() {{{2
+// Function: overideConfirmLinks() {{{2
+APP.overideConfirmLinks = function() {
     // This is a bit of a hack to override the :confirm option in link_to but
     // it degrades nicely.
     $("a[confirm_message]").each(function () {
@@ -381,8 +368,23 @@ $(document).ready(function() {
             return false;
         });
     });
+};
+// }}}1
 
-    // }}}2
+// Document Ready {{{1
+$(document).ready(function() {
+    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
+    APP.flagDetection();
+    APP.autocomplete.load();
+    APP.loadMultiselect();
+    APP.initNavBar();
+    APP.initDateTimePickers();
+    APP.initAccordions();
+    APP.initButtons();
+    APP.initAutoApproveDialog();
+    APP.initNotifications();
+    APP.overideConfirmLinks();
+
     // Help dialog {{{2
     APP.initHelpTabs();
 
