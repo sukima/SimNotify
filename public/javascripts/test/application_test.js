@@ -329,4 +329,32 @@ test("should handle save request from user", function() { // {{{2
   equal(this.hidden.val(), "", "dialog sets input#auto_approve to ''");
   ok(this.was_submitted, "form was submitted");
 });
+
+module("APP.initNotifications()", { // {{{1
+  setup: function() { // {{{2
+    this.test1 = $("<div></div>").clone()
+      .addClass("notification")
+      .appendTo("#qunit-fixture");
+    this.test2 = $("<div></div>").clone()
+      .addClass("warning")
+      .appendTo("#qunit-fixture");
+    this.test3 = $("<div></div>").clone()
+      .attr("id", "flash_notice")
+      .appendTo("#qunit-fixture");
+    this.test4 = $("<div></div>").clone()
+      .attr("id", "flash_error")
+      .appendTo("#qunit-fixture");
+    APP.initNotifications();
+  }
+});
+test("should set ui-widgets for all notification types (fails with IE)", function() { // {{{2
+  ok(this.test1.parent().hasClass("ui-widget"), "should turn .notification div into a ui-widget");
+  ok(this.test1.children("span.ui-icon").length > 0, ".notification should have a child span.ui-icon");
+  ok(this.test2.parent().hasClass("ui-widget"), "should turn .warning div into a ui-widget");
+  ok(this.test2.children("span.ui-icon").length > 0, ".warning should have a child span.ui-icon");
+  ok(this.test3.parent().hasClass("ui-widget"), "should turn #flash_notice div into a ui-widget");
+  ok(this.test3.children("span.ui-icon").length > 0, "#flash_notice should have a child span.ui-icon");
+  ok(this.test4.parent().hasClass("ui-widget"), "should turn #flash_error div into a ui-widget");
+  ok(this.test4.children("span.ui-icon").length > 0, "#flash_error should have a child span.ui-icon");
+});
 /* vim:set sw=2 et fdm=marker: */

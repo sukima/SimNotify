@@ -350,8 +350,6 @@ $(document).ready(function() {
     APP.initAccordions();
     APP.initButtons();
     APP.initAutoApproveDialog();
-
-    // Notifications {{{2
     APP.initNotifications();
 
     // Override confirm() {{{2
