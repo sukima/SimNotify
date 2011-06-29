@@ -16,10 +16,15 @@ jQuery.fn.submitWithAjax = function() {
 };
 
 // Application object {{{1
-var APP = { cache: {}, config: {
-    debug: false,
-    jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
-}};
+var APP = {
+    cache: {
+        loading: $("<img src=\"/images/loading.gif\" alt=\"loading\" />")
+    },
+    config: {
+        debug: false,
+        jquery_theme_path: "/stylesheets/jquery-ui-themes/themes/%s/jquery.ui.all.css"
+    }
+};
 
 // Locale text {{{2
 APP.locale = {
@@ -35,7 +40,7 @@ APP.locale = {
         // console.log(msg);
         // alert_needed = false;
     // }
-    // if ( $("#general_debug_info").length > 0 ) {
+    // if ( $("#general_debug_info").length ) {
         // $("#general_debug_info").append(str);
         // alert_needed = false;
     // }
@@ -44,7 +49,22 @@ APP.locale = {
 
 // Function: getTimeValues() {{{2
 APP.getTimeValues = function(dateTimeStr) {
-    var t = dateTimeStr.replace(/^.*\s+/, '').split(":");
+    var t;
+    if (dateTimeStr.length < 3)
+    {
+        t = [ dateTimeStr, "0" ];
+    }
+    else
+    {
+        t = dateTimeStr.replace(/^.*\s+/, '').split(":");
+        if (t.length < 2)
+        {
+            var re = /(\d?\d)(\d\d)$/;
+            var result = re.exec(t[0]);
+            t[0] = (result[1]) ? result[1] : "0";
+            t[1] = (result[2]) ? result[2] : "0";
+        }
+    }
     return { hour: t[0], minute: t[1] };
 };
 
@@ -57,7 +77,7 @@ APP.getDateValues = function(dateTimeStr) {
     return { month: d[0], day: d[1], year: d[2] };
 };
 
-// Function: getDateTimeStringFromHashes() {{{2
+// Function: getDateTimeStringFromHash() {{{2
 APP.getDateTimeStringFromHash = function(d) {
     return d.month + "/" + d.day + "/" + d.year + " " + d.hour + ":" + d.minute;
 };
@@ -81,7 +101,7 @@ APP.syncStartEndDates = function () {
     var end_date = $("#event_end_time_input .ui-date-text");
     var d1 = $(this).val().replace(/[^\d]/g, '');
     var d2 = (end_date.val() == APP.locale.pick_datetime) ?
-        0 : end_date.val().replace(/[^\d]/g, '');
+        "0" : end_date.val().replace(/[^\d]/g, '');
     if  (d2 < d1)
         end_date.val($(this).val()).trigger('change').effect('highlight');
 };
@@ -137,52 +157,56 @@ APP.initThemePicker = function () {
     });
 };
 
-// }}}1
-
-// Document Ready {{{1
-$(document).ready(function() {
-    // Flag Detection {{{2
-    if ( $("#NewUserFlag").length > 0 ) {
+// Function: flagDetection() {{{2
+APP.flagDetection = function() {
+    if ( $("#NewUserFlag").length ) {
         APP.config.new_user = true;
         if (APP.config.debug) $("NewUserFlag").append("NewUserFlag set").show();
     } else {
         APP.config.new_user = false;
     }
+};
 
-    // Reusable Resources {{{2
-    var $loading = $("<img src=\"/images/loading.gif\" alt=\"loading\" />");
-
-    // Autocomplete / Multiselect {{{2
-    $.getJSON('/main/autocomplete_map', function(data) {
-        APP.autocomplete_map = data;
+// Function: autocomplete() {{{2
+APP.autocomplete = {
+    init: function(data) {
+        APP.cache.autocomplete_map = data;
         $('input.autocomplete').each(function(index) {
-            $(this).autocomplete({ source: APP.autocomplete_map[$(this).attr('id')] });
+            $(this).autocomplete({ source: APP.cache.autocomplete_map[$(this).attr('id')] });
         });
+    },
+    load: function() {
+        $.getJSON('/main/autocomplete_map', this.init);
+    }
+};
 
-        $("select.multiselect").each(function () {
-            if ( $(this).attr("multiple") === undefined )
-            {
-                $(this).multiSelect({
-                    multiple: false,
-                    showHeader: false,
-                    minWidth: 200,
-                    selectedText: function (numChecked, numTotal, checkedItem) {
-                        return $(checkedItem).attr("title");
-                    }
-                });
-            }
-            else
-            {
-                $(this).multiSelect({
-                    minWidth: 300,
-                    selectedList: 2,
-                    showHeader: false
-                });
-            }
-        });
+// Function: loadMultiselect() {{{2
+APP.loadMultiselect = function() {
+    $("select.multiselect").each(function () {
+        if ( $(this).attr("multiple") )
+        {
+            $(this).multiSelect({
+                minWidth: 300,
+                selectedList: 2,
+                showHeader: false
+            });
+        }
+        else
+        {
+            $(this).multiSelect({
+                multiple: false,
+                showHeader: false,
+                minWidth: 200,
+                selectedText: function (numChecked, numTotal, checkedItem) {
+                    return $(checkedItem).attr("title");
+                }
+            });
+        }
     });
+};
 
-    // Navigation bar {{{2
+// Function: initNavBar() {{{2
+APP.initNavBar = function() {
     $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");
     $("#navigation>ul").addClass("nav-list");
@@ -192,8 +216,11 @@ $(document).ready(function() {
     }, function() {
         $('ul', this).slideUp(100);
     });
+};
 
-    // Datepicker / Timepicker {{{2
+// Function: initDateTimePickers() {{{2
+APP.initDateTimePickers = function() {
+    // Datepicker / Timepicker 
     // Define the dateFormat for the datepicker
     // $.datepicker._defaults.dateFormat = 'M dd yy';
 
@@ -202,12 +229,10 @@ $(document).ready(function() {
      */
     // Date/Time Picker Init {{{3
     $('.datetime').each(function(i, el) {
-        var input = document.createElement('input');
+        var input = $("<input type='text' class='ui-date-text' />");
         if ($(el).attr('id') == "event_start_time_input")
-            $(input).bind('change', APP.syncStartEndDates);
+            input.bind('change', APP.syncStartEndDates);
 
-        // datepicker field
-        $(input).attr({'type': 'text', 'class': 'ui-date-text'});
         // Insert the input:text before the first select
         $(el).find("select:first").before(input);
         if (!APP.config.debug) $(el).find("select:lt(5)").hide();
@@ -219,7 +244,7 @@ $(document).ready(function() {
         });
         if( values.length > 1 ) {
             d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
-            $(input).val(APP.getDateTimeStringFromHash({
+            input.val(APP.getDateTimeStringFromHash({
                 year: values[0],
                 month: values[1],
                 day: values[2],
@@ -229,35 +254,37 @@ $(document).ready(function() {
         }
         else
         {
-            $(input).val(APP.locale.pick_datetime);
+            input.val(APP.locale.pick_datetime);
         }
 
-        $(input).datetimepicker({
+        input.datetimepicker({
             stepMinute: 15,
             minuteGrid: 15,
             hourGrid: 4
         });
-    });
+    }); // }}}3
 
     /**
      * Sets the date for each select with the date selected with datepicker
      */
     // Input change events {{{3
-    $('input.ui-date-text').live('change', APP.saveDateValues);
+    $('input.ui-date-text').bind('change', APP.saveDateValues);
 
     // }}}3
+};
 
-
-    // Accordions {{{2
+// Function: initAccordions() {{{2
+APP.initAccordions = function() {
     $(".accordion").accordion({
       header: '.accordion-header',
       collapsible: true,
-      clearStyle: true 
+      clearStyle: true
     });
+};
 
-    // Buttons {{{2
+// Function: initButtons() {{{2
+APP.initButtons = function() {
     // Setup default buttons.
-    $("#navigation a.dropdown").button({icons:{secondary:'ui-icon-triangle-1-s'}});
     $("#navigation a").each(function() {
         if ($(this).hasClass("dropdown"))
         {
@@ -281,7 +308,10 @@ $(document).ready(function() {
     if (APP.config.new_user) {
         $("#nav_help_link").button("option", "icons", {secondary:'ui-icon-info'});
     }
+};
 
+// Function: initAutoApproveDialog() {{{2
+APP.initAutoApproveDialog = function() {
     // Cache the form that needs to be interacted with.
     APP.cache.event_form = $("form#new_event");
     // Setup the #confirm_auto_approve_text dialog box.
@@ -313,45 +343,61 @@ $(document).ready(function() {
             return false;
         });
     }
+};
 
-    // Notifications {{{2
-    APP.initNotifications();
-
-    // Override confirm() {{{2
+// Function: overideConfirmLinks() {{{2
+APP.overideConfirmLinks = function() {
     // This is a bit of a hack to override the :confirm option in link_to but
     // it degrades nicely.
     $("a[confirm_message]").each(function () {
-        // OPTIMIZE: Use this blog to optimize
+        // TODO: Use this blog to optimize
         // http://blog.nemikor.com/2009/04/08/basic-usage-of-the-jquery-ui-dialog/
         $(this).removeAttr('onclick');
         $(this).unbind('click', false);
         $(this).click(function (e) {
             var anchor = this;
-            $("<div>" + $(this).attr('confirm_message') + "</div>").dialog({
-                resizable: false,
-                modal: true,
-                title: $(this).text(),
-                buttons: {
-                    Ok: function() {
-                        window.location.href = $(anchor).attr('href');
-                    },
-                    Cancel: function() {
-                        $(this).dialog('close');
-                        $(this).remove();
+            $("<div></div>")
+                .text($(this).attr('confirm_message'))
+                .dialog({
+                    resizable: false,
+                    modal: true,
+                    title: $(this).text(),
+                    buttons: {
+                        Ok: function() {
+                            window.location.href = $(anchor).attr('href');
+                        },
+                        Cancel: function() {
+                            $(this).dialog('close');
+                            $(this).remove();
+                        }
                     }
-                }
-            });
+                });
             return false;
         });
     });
+};
+// }}}1
 
-    // }}}2
+// Document Ready {{{1
+$(document).ready(function() {
+    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
+    APP.flagDetection();
+    APP.autocomplete.load();
+    APP.loadMultiselect();
+    APP.initNavBar();
+    APP.initDateTimePickers();
+    APP.initAccordions();
+    APP.initButtons();
+    APP.initAutoApproveDialog();
+    APP.initNotifications();
+    APP.overideConfirmLinks();
+
     // Help dialog {{{2
     APP.initHelpTabs();
 
     $("#nav_help_link").each(function () {
         var help_href = $(this).attr('href') + "?partial=1";
-        var help_dialog = $("<div />").append($loading.clone());
+        var help_dialog = $("<div />").append(APP.cache.loading.clone());
         var help_link = $(this).one('click', function (e) {
             e.preventDefault();
             help_dialog.load(help_href, function () {
@@ -373,7 +419,7 @@ $(document).ready(function() {
     });
 
     // Deprecated in favor of #NewUserFlag
-    if ( $("#force_display_help").length > 0 ) {
+    if ( $("#force_display_help").length ) {
         $("#nav_help_link").trigger('click');
     }
 
@@ -382,7 +428,7 @@ $(document).ready(function() {
 
     // Submit Event Form {{{2
     var no_scenario_link = $("#no-scenario-link");
-    if (no_scenario_link.length > 0) {
+    if (no_scenario_link.length) {
         no_scenario_link.click(function (e) {
             $(this).hide();
             $("form.submit_note").show();

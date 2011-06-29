@@ -25,3 +25,31 @@
 
 /* Fix for IE that renders the nav bar incorrectly. */
 li { height: 1%; }
+
+/* Secret test link */
+#test_link {
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
+#test_link a {
+  display: inline-block;
+  width: 10px;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+#test_link a:hover {
+  background-color: #36D;
+  text-decoration: none;
+}
+
+#test_link a:visited {
+  text-decoration: none;
+}
+
+#test_link a:active {
+  text-decoration: none;
+}
