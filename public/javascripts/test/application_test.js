@@ -1,6 +1,7 @@
 // Test Helper {{{1
 if (!test_helper) { var test_helper = {}; }
-test_helper.buildDateTimeInputs = function() {
+test_helper.moduleDateTimeInputConfig = {
+  setup: function() {
     this.datetime = $("<div class='datetime'></div>")
       .append("<input type='test' id='test_input' />");
     this.datetime.find("#test_input")
@@ -14,6 +15,12 @@ test_helper.buildDateTimeInputs = function() {
     }
     this.datetime.appendTo("#qunit-fixture");
     this.input = $("#test_input").bind("test", APP.saveDateValues);
+  },
+  teardown: function() {
+    // the dateTimePicker() manipulates the DOM outside of #qunit-fixture
+    // Clean up litter.
+    $("#ui-datepicker-div").remove();
+  }
 };
 
 module("Application Object"); // {{{1
@@ -55,9 +62,7 @@ test("should create string from hash values", function() { // {{{2
   }), "03/04/2011 12:30", "should return correctly formed date string");
 });
 
-module("APP.saveDateValues()", { // {{{1
-  setup: test_helper.buildDateTimeInputs
-});
+module("APP.saveDateValues()", test_helper.moduleDateTimeInputConfig); // {{{1
 test("should assign select values from text field", function() { // {{{2
   this.input.trigger("test");
   equal($("#select_0").val(), "3", "select_0 should be set to year ('3')"); // year
@@ -228,9 +233,7 @@ test("should reconfigure nav bar", function() { // {{{2
   ok(this.navdiv.find("ul li>ul").hasClass("sub-nav-list"), "#navigation>ul li>ul should have class 'sub-nav-list'");
 });
 
-module("APP.initDateTimePickers()", { // {{{1
-  setup: test_helper.buildDateTimeInputs
-});
+module("APP.initDateTimePickers()", test_helper.moduleDateTimeInputConfig); // {{{1
 test("should create correctly formed Date Time Picker", function() { // {{{2
   APP.initDateTimePickers();
   equal($("input.ui-date-text").length, 1, "should only have one 'ui-date-text' input");
