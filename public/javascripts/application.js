@@ -309,19 +309,9 @@ APP.initButtons = function() {
         $("#nav_help_link").button("option", "icons", {secondary:'ui-icon-info'});
     }
 };
-// }}}1
 
-// Document Ready {{{1
-$(document).ready(function() {
-    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    APP.initNavBar();
-    APP.initDateTimePickers();
-    APP.initAccordions();
-    APP.initButtons();
-
+// Function: initAutoApproveDialog() {{{2
+APP.initAutoApproveDialog = function() {
     // Cache the form that needs to be interacted with.
     APP.cache.event_form = $("form#new_event");
     // Setup the #confirm_auto_approve_text dialog box.
@@ -346,6 +336,20 @@ $(document).ready(function() {
         APP.cache.confirm_auto_approve_dialog.dialog("open");
         return false;
     });
+};
+// }}}1
+
+// Document Ready {{{1
+$(document).ready(function() {
+    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
+    APP.flagDetection();
+    APP.autocomplete.load();
+    APP.loadMultiselect();
+    APP.initNavBar();
+    APP.initDateTimePickers();
+    APP.initAccordions();
+    APP.initButtons();
+    APP.initAutoApproveDialog();
 
     // Notifications {{{2
     APP.initNotifications();

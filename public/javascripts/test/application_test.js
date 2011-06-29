@@ -277,4 +277,56 @@ test("should create all button widgets", function() { // {{{2
   ok($("#test-link-6").hasClass("ui-button"), "test-link-6 is a button");
   ok($("#test-link-6").find(".ui-icon").length > 0, "test-link-6 has an icon");
 });
+
+module("APP.initAutoApproveDialog()", { // {{{1
+  setup: function() { // {{{2
+    var that = this;
+    this.was_submitted = false;
+    this.form = $("<form id='new_event'></form>")
+      .submit(function() { that.was_submitted = true; return false; })
+      .appendTo("#qunit-fixture");
+    this.hidden = $("<input />")
+      .attr("type", "hidden")
+      .attr("id", "auto_approve")
+      .attr("name", "auto_approve")
+      .val("xxxxxx")
+      .appendTo(this.form);
+    this.submit = $("<input />").clone()
+      .attr("type", "submit")
+      .addClass("confirm_auto_approve")
+      .appendTo(this.form);
+    $("<div></div>").clone()
+      .attr("id", "confirm_auto_approve_text")
+      .appendTo("#qunit-fixture");
+    APP.initAutoApproveDialog();
+  },
+  teardown: function() { // {{{2
+    delete APP.cache.confirm_auto_approve_dialog;
+    delete APP.cache.event_form;
+    // dialog() manipulates the DOM outside of #qunit-fixture
+    // Clean up litter.
+    $(".ui-dialog").remove();
+    $("#confirm_auto_approve_text").remove();
+  }
+});
+test("should initialize auto approve dialog cache", function() { // {{{2
+  ok(APP.cache.event_form !== undefined, "APP.cache.event_form assigned");
+  ok(APP.cache.confirm_auto_approve_dialog !== undefined, "APP.cache.confirm_auto_approve_dialog assigned");
+});
+test("should handle auto approve request from user", function() { // {{{2
+  this.buttons = $(".ui-dialog-buttonset > :button")
+
+  this.submit.trigger("click");
+  $(this.buttons[0]).trigger("click");
+  equal(this.hidden.val(), "yes", "dialog sets input#auto_approve to 'yes'");
+  ok(this.was_submitted, "form was submitted");
+});
+test("should handle save request from user", function() { // {{{2
+  this.buttons = $(".ui-dialog-buttonset > :button")
+
+  this.submit.trigger("click");
+  $(this.buttons[1]).trigger("click");
+  equal(this.hidden.val(), "", "dialog sets input#auto_approve to ''");
+  ok(this.was_submitted, "form was submitted");
+});
 /* vim:set sw=2 et fdm=marker: */
