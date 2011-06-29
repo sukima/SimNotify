@@ -281,20 +281,10 @@ APP.initAccordions = function() {
       clearStyle: true
     });
 };
-// }}}1
 
-// Document Ready {{{1
-$(document).ready(function() {
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    APP.initNavBar();
-    APP.initDateTimePickers();
-    APP.initAccordions();
-
-    // Buttons {{{2
+// Function: initButtons() {{{2
+APP.initButtons = function() {
     // Setup default buttons.
-    $("#navigation a.dropdown").button({icons:{secondary:'ui-icon-triangle-1-s'}});
     $("#navigation a").each(function() {
         if ($(this).hasClass("dropdown"))
         {
@@ -318,6 +308,19 @@ $(document).ready(function() {
     if (APP.config.new_user) {
         $("#nav_help_link").button("option", "icons", {secondary:'ui-icon-info'});
     }
+};
+// }}}1
+
+// Document Ready {{{1
+$(document).ready(function() {
+    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
+    APP.flagDetection();
+    APP.autocomplete.load();
+    APP.loadMultiselect();
+    APP.initNavBar();
+    APP.initDateTimePickers();
+    APP.initAccordions();
+    APP.initButtons();
 
     // Cache the form that needs to be interacted with.
     APP.cache.event_form = $("form#new_event");

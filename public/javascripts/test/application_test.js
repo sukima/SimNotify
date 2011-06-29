@@ -246,4 +246,32 @@ test("should create jQuery-UI accordion widgets", function() { // {{{2
   APP.initAccordions();
   ok($(".accordion").hasClass('ui-accordion'), "jQuery-ui accordian created succesfully");
 });
+
+module("APP.initButtons()", { // {{{1
+  setup: function() { // {{{2
+    this.nav_div = $("<div id='navigation'></div>").appendTo("#qunit-fixture");
+    this.a = $("<a></a>").attr("id", "test-link-1").appendTo("#qunit-fixture");
+    this.a.clone().attr("id", "test-link-2").addClass("button").appendTo("#qunit-fixture");
+    this.a.clone().attr("id", "test-link-3").appendTo(this.nav_div);
+    this.a.clone().attr("id", "test-link-4").addClass("dropdown").appendTo(this.nav_div);
+    this.a.clone().attr("id", "nav_help_link").appendTo(this.nav_div);
+    this.a.clone().attr("id", "test-link-6").data('button-icon', "ui-icon-check").appendTo(this.nav_div);
+    APP.config.new_user = true;
+  },
+  teardown: function() { // {{{2
+    APP.config.new_user = false;
+  }
+});
+test("should create all button widgets", function() { // {{{2
+  APP.initButtons();
+  ok(!$("#test-link-1").hasClass("ui-button"), "test-link-1 is not a button");
+  ok($("#test-link-2").hasClass("ui-button"), "test-link-2 is a button");
+  ok($("#test-link-3").hasClass("ui-button"), "test-link-3 is a button");
+  ok($("#test-link-4").hasClass("ui-button"), "test-link-4 is a button");
+  ok($("#test-link-4").find(".ui-icon").length > 0, "test-link-4 has an icon");
+  ok($("#nav_help_link").hasClass("ui-button"), "nav_help_link is a button");
+  ok($("#nav_help_link").find(".ui-icon").length > 0, "nav_help_link has an icon");
+  ok($("#test-link-6").hasClass("ui-button"), "test-link-6 is a button");
+  ok($("#test-link-6").find(".ui-icon").length > 0, "test-link-6 has an icon");
+});
 /* vim:set sw=2 et fdm=marker: */
