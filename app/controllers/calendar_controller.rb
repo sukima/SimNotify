@@ -12,7 +12,7 @@ class CalendarController < ApplicationController
   def save_preferences
     if params[:facilities].kind_of? Array
       session[:calendar_facilities_pref] = params[:facilities].collect do |f|
-        f_id = f.slice(/\Bfacility=([0-9]+|special)(&|$)/,1)
+        f_id = f.slice(/\bfacility=([0-9]+|special)/,1)
         if f_id.nil? && f.match(/^([0-9]+|special)$/)
           f_id = f
         end
