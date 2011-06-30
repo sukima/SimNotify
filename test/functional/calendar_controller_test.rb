@@ -159,6 +159,44 @@ class CalendarControllerTest < ActionController::TestCase
       should assign_to(:time_format)
       should render_template :agenda
     end
+
+    context "GET :save_preferences" do
+      context "with bad data" do
+        setup do
+          get :save_preferences, { :bad_data => "bad_value" }
+        end
+        should respond_with :not_acceptable
+        should respond_with_content_type(/plain/)
+      end
+      context "with good data" do
+        setup do
+          get :save_preferences, {
+            :facilities => [ "/test_url/?facility=A", "/test/?facility=X&foo", "bogus_value", "23", "special" ]
+          }
+        end
+        should respond_with :success
+        should respond_with_content_type(/plain/)
+        should "assign session[:calendar_facilities_pref] as an array with count of 5" do
+          assert @request.session[:calendar_facilities_pref].kind_of? Array
+          assert_equal 5, @request.session[:calendar_facilities_pref].count
+        end
+        should "have session data save 'A' at index 0" do
+          assert_equal "A", @request.session[:calendar_facilities_pref][0]
+        end
+        should "have session data save 'X' at index 1" do
+          assert_equal "X", @request.session[:calendar_facilities_pref][1]
+        end
+        should "have session data save nil at index 2" do
+          assert_nil @request.session[:calendar_facilities_pref][2]
+        end
+        should "have session data save '23' at index 3" do
+          assert_equal "23", @request.session[:calendar_facilities_pref][3]
+        end
+        should "have session data save 'special' at index 4" do
+          assert_equal "special", @request.session[:calendar_facilities_pref][4]
+        end
+      end
+    end
   end
 
   private

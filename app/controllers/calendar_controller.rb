@@ -6,9 +6,22 @@ class CalendarController < ApplicationController
   def index
     @is_calendar = true
     @facilities = Facility.find(:all)
-    # respond_to do |format|
-      # format.html
-    # end
+    @facility_preferences = session[:calendar_facilities_pref] || :all
+  end
+
+  def save_preferences
+    if params[:facilities].kind_of? Array
+      session[:calendar_facilities_pref] = params[:facilities].collect do |f|
+        f_id = f.slice(/\Bfacility=([0-9]+|special)(&|$)/,1)
+        if f_id.nil? && f.match(/^([0-9]+|special)$/)
+          f_id = f
+        end
+        f_id
+      end
+      render :text => "Preferences saved", :status => :ok
+    else
+      render :text => "Invalid parameter format", :status => :not_acceptable
+    end
   end
 
   def agenda

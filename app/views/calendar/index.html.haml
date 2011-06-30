@@ -20,10 +20,12 @@
     #calendar-legend.ui-widget-content.ui-corner-all
       - @facilities.each do |f|
         %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{h f.agenda_color};"}
-          = check_box_tag("facility-checkbox-#{f.id}", f.id, true, { :class => 'facility' })
+          - is_checked = (@facility_preferences == :all || @facility_preferences.include?(f.id.to_s))
+          = check_box_tag("facility-checkbox-#{f.id}", f.id, is_checked, { :class => 'facility' })
           =h f.name
       %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("special_event_color").value};"}
-        = check_box_tag("special-event-checkbox", "special", true, { :class => 'facility' })
+        - is_checked = (@facility_preferences == :all || @facility_preferences.include?("special"))
+        = check_box_tag("special-event-checkbox", "special", is_checked, { :class => 'facility' })
         Special Event
       %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("not_approved_color").value};"}
         Not Approved
