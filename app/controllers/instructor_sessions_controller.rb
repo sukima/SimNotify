@@ -6,7 +6,6 @@ class InstructorSessionsController < ApplicationController
   def create
     @instructor_session = InstructorSession.new(params[:instructor_session])
     if @instructor_session.save
-      flash[:notice] = "Logged in successfully."
       redirect_to_target_or_default(root_url)
     else
       render :action => 'new'
