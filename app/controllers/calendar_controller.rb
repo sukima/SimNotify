@@ -15,7 +15,7 @@ class CalendarController < ApplicationController
         f_id = f.slice(/\bfacility=([0-9]+|special)/,1)
         if f_id.nil? && f.match(/^([0-9]+|special)$/)
           f_id = f
-        end
+        end # remains nil if not matching above pattern.
         f_id
       end
       render :text => "Preferences saved", :status => :ok
