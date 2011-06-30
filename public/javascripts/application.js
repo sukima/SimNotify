@@ -400,6 +400,19 @@ APP.initHelpDialog = function() {
         $("#nav_help_link").trigger('click');
     }
 };
+
+// Function: initEventSubmitNote() {{{2
+APP.initEventSubmitNote = function() {
+    var no_scenario_link = $("#no-scenario-link");
+    if (no_scenario_link.length) {
+        no_scenario_link.click(function (e) {
+            $(this).hide();
+            $("form.submit_note").show();
+        });
+
+        $("form.submit_note").hide();
+    }
+};
 // }}}1
 
 // Document Ready {{{1
@@ -417,18 +430,7 @@ $(document).ready(function() {
     APP.overideConfirmLinks();
     APP.initThemePicker();
     APP.initHelpDialog();
-
-    // Submit Event Form {{{2
-    var no_scenario_link = $("#no-scenario-link");
-    if (no_scenario_link.length) {
-        no_scenario_link.click(function (e) {
-            $(this).hide();
-            $("form.submit_note").show();
-        });
-
-        $("form.submit_note").hide();
-    }
-
+    APP.initEventSubmitNote();
 }); // }}}1
 
 // vim:set sw=4 ts=4 et fdm=marker:
