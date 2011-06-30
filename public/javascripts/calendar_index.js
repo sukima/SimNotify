@@ -65,6 +65,8 @@ CAL.scanFacilityOptions = function() {
             CAL.cache.calendar.fullCalendar("removeEventSource", url);
         }
     });
+
+    CAL.savePreferences();
 };
 
 // Function: initFullCalendar() {{{1

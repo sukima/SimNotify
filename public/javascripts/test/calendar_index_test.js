@@ -55,6 +55,7 @@ test("should sync facility_urls with facility checkboxes", function() { // {{{2
 
 module("CAL.scanFacilityOptions()", { // {{{1
   setup: function() { // {{{2
+    test_helper.moduleSetupAjaxMock.setup(this);
     $("<input type='checkbox' id='facility-box' class='facility' />")
       .attr('value', "Unique-test-identifier-jshdajsiu")
       .attr('checked', true)
@@ -66,6 +67,7 @@ module("CAL.scanFacilityOptions()", { // {{{1
     CAL.cache.facility_urls = [ CAL.buildURL("Unique-test-identifier-iuryhweh") ];
   },
   teardown: function() { // {{{2
+    test_helper.moduleSetupAjaxMock.teardown();
     CAL.cache.facility_urls = [ ];
     delete CAL.cache.calendar;
   }
