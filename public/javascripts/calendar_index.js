@@ -41,8 +41,8 @@ CAL.savePreferences = function() {
     $.ajax({
         url: CAL.save_preferences_path,
         type: 'POST',
-        dataType: 'text',
-        data: send_data,
+        dataType: 'html',
+        data: { facilities: send_data },
         success: function(data, textStatus, xhr) {
             $.n("Preferences Saved");
         }

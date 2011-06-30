@@ -118,17 +118,17 @@ module("CAL.savePreferences()", { // {{{1
 test("should build properly formatted parameter data", function() { // {{{2
   expect(5);
   var data = this.options.data;
-  if (data !== undefined && $.isArray(data))
+  if (data !== undefined && data.facilities !== undefined)
   {
-    ok(true, "data is defined and is an array");
-    ok(data.length == 3, "array has correct length (3)");
-    equal(data[0], "12345", "first element is '12345'");
-    equal(data[1], "special", "second element is 'special'");
-    equal(data[2], "A", "second element is 'A'");
+    ok(true, "data is defined correctly");
+    ok(data.facilities.length == 3, "array has correct length (3)");
+    equal(data.facilities[0], "12345", "first element is '12345'");
+    equal(data.facilities[1], "special", "second element is 'special'");
+    equal(data.facilities[2], "A", "second element is 'A'");
   }
   else
   {
-    ok(false, "data is defined and is an array");
+    ok(false, "data is defined correctly");
   }
 });
 /* vim:set sw=2 et fdm=marker: */
