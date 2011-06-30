@@ -2,6 +2,7 @@
 // Main CAl object.
 CAL = {};
 CAL.calendar_path = '/calendar/events';
+CAL.save_preferences_path = '/calendar/save_preferences';
 
 // cache object {{{1
 CAL.cache = {
@@ -24,6 +25,30 @@ CAL.cache.sync = function() {
     });
 };
 
+// Function: savePreferences() {{{1
+CAL.savePreferences = function() {
+    var re = /\bfacility=([^&]+)/,
+        matches,
+        send_data = [];
+    $.each(CAL.cache.facility_urls, function(i,val) {
+        matches = re.exec(val);
+        if (matches.length == 2) // Make sure correct match found
+        {
+            send_data.push(matches[1]);
+        }
+    });
+
+    $.ajax({
+        url: CAL.save_preferences_path,
+        type: 'POST',
+        dataType: 'html',
+        data: { facilities: send_data },
+        success: function(data, textStatus, xhr) {
+            $.n("Preferences Saved");
+        }
+    });
+};
+
 // Function: scanFacilityOptions() {{{1
 CAL.scanFacilityOptions = function() {
     $(".facility").each(function() {
@@ -40,6 +65,8 @@ CAL.scanFacilityOptions = function() {
             CAL.cache.calendar.fullCalendar("removeEventSource", url);
         }
     });
+
+    CAL.savePreferences();
 };
 
 // Function: initFullCalendar() {{{1

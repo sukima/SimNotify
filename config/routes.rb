@@ -75,6 +75,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.calendar 'calendar', :controller => 'calendar'
   map.agenda 'calendar/agenda', :controller => 'calendar', :action => 'agenda'
+  map.save_preferences 'calendar/save_preferences', :controller => 'calendar', :action => 'save_preferences'
   map.connect 'calendar/:action', :controller => 'calendar'
   map.connect 'calendar/:action.:format', :controller => 'calendar'
 

@@ -151,7 +151,7 @@ APP.initThemePicker = function () {
         return;
 
     $("#instructor_gui_theme").change(function () {
-        url = APP.config.jquery_theme_path.replace(/(^|[^%])%s/, "$1" + $(this).val());
+        var url = APP.config.jquery_theme_path.replace(/(^|[^%])%s/, "$1" + $(this).val());
         $("link.theme").attr("href", url);
         $("#theme_sample").show();
     });
@@ -243,7 +243,7 @@ APP.initDateTimePickers = function() {
             if(val != '') values.push(val);
         });
         if( values.length > 1 ) {
-            d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
+            var d = new Date(values[0], parseInt(values[1]) - 1, values[2]);
             input.val(APP.getDateTimeStringFromHash({
                 year: values[0],
                 month: values[1],

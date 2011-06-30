@@ -31,6 +31,7 @@ module LayoutHelper
     ret += stylesheet_link_tag "#{APP_CONFIG[:theme_dir]}/#{theme}/jquery.ui.all.css", :class => "theme"
     ret += stylesheet_link_tag "jquery-ui-timepicker-addon"
     ret += stylesheet_link_tag "jquery.multiselect"
+    ret += stylesheet_link_tag "jquery.notifications"
     return ret
   end
 
@@ -49,6 +50,7 @@ module LayoutHelper
     ret += javascript_include_tag "jquery.multiselect"
     ret += javascript_include_tag "jquery.icolorpicker.min"
     ret += javascript_include_tag "jquery.ba-dotimeout.min"
+    ret += javascript_include_tag "jquery.notifications.min"
     return ret
   end
 

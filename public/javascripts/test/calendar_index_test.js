@@ -1,7 +1,24 @@
+// Test Helper {{{1
+if (test_helper === undefined) { var test_helper = {}; }
+test_helper.jquery_ajax = jQuery.ajax;
+test_helper.moduleSetupAjaxMock = { // {{{2
+  setup: function(scope) {
+    if (scope === undefined) { scope = this; }
+    this.options = null;
+    jQuery.ajax = function(settings) {
+      scope.options = settings;
+    };
+  },
+  teardown: function() {
+    jQuery.ajax = test_helper.jquery_ajax;
+  }
+};
+
 module("Calendar Object"); // {{{1
 test("should define initial values", function() { // {{{2
   ok(CAL !== undefined, "Cal is defined");
   ok(CAL.calendar_path !== undefined, "CAL.calendar_path is defined");
+  ok(CAL.save_preferences_path !== undefined, "CAL.save_preferences_path is defined");
 });
 
 module("Calendar Cache Object"); // {{{1
@@ -38,6 +55,7 @@ test("should sync facility_urls with facility checkboxes", function() { // {{{2
 
 module("CAL.scanFacilityOptions()", { // {{{1
   setup: function() { // {{{2
+    test_helper.moduleSetupAjaxMock.setup(this);
     $("<input type='checkbox' id='facility-box' class='facility' />")
       .attr('value', "Unique-test-identifier-jshdajsiu")
       .attr('checked', true)
@@ -49,6 +67,7 @@ module("CAL.scanFacilityOptions()", { // {{{1
     CAL.cache.facility_urls = [ CAL.buildURL("Unique-test-identifier-iuryhweh") ];
   },
   teardown: function() { // {{{2
+    test_helper.moduleSetupAjaxMock.teardown();
     CAL.cache.facility_urls = [ ];
     delete CAL.cache.calendar;
   }
@@ -75,6 +94,7 @@ module("CAL.initFullCalendar()", { // {{{1
   }
 });
 test("should execute cleanly", function() { // {{{2
+  expect(2);
   try
   {
     CAL.initFullCalendar();
@@ -89,4 +109,28 @@ test("should be defined (no functional tests)", function() { // {{{2
   ok(CAL.initFacilityChangeEvents !== undefined, "function is defined");
 });
 
+module("CAL.savePreferences()", { // {{{1
+  setup: function() { // {{{2
+    test_helper.moduleSetupAjaxMock.setup(this);
+    CAL.cache.facility_urls = [ "/test?facility=12345", "/test?facility=special", "/test?facility=A&foo" ];
+    CAL.savePreferences();
+  },
+  teardown: test_helper.moduleSetupAjaxMock.teardown // {{{2
+});
+test("should build properly formatted parameter data", function() { // {{{2
+  expect(5);
+  var data = this.options.data;
+  if (data !== undefined && data.facilities !== undefined)
+  {
+    ok(true, "data is defined correctly");
+    ok(data.facilities.length == 3, "array has correct length (3)");
+    equal(data.facilities[0], "12345", "first element is '12345'");
+    equal(data.facilities[1], "special", "second element is 'special'");
+    equal(data.facilities[2], "A", "second element is 'A'");
+  }
+  else
+  {
+    ok(false, "data is defined correctly");
+  }
+});
 /* vim:set sw=2 et fdm=marker: */
