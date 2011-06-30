@@ -376,25 +376,9 @@ APP.overideConfirmLinks = function() {
         });
     });
 };
-// }}}1
 
-// Document Ready {{{1
-$(document).ready(function() {
-    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    APP.initNavBar();
-    APP.initDateTimePickers();
-    APP.initAccordions();
-    APP.initButtons();
-    APP.initAutoApproveDialog();
-    APP.initNotifications();
-    APP.overideConfirmLinks();
-
-    // Help dialog {{{2
-    APP.initHelpTabs();
-
+// Function: initHelpDialog() {{{2
+APP.initHelpDialog = function() {
     $("#nav_help_link").each(function () {
         var help_href = $(this).attr('href') + "?partial=1";
         var help_dialog = $("<div />").append(APP.cache.loading.clone());
@@ -422,11 +406,10 @@ $(document).ready(function() {
     if ( $("#force_display_help").length ) {
         $("#nav_help_link").trigger('click');
     }
+};
 
-    // Theme Viewer {{{2
-    APP.initThemePicker();
-
-    // Submit Event Form {{{2
+// Function: initEventSubmitNote() {{{2
+APP.initEventSubmitNote = function() {
     var no_scenario_link = $("#no-scenario-link");
     if (no_scenario_link.length) {
         no_scenario_link.click(function (e) {
@@ -436,7 +419,5 @@ $(document).ready(function() {
 
         $("form.submit_note").hide();
     }
-
-}); // }}}1
-
+};
 // vim:set sw=4 ts=4 et fdm=marker:
