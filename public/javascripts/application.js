@@ -413,24 +413,4 @@ APP.initEventSubmitNote = function() {
         $("form.submit_note").hide();
     }
 };
-// }}}1
-
-// Document Ready {{{1
-$(document).ready(function() {
-    // TODO: Move this outside of applicatin.js and into layout.html.haml maybe?
-    APP.flagDetection();
-    APP.autocomplete.load();
-    APP.loadMultiselect();
-    APP.initNavBar();
-    APP.initDateTimePickers();
-    APP.initAccordions();
-    APP.initButtons();
-    APP.initAutoApproveDialog();
-    APP.initNotifications();
-    APP.overideConfirmLinks();
-    APP.initThemePicker();
-    APP.initHelpDialog();
-    APP.initEventSubmitNote();
-}); // }}}1
-
 // vim:set sw=4 ts=4 et fdm=marker:

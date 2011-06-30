@@ -14,6 +14,22 @@
     = javascript_include_tag 'application'
     = iebugfixes_include_tag
     = yield(:head)
+    :javascript
+      $(document).ready(function() {
+          APP.flagDetection();
+          APP.autocomplete.load();
+          APP.loadMultiselect();
+          APP.initNavBar();
+          APP.initDateTimePickers();
+          APP.initAccordions();
+          APP.initButtons();
+          APP.initAutoApproveDialog();
+          APP.initNotifications();
+          APP.overideConfirmLinks();
+          APP.initThemePicker();
+          APP.initHelpDialog();
+          APP.initEventSubmitNote();
+      });
   %body
     #container
       #logo-container= image_tag "logo.png"
