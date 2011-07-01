@@ -12,7 +12,7 @@
   %tbody
     - for instructor in @instructors
       %tr
-        %td= link_to instructor.name, instructor
+        %td= name_with_gravatar(instructor)
         %td= h instructor.office
         %td= h instructor.email
         %td= h instructor.phone

@@ -27,6 +27,7 @@ class Option < ActiveRecord::Base
       "system_email_recipients",
       "days_to_send_event_notifications",
       "not_approved_color",
+      "gravatar_default",
       "special_event_color"
     ].each do |o|
       options[o] ||= self.create_default_for(o)
@@ -49,6 +50,9 @@ class Option < ActiveRecord::Base
     when "special_event_color"
       # The color for special events in calendar
       return Option.create(:name => "special_event_color", :value => "#f90")
+    when "gravatar_default"
+      # The default gravatar icons to use ("identicon", "monsterid", "wavatar")
+      return Option.create(:name => "gravatar_default", :value => "wavatar")
     else
       return Option.new(:name => option_name)
     end
