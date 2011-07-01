@@ -181,6 +181,27 @@ module LayoutHelper
     the_datetime.strftime("%A, %b %d %H:%M")
   end
 
+  # name_with_gravatar {{{1
+  def name_with_gravatar(instructor, option = {})
+    option[:pos] ||= :left
+    option[:link] ||= true
+    if option[:link]
+      if option[:link].kind_of? String
+        name = link_to h(instructor.name), option[:link]
+      else
+        name = link_to h(instructor.name), instructor
+      end
+    else
+      name = h(instructor.name)
+    end
+    ret = ""
+    ret += name if option[:pos] == :right
+    ret += "<span class=\"grav-mini-icon\">"
+    ret += image_tag(instructor.gravatar_url(:size=>16), :size=>"16x16")
+    ret += "</span>"
+    ret += name if option[:pos] == :left
+    ret
+  end
   # }}}1
 end
 
