@@ -175,3 +175,7 @@ tr.approved td {
 #theme_sample {
   margin: 0px 0px 10px 0px;
 }
+
+#jquery-notifications {
+  position: fixed !important;
+}

@@ -44,7 +44,7 @@ CAL.savePreferences = function() {
         dataType: 'html',
         data: { facilities: send_data },
         success: function(data, textStatus, xhr) {
-            $.n("Preferences Saved");
+            $.n(data);
         }
     });
 };

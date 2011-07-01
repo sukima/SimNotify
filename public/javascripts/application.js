@@ -15,6 +15,9 @@ jQuery.fn.submitWithAjax = function() {
     return this;
 };
 
+// Global Settings {{{1
+$.n.defaults.timeout = 3000;
+
 // Application object {{{1
 var APP = {
     cache: {
