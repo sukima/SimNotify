@@ -2,6 +2,7 @@
   - f.inputs do
     = f.input :value,
       :as => :multiselect,
+      :include_blank => false,
       :collection => Instructor.all,
       :label => "System email recipients",
       :hint => "Select who should recieve system email notifications."
@@ -25,4 +26,13 @@
       :label => "Special Event Color",
       :hint => "The color to display a special event in the calendar",
       :as => :colorpicker
+  = f.buttons
+- semantic_form_for @options["gravatar_default"], :namespace => "gravatar_default" do |f|
+  - f.inputs do
+    = f.input :value,
+      :label => "Default user icons",
+      :hint => "The theme to use when assigning default user icons for those who do not have a gravatar.com account",
+      :as => :select,
+      :include_blank => false,
+      :collection => [ "identicon", "monsterid", "wavatar" ]
   = f.buttons
