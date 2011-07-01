@@ -179,3 +179,15 @@ tr.approved td {
 #jquery-notifications {
   position: fixed !important;
 }
+
+.grav-icon {
+  float: right;
+}
+
+.grav-mini-icon {
+  margin: 0 2px;
+}
+
+.grav-mini-icon img {
+  vertical-align: middle;
+}
