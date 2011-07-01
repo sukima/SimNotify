@@ -1,5 +1,5 @@
 source :gemcutter
-gem "rails", "~> 2.3.5"
+gem "rails", "2.3.11"
 
 # bundler requires these gems in all environments
 gem "haml", "~> 3.0.18"
@@ -7,7 +7,8 @@ gem "authlogic", "~> 2.1.6"
 gem "formtastic", "~> 1.2.0"
 gem "validation_reflection", "~> 0.3.8"
 gem "maruku", "~> 0.6.0"
-gem "paperclip", "~> 2.3"
+gem "paperclip", "2.3.8"
+gem "gravtastic"
 
 group :native do
   gem "mysql"
