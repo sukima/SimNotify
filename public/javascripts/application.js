@@ -29,12 +29,12 @@ var APP = {
     }
 };
 
-// Locale text {{{2
+// Locale text {{{1
 APP.locale = {
     pick_datetime: "Pick a date and time..."
 };
 
-// Function: log() {{{2
+// Function: log() {{{1
 // APP.log = function (msg) {
     // var alert_needed = true;
     // var str = msg;
@@ -50,7 +50,7 @@ APP.locale = {
     // if (alert_needed) alert(str);
 // };
 
-// Function: getTimeValues() {{{2
+// Function: getTimeValues() {{{1
 APP.getTimeValues = function(dateTimeStr) {
     var t;
     if (dateTimeStr.length < 3)
@@ -71,7 +71,7 @@ APP.getTimeValues = function(dateTimeStr) {
     return { hour: t[0], minute: t[1] };
 };
 
-// Function: getDateValues() {{{2
+// Function: getDateValues() {{{1
 APP.getDateValues = function(dateTimeStr) {
     var d = dateTimeStr.replace(/\s+.*$/, '').split("/");
     // the month and day are not 0 padded unlike the rest of the select values.
@@ -80,12 +80,12 @@ APP.getDateValues = function(dateTimeStr) {
     return { month: d[0], day: d[1], year: d[2] };
 };
 
-// Function: getDateTimeStringFromHash() {{{2
+// Function: getDateTimeStringFromHash() {{{1
 APP.getDateTimeStringFromHash = function(d) {
     return d.month + "/" + d.day + "/" + d.year + " " + d.hour + ":" + d.minute;
 };
 
-// Function: saveDateValues() {{{2
+// Function: saveDateValues() {{{1
 // Rails default select list uses the following order:
 //     year, month, day, hour, minute
 APP.saveDateValues = function () {
@@ -99,7 +99,7 @@ APP.saveDateValues = function () {
     $(sels[4]).val(t.minute);
 };
 
-// Function: syncStartEndDates() {{{2
+// Function: syncStartEndDates() {{{1
 APP.syncStartEndDates = function () {
     var end_date = $("#event_end_time_input .ui-date-text");
     var d1 = $(this).val().replace(/[^\d]/g, '');
@@ -109,7 +109,7 @@ APP.syncStartEndDates = function () {
         end_date.val($(this).val()).trigger('change').effect('highlight');
 };
 
-// Function: initNotifications() {{{2
+// Function: initNotifications() {{{1
 APP.initNotifications = function (scope) {
     if (jQuery.browser.msie)
         return;
@@ -137,7 +137,7 @@ APP.initNotifications = function (scope) {
         prepend("<span class=\"ui-icon ui-icon-alert\" />");
 };
 
-// Function: initHelpTabs() {{{2
+// Function: initHelpTabs() {{{1
 APP.initHelpTabs = function () {
     $("#help").tabs();
     $(".help-buttons").addClass("ui-widget").wrap("<div class=\"ui-helper-clearfix\" />");
@@ -148,7 +148,7 @@ APP.initHelpTabs = function () {
     });
 };
 
-// Function: initThemePicker() {{{2
+// Function: initThemePicker() {{{1
 APP.initThemePicker = function () {
     if (!jQuery.support.htmlSerialize)
         return;
@@ -160,7 +160,7 @@ APP.initThemePicker = function () {
     });
 };
 
-// Function: flagDetection() {{{2
+// Function: flagDetection() {{{1
 APP.flagDetection = function() {
     if ( $("#NewUserFlag").length ) {
         APP.config.new_user = true;
@@ -170,7 +170,7 @@ APP.flagDetection = function() {
     }
 };
 
-// Function: autocomplete() {{{2
+// Function: autocomplete() {{{1
 APP.autocomplete = {
     init: function(data) {
         APP.cache.autocomplete_map = data;
@@ -183,7 +183,7 @@ APP.autocomplete = {
     }
 };
 
-// Function: loadMultiselect() {{{2
+// Function: loadMultiselect() {{{1
 APP.loadMultiselect = function() {
     $("select.multiselect").each(function () {
         if ( $(this).attr("multiple") )
@@ -208,7 +208,7 @@ APP.loadMultiselect = function() {
     });
 };
 
-// Function: initNavBar() {{{2
+// Function: initNavBar() {{{1
 APP.initNavBar = function() {
     $("#navigation").removeClass("side-navigation").addClass("nav-widget ui-widget ui-widget-header ui-corner-all ui-helper-clearfix");
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");
@@ -221,7 +221,7 @@ APP.initNavBar = function() {
     });
 };
 
-// Function: initDateTimePickers() {{{2
+// Function: initDateTimePickers() {{{1
 APP.initDateTimePickers = function() {
     // Datepicker / Timepicker 
     // Define the dateFormat for the datepicker
@@ -276,7 +276,7 @@ APP.initDateTimePickers = function() {
     // }}}3
 };
 
-// Function: initAccordions() {{{2
+// Function: initAccordions() {{{1
 APP.initAccordions = function() {
     $(".accordion").accordion({
       header: '.accordion-header',
@@ -285,7 +285,7 @@ APP.initAccordions = function() {
     });
 };
 
-// Function: initButtons() {{{2
+// Function: initButtons() {{{1
 APP.initButtons = function() {
     // Setup default buttons.
     $("#navigation a").each(function() {
@@ -313,7 +313,7 @@ APP.initButtons = function() {
     }
 };
 
-// Function: initAutoApproveDialog() {{{2
+// Function: initAutoApproveDialog() {{{1
 APP.initAutoApproveDialog = function() {
     // Cache the form that needs to be interacted with.
     APP.cache.event_form = $("form#new_event");
@@ -348,7 +348,7 @@ APP.initAutoApproveDialog = function() {
     }
 };
 
-// Function: overideConfirmLinks() {{{2
+// Function: overideConfirmLinks() {{{1
 APP.overideConfirmLinks = function() {
     // This is a bit of a hack to override the :confirm option in link_to but
     // it degrades nicely.
@@ -380,7 +380,7 @@ APP.overideConfirmLinks = function() {
     });
 };
 
-// Function: initHelpDialog() {{{2
+// Function: initHelpDialog() {{{1
 APP.initHelpDialog = function() {
     $("#nav_help_link").each(function () {
         var help_href = $(this).attr('href') + "?partial=1";
@@ -411,7 +411,7 @@ APP.initHelpDialog = function() {
     }
 };
 
-// Function: initEventSubmitNote() {{{2
+// Function: initEventSubmitNote() {{{1
 APP.initEventSubmitNote = function() {
     var no_scenario_link = $("#no-scenario-link");
     if (no_scenario_link.length) {
