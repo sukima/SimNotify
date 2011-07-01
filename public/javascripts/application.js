@@ -188,7 +188,7 @@ APP.loadMultiselect = function() {
     $("select.multiselect").each(function () {
         if ( $(this).attr("multiple") )
         {
-            $(this).multiSelect({
+            $(this).multiselect({
                 minWidth: 300,
                 selectedList: 2,
                 showHeader: false
@@ -196,7 +196,7 @@ APP.loadMultiselect = function() {
         }
         else
         {
-            $(this).multiSelect({
+            $(this).multiselect({
                 multiple: false,
                 showHeader: false,
                 minWidth: 200,

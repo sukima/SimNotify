@@ -217,8 +217,8 @@ module("APP.loadMultiselect()", { // {{{1
   }
 });
 test("should create multiselect for select elements", function() { // {{{2
-  ok($("#ui-multiselect-ui-multiselect-0-option-0").attr("type") == "radio", "non-multiple select uses radio buttons");
-  ok($("#ui-multiselect-ui-multiselect-1-option-0").attr("type") == "checkbox", "multiple select uses checkboxes buttons");
+  ok($("#ui-multiselect-0-option-0").attr("type") == "radio", "non-multiple select uses radio buttons");
+  ok($("#ui-multiselect-1-option-0").attr("type") == "checkbox", "multiple select uses checkboxes buttons");
 });
 
 module("APP.initNavBar()", { // {{{1
