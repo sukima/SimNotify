@@ -1,5 +1,8 @@
 - title "Instructor Details"
-%h2 #{@instructor.name}
+%h2
+  =h @instructor.name
+  .grav-icon
+    = link_to image_tag(@instructor.gravatar_url(:size => 80)), "http://gravatar.com/"
 = roles_for(@instructor)
 %p
   %strong Email:

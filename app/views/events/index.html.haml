@@ -40,7 +40,10 @@
           %td= link_to_confirm h(event.title), event
           %td= h event.location
           - if is_admin?
-            %td= link_to_confirm h(event.instructor.name), event.instructor
+            %td
+              %span.grav-mini-icon
+                = image_tag(event.instructor.gravatar_url(:size=>16), :size=>"16x16")
+              = link_to_confirm h(event.instructor.name), event.instructor
           %td
             - if !event.notes.empty?
               %span.ui-icon.ui-icon-home Has notes
