@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110611205112) do
+ActiveRecord::Schema.define(:version => 20110701152723) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110611205112) do
     t.boolean  "new_user",          :default => true
     t.boolean  "is_tech",           :default => false
     t.integer  "facility_id"
+    t.boolean  "active",            :default => true
   end
 
   create_table "location_suggestions", :force => true do |t|
