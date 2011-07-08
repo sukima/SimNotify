@@ -4,8 +4,8 @@ class Instructor < ActiveRecord::Base
   acts_as_authentic
   gravtastic :rating => 'PG', :default => Option.find_option_for("gravatar_default")
 
-  has_many :events
-  has_many :assets
+  has_many :events, :dependent => :nullify
+  has_many :assets, :dependent => :nullify
   belongs_to :facility
 
   before_destroy :destroyable?
