@@ -1,7 +1,13 @@
 - confirm_on_exit
+:javascript
+  $(function() {
+    APP.instructorActiveButton.init();
+  });
 - semantic_form_for @instructor do |f|
   - f.inputs do
     = f.input :name
+    - if is_admin?
+      = f.input :active
     = f.input :email
     - if Facility.count > 0
       = f.input :facility
@@ -9,16 +15,17 @@
     = f.input :phone
     = f.input :password, :as => :password, :required => true
     = f.input :password_confirmation, :as => :password, :required => true
-    - if @current_instructor && @current_instructor.admin?
+    - if is_admin?
       - if @instructor == @current_instructor
         %p You are an administrator.
       - else
         = f.input :admin
       = f.input :is_tech
-    #theme_sample.ui-state-default.ui-corner-all.ui-helper-clearfix{:style=>"display:none;"}
-      %span.ui-icon.ui-icon-info
-      Theme sample
-      %span.ui-icon.ui-icon-lightbulb
+    #theme_sample.ui-widget.ui-helper-clearfix{:style=>"display:none;text-align:center"}
+      .ui-state-default.ui-corner-all
+        %span.ui-icon.ui-icon-info{:style=>"float:left;margin-right:.3em"}
+        Theme sample
+        %span.ui-icon.ui-icon-lightbulb{:style=>"float:right;margin-left:.3em"}
     = f.input :gui_theme, :as => :select,
       :collection => APP_CONFIG[:gui_themes],
       :include_blank => false
