@@ -152,6 +152,8 @@ facility, location, start and end times. These are used for booking locations
 when there is no program or simulation. (ie. A meeting, holiday, facility day,
 etc.). Location is optional to handle cases like holidays.)
 
+Whiteboard is at: http://bit.ly/qahhtz
+
 Versions
 ========
 
