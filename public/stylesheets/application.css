@@ -191,3 +191,9 @@ tr.approved td {
 .grav-mini-icon img {
   vertical-align: middle;
 }
+
+/* Instructor active buton */
+
+.instructor_inactive {
+  text-decoration: line-through;
+}
