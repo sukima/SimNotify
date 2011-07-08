@@ -359,7 +359,7 @@ APP.overideConfirmLinks = function() {
         $(this).unbind('click', false);
         $(this).click(function (e) {
             var anchor = this;
-            $("<div></div>")
+            $("<div />").clone()
                 .text($(this).attr('confirm_message'))
                 .dialog({
                     resizable: false,
@@ -384,7 +384,7 @@ APP.overideConfirmLinks = function() {
 APP.initHelpDialog = function() {
     $("#nav_help_link").each(function () {
         var help_href = $(this).attr('href') + "?partial=1";
-        var help_dialog = $("<div />").append(APP.cache.loading.clone());
+        var help_dialog = $("<div />").clone().append(APP.cache.loading.clone());
         var help_link = $(this).one('click', function (e) {
             e.preventDefault();
             help_dialog.load(help_href, function () {
@@ -423,4 +423,26 @@ APP.initEventSubmitNote = function() {
         $("form.submit_note").hide();
     }
 };
+
+// Object: instructorActiveButton() {{{1
+APP.instructorActiveButton = {
+    renderCheckboxExtras: function(el) { // {{{2
+        if ( $(el.currentTarget).attr("checked") == true )
+        {
+            $("#instructor_inactive_warning").hide();
+            $(el.currentTarget).parent().removeClass("instructor_inactive");
+        }
+        else
+        {
+            $("#instructor_inactive_warning").show();
+            $(el.currentTarget).parent().addClass("instructor_inactive");
+        }
+    },
+    init: function() { // {{{2
+        $("input#instructor_active")
+            .change(APP.instructorActiveButton.renderCheckboxExtras)
+            .change()
+    }
+};
+
 // vim:set sw=4 ts=4 et fdm=marker:
