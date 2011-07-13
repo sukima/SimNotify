@@ -41,7 +41,7 @@ class SpecialEventsController < ApplicationController
   def update
     @special_event = SpecialEvent.find(params[:id])
     if event_owned_or_admin_check(@special_event)
-      if @special_event.update_attributes(params[:event])
+      if @special_event.update_attributes(params[:special_event])
         flash[:notice] = "Successfully updated special event"
         redirect_to @special_event
         return
