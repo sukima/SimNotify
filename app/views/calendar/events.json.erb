@@ -1,0 +1,5 @@
+<%
+  json = []
+  json += @events.collect { |e| build_json_event(e) }
+  json += @special_events.collect { |e| build_json_event(e) }
+%><%= json.to_json %>

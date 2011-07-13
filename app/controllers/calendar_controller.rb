@@ -85,45 +85,8 @@ class CalendarController < ApplicationController
       @events = [ ]
     end
 
-    json_events = [ ]
-    @events.each do |e|
-      json_events << build_json_event(e)
+    respond_to do |wants|
+      wants.json
     end
-    @special_events.each do |e|
-      json_events << build_json_event(e)
-    end
-
-    render :json => json_events.to_json
-  end
-
-  private
-  def build_json_event(e, opt={ :eventMethod => :event_path, :allDay => :live_in? })
-      json_event = {
-        :start => e.start_time,
-        :end => e.end_time,
-      }
-      if e.kind_of? Event
-        if (e.instructor == current_instructor || is_admin?)
-          json_event[:title] = e.title
-          json_event[:url] = event_path(e)
-        else
-          json_event[:title] = "Session Scheduled"
-        end
-        json_event[:allDay] = e.live_in?
-        if e.approved? && !e.facility.nil?
-          json_event[:color] = e.facility.agenda_color
-        elsif !e.approved
-          # className = e.status_as_class
-          # json_event[:className] = className unless className.nil?
-          json_event[:color] = Option.find_option_for("not_approved_color").value
-        end
-      elsif e.kind_of? SpecialEvent
-        json_event[:title] = e.title
-        json_event[:url] = special_event_path(e)
-        json_event[:allDay] = e.all_day?
-        # json_event[:className] = "special-event"
-        json_event[:color] = Option.find_option_for("special_event_color").value
-      end
-      return json_event
   end
 end

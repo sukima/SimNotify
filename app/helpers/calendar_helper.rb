@@ -40,4 +40,26 @@ module CalendarHelper
       return "&nbsp;"
     end
   end
+
+  def build_json_event(e, opt={ :eventMethod => :event_path, :allDay => :live_in? })
+      json_event = {
+        :start => e.start_time,
+        :end => e.end_time,
+      }
+      if e.kind_of? Event
+        if (e.instructor == current_instructor || is_admin?)
+          json_event[:title] = e.title
+          json_event[:url] = event_path(e)
+        else
+          json_event[:title] = "Session Scheduled"
+        end
+        json_event[:allDay] = e.live_in?
+      elsif e.kind_of? SpecialEvent
+        json_event[:title] = e.title
+        json_event[:url] = special_event_path(e)
+        json_event[:allDay] = e.all_day?
+      end
+      json_event[:color] = facility_color(e)
+      return json_event
+  end
 end
