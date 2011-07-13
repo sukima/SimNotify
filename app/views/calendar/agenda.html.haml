@@ -9,6 +9,12 @@
         padding: 2px;
         width: 50%;
       }
+      li.week-list-item {
+        margin: 5px 0px;
+      }
+      .facility-box {
+        padding: 0px 5px;
+      }
       @media print {
         #controls {
           display: none;
@@ -29,16 +35,24 @@
         = select_tag "tech", "<option value='all'>All Technicians</option>" +                  |
           options_from_collection_for_select(Instructor.technicians, "id", "name", @tech.to_i) |
         = submit_tag "Refresh"
-    %h2= "Agenda for #{@date_range}"
+    %h1= "Agenda for #{@date_range}"
     %hr
     - if @weeks.empty?
       .info There are no events scheduled.
     - @weeks.each_with_index do |week,index|
       %div{:id => "week-#{index}"}
-        %h4= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
+        %h2= "Week for #{week[:week_start].strftime(@time_format)} - #{week[:week_end].strftime(@time_format)}"
         - if week[:events].empty?
           .info No sessions scheduled for this week.
         - else
           %ol.week-list
+            - day_match = nil
             - week[:events].each do |event|
-              %li.week-list-item= agenda_event_description_for(event)
+              - event_day = event.start_time.strftime("%A - %B %d")
+              - if event_day != day_match
+                - day_match = event_day
+                %h4= event_day
+              %li.week-list-item
+                = agenda_event_description_for(event)
+                %span.facility-box{:style=>"background-color: #{facility_color(event)};"}
+                  = facility_name(event)

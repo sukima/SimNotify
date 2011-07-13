@@ -12,4 +12,32 @@ module CalendarHelper
     end
     return str
   end
+
+  def facility_color(event)
+    if event.kind_of? Event
+      if event.approved? && !event.facility.nil?
+        return event.facility.agenda_color
+      elsif !event.approved
+        return Option.find_option_for("not_approved_color").value
+      end
+    elsif event.kind_of? SpecialEvent
+      return Option.find_option_for("special_event_color").value
+    else
+      return "#000"
+    end
+  end
+
+  def facility_name(event)
+    if event.kind_of? Event
+      if !event.facility.nil?
+        return h event.facility.name
+      else
+        return "Other"
+      end
+    elsif event.kind_of? SpecialEvent
+      return (event.event_type.blank?) ? "Other" : h(event.event_type)
+    else
+      return "&nbsp;"
+    end
+  end
 end
