@@ -181,6 +181,10 @@ module LayoutHelper
     the_datetime.strftime("%A, %b %d %H:%M")
   end
 
+  def ftime(the_time)
+    the_time.strftime("%H:%M")
+  end
+
   # name_with_gravatar {{{1
   def name_with_gravatar(instructor, option = {})
     option[:pos] ||= :left
