@@ -3,7 +3,8 @@
   %head
     %title= "#{APP_CONFIG[:application_name]} - " + h(yield(:title) || "Untitled")
     %meta{:content => "text/html; charset=iso-8859-15", "http-equiv" => "content-type"}/
-    %meta{:content => "#{APP_CONFIG[:application_name]} v#{APP_CONFIG[:application_version]} by Devin Weaver suki (at) tritarget.org", :name => "generator"}/
+    %meta{:content => "#{APP_CONFIG[:application_name]} v#{APP_CONFIG[:application_version]}", :name => "generator"}/
+    %link{:rel => "author", :href => "/humans.txt"}/
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag 'style'
     = formtastic_stylesheet_link_tag
