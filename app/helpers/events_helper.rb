@@ -6,7 +6,7 @@ module EventsHelper
       ret << " - "
       ret << "#{h event.facility.name} " if event.facility
       ret << "#{h event.location} - "
-      ret << "#{pluralize(event.scenarios.count, "senario")} - "
+      ret << "#{pluralize(event.scenarios.count, "scenario")} - "
       ret << "#{h event.need_flags_as_words}" if event.collective_has_needs
     end
     return ret
