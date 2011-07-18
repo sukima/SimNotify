@@ -20,6 +20,10 @@
     Contact: jason.zigmont [at] ynhh.org
     From: West Haven, Connecticut, USA
 
+    For the initial layout of the site
+    Design by: Nicolas Fafchamps
+    Website: http://nicolas.freezee.org
+
 
 /* SITE */
 
