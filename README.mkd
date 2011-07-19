@@ -119,3 +119,12 @@ The following setup procedures are required with a fresh build.
 3. `rake mailer:views` - Builds the views needed to send mail. You can
    clean the genrated files with `rake mailer:clean`
 4. `rake db:schema:load` - Loads the database.
+
+Versions
+========
+
+Be sure to update the following files to the correct version number:
+
+1. README.md
+2. public/humans.txt
+3. config/initializers/load_config.rb
