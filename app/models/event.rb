@@ -86,6 +86,16 @@ class Event < ActiveRecord::Base
     return Event.find(:all, :conditions => conditions)
   end
 
+  def self.find_by_technician(tech, opts={})
+    opts[:start_time] ||= Time.now.beginning_of_week
+    opts[:end_time] ||= Time.now.end_of_week
+    conditions = {
+      :technician_id => tech.id,
+      :start_time => opts[:start_time]..opts[:end_time]
+    }
+    return Event.find(:all, :conditions => conditions)
+  end
+
   def collective_need_flags
     needs_hash = {
       :staff_support => false,

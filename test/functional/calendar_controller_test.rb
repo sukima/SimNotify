@@ -24,6 +24,10 @@ class CalendarControllerTest < ActionController::TestCase
       should_require_admin :action => :agenda
     end
 
+    context "get :tech_schedule" do
+      should_require_admin :action => :tech_schedule
+    end
+
     context "get :events" do
       context "without params" do
         setup do
@@ -177,6 +181,34 @@ class CalendarControllerTest < ActionController::TestCase
         should "have special and event included" do
           assert @json.length == 2
         end
+      end
+    end
+
+    context "get :tech_schedule" do
+      setup do
+        @tech = Factory(:technician)
+      end
+      context "without week_index" do
+        setup do
+          get :tech_schedule, { :tech_id => @tech.id }
+        end
+        should respond_with :success
+        should assign_to(:week_index).with("0")
+        should assign_to(:tech)
+        should assign_to(:technicians)
+        should assign_to(:events)
+        should render_template :tech_schedule
+      end
+      context "with week_index=>3" do
+        setup do
+          get :tech_schedule, { :tech_id => @tech.id, :week_index => 3 }
+        end
+        should respond_with :success
+        should assign_to(:week_index).with("3")
+        should assign_to(:tech)
+        should assign_to(:technicians)
+        should assign_to(:events)
+        should render_template :tech_schedule
       end
     end
 

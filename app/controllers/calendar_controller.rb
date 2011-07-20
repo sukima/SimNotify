@@ -24,6 +24,19 @@ class CalendarController < ApplicationController
     end
   end
 
+  def tech_schedule
+    @week_index = params[:week_index]
+    @week_index ||= "0"
+    @tech = Instructor.find(params[:tech_id])
+    @technicians = Instructor.technicians
+
+    opts = {}
+    i = @week_index.to_i
+    opts[:start_time] = Time.now.beginning_of_week + i.weeks
+    opts[:end_time] = Time.now.end_of_week + i.weeks
+    @events = Event.find_by_technician(@tech, opts)
+  end
+
   def agenda
     @time_format = "%a, %B %d"
     today = Time.now
