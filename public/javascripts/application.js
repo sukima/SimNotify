@@ -444,5 +444,12 @@ APP.instructorActiveButton = {
             .change()
     }
 };
+// Function: initAgendaButtons() {{{1
+APP.initAgendaButtons = function() {
+    $("input:submit").button();
+    $("#print-button").button({icons:{primary:'ui-icon-print'}})
+        .click(function() { window.print(); });
+    $("#return-button").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
+};
 
 // vim:set sw=4 ts=4 et fdm=marker:

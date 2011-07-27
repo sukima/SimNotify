@@ -7,9 +7,7 @@
     = javascript_include_tag "application"
     :javascript
       $(function() {
-        $("input:submit").button();
-        $("#print-button").button({icons:{primary:'ui-icon-print'}});
-        $("#return-button").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
+        APP.initAgendaButtons();
       });
   %body
     = render :partial => "agenda_controls"

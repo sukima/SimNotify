@@ -409,4 +409,24 @@ test("renderCheckboxExtras() should correctly adjust for checkbox value", functi
 test("init() should setup correct DOM layout", function() { // {{{2
   ok(true, "No tests for this function");
 })
+
+module("APP.initAgendaButtons", { // {{{1
+  setup: function() { // {{{2
+    this.input = $("<input />").clone()
+      .attr("type", "submit")
+      .appendTo("#qunit-fixture");
+    this.printBtn = $("<div />").clone()
+      .attr("id", "print-button")
+      .appendTo("#qunit-fixture");
+    this.returnBtn = $("<div />").clone()
+      .attr("id", "return-button")
+      .appendTo("#qunit-fixture");
+  }
+});
+test("should initialize buttons", function() { // {{{2
+  APP.initAgendaButtons();
+  ok(this.input.hasClass("ui-button"), "'input:submit' is a button");
+  ok(this.printBtn.hasClass("ui-button"), "'#print-button' is a button");
+  ok(this.returnBtn.hasClass("ui-button"), "'#return.button' is a button");
+});
 /* vim:set sw=2 et fdm=marker: */
