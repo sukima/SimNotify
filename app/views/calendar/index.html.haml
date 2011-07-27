@@ -5,7 +5,7 @@
 - stylesheet 'fullcalendar.print', :media => :print
 - stylesheet "calendar-fixes"
 - if current_instructor.is_tech?
-  - add_nav_link "Tech Schedule", tech_schedule_path(current_instructor.id), { :icon => 'check', :is_button => true }
+  - add_nav_link "My Schedule", tech_schedule_path(current_instructor.id), { :icon => 'check', :is_button => true }
 - add_nav_link "Print Agenda", agenda_path, { :icon => 'print', :is_button => true }
 - wide_content
 :css
