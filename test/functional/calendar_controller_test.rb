@@ -239,7 +239,6 @@ class CalendarControllerTest < ActionController::TestCase
       should assign_to(:number_of_weeks)
       should assign_to(:weeks)
       should assign_to(:tech_id)
-      should assign_to(:tech)
       should assign_to(:date_range)
       should assign_to(:time_format)
       should render_template :agenda

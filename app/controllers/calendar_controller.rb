@@ -45,7 +45,6 @@ class CalendarController < ApplicationController
     today = Time.now
 
     @tech_id = params[:tech] || "all"
-    @tech = Instructor.find(@tech_id)
     @number_of_weeks = ( (params[:number_of_weeks].blank?) ? "3" : params[:number_of_weeks] ).to_i
     @weeks = [ ]
     for x in 0..@number_of_weeks-1 do
@@ -57,7 +56,7 @@ class CalendarController < ApplicationController
       conditions = { :start_time => (the_week[:week_start]..the_week[:week_end]) }
       the_week[:events] = SpecialEvent.find(:all, :conditions => conditions)
 
-      conditions[:technician_id] = @tech unless @tech.blank? || @tech.downcase == "all"
+      conditions[:technician_id] = @tech_id unless @tech_id.blank? || @tech_id.downcase == "all"
       the_week[:events] += Event.find(:all, :conditions => conditions)
 
       the_week[:events].sort! { |a,b| a.start_time <=> b.start_time }
