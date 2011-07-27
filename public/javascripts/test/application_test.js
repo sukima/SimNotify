@@ -429,4 +429,33 @@ test("should initialize buttons", function() { // {{{2
   ok(this.printBtn.hasClass("ui-button"), "'#print-button' is a button");
   ok(this.returnBtn.hasClass("ui-button"), "'#return.button' is a button");
 });
+
+module("APP.appendToNavBar", { // {{{1
+  setup: function() { // {{{2
+    this.nav_bar = $("<div />").clone()
+      .attr("id", "navigation")
+      .appendTo("#qunit-fixture");
+    this.test_content_1 = $("<div />").clone()
+      .attr("id", "test-content-1")
+      .addClass("ui-widget ui-widget-header ui-corner-all")
+      .appendTo("#qunit-fixture");
+    this.test_content_2 = $("<div />").clone()
+      .attr("id", "test-content-2")
+      .addClass("ui-widget ui-widget-content ui-corner-all")
+      .appendTo("#qunit-fixture");
+  }
+});
+test("should append items to navigation bar", function() { // {{{2
+  APP.appendToNavBar(this.test_content_1);
+  ok(this.test_content_1.parent().attr("id") == this.nav_bar.attr("id"), "test_content_1 moved to nav_bar");
+  ok(!this.test_content_1.hasClass("ui-widget"), "Class 'ui-widget' removed from test_content_1");
+  ok(!this.test_content_1.hasClass("ui-widget-header"), "Class 'ui-widget-header' removed from test_content_1");
+  ok(!this.test_content_1.hasClass("ui-corner-all"), "Class 'ui-corner-all' removed from test_content_1");
+  APP.appendToNavBar(this.test_content_2);
+  ok(this.test_content_2.parent().attr("id") == this.nav_bar.attr("id"), "test_content_2 moved to nav_bar");
+  ok(!this.test_content_2.hasClass("ui-widget"), "Class 'ui-widget' removed from test_content_2");
+  ok(!this.test_content_2.hasClass("ui-widget-content"), "Class 'ui-widget-content' removed from test_content_2");
+  ok(!this.test_content_2.hasClass("ui-corner-all"), "Class 'ui-corner-all' removed from test_content_2");
+});
+
 /* vim:set sw=2 et fdm=marker: */

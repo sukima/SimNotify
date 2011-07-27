@@ -452,4 +452,15 @@ APP.initAgendaButtons = function() {
     $("#return-button").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
 };
 
+// Function: appendToNavBar() {{{1
+APP.appendToNavBar = function(selector) {
+    var nav = $("#navigation");
+    $("<div />").clone()
+        .addClass("ui-helper-clearfix")
+        .appendTo(nav);
+    $(selector).detach()
+        .removeClass("ui-widget ui-widget-header ui-widget-content ui-corner-all")
+        .appendTo(nav);
+};
+
 // vim:set sw=4 ts=4 et fdm=marker:
