@@ -2,24 +2,9 @@
 %html
   %head
     = stylesheet_link_jquery
+    = stylesheet_link_tag "agenda"
     = javascript_include_jquery
-    :css
-      div.ui-widget {
-        font-size: 0.6em;
-        padding: 2px;
-        width: 50%;
-      }
-      li.week-list-item {
-        margin: 5px 0px;
-      }
-      .facility-box {
-        padding: 0px 5px;
-      }
-      @media print {
-        #controls {
-          display: none;
-        }
-      }
+    = javascript_include_tag "application"
     :javascript
       $(function() {
         $("input:submit").button();
@@ -27,14 +12,7 @@
         $("#return-button").button({icons:{primary:'ui-icon-arrowreturnthick-1-w'}});
       });
   %body
-    #controls.ui-widget.ui-widget-header.ui-corner-all
-      - form_tag agenda_path do
-        = link_to "Return", calendar_path, :id => "return-button"
-        = link_to "Print", "javascript:window.print()", :id => "print-button"
-        = text_field_tag 'number_of_weeks', @number_of_weeks
-        = select_tag "tech", "<option value='all'>All Technicians</option>" +                  |
-          options_from_collection_for_select(Instructor.technicians, "id", "name", @tech.to_i) |
-        = submit_tag "Refresh"
+    = render :partial => "agenda_controls"
     %h1= "Agenda for #{@date_range}"
     %hr
     - if @weeks.empty?
@@ -52,7 +30,4 @@
               - if event_day != day_match
                 - day_match = event_day
                 %h4= event_day
-              %li.week-list-item
-                = agenda_event_description_for(event)
-                %span.facility-box{:style=>"background-color: #{facility_color(event)};"}
-                  = facility_name(event)
+              = render :partial => "agenda_event", :object => event
