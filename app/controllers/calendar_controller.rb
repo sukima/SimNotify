@@ -30,18 +30,22 @@ class CalendarController < ApplicationController
     @tech = Instructor.find(params[:tech_id])
     @technicians = Instructor.technicians
 
-    opts = {}
     i = @week_index.to_i
-    opts[:start_time] = Time.now.beginning_of_week + i.weeks
-    opts[:end_time] = Time.now.end_of_week + i.weeks
-    @events = Event.find_by_technician(@tech, opts)
+    @start_of_week = Time.now.beginning_of_week + i.weeks
+    @end_of_week = Time.now.end_of_week + i.weeks
+    @events = Event.find_by_technician(@tech, {
+      :start_time => @start_of_week,
+      :end_time => @end_of_week
+    })
+    @tech_id = @tech.id
   end
 
   def agenda
     @time_format = "%a, %B %d"
     today = Time.now
 
-    @tech = params[:tech] || "all"
+    @tech_id = params[:tech] || "all"
+    @tech = Instructor.find(@tech_id)
     @number_of_weeks = ( (params[:number_of_weeks].blank?) ? "3" : params[:number_of_weeks] ).to_i
     @weeks = [ ]
     for x in 0..@number_of_weeks-1 do

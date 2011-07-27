@@ -195,7 +195,10 @@ class CalendarControllerTest < ActionController::TestCase
         should respond_with :success
         should assign_to(:week_index).with("0")
         should assign_to(:tech)
+        should assign_to(:tech_id)
         should assign_to(:technicians)
+        should assign_to(:start_of_week)
+        should assign_to(:end_of_week)
         should assign_to(:events)
         should render_template :tech_schedule
       end
@@ -206,7 +209,10 @@ class CalendarControllerTest < ActionController::TestCase
         should respond_with :success
         should assign_to(:week_index).with("3")
         should assign_to(:tech)
+        should assign_to(:tech_id)
         should assign_to(:technicians)
+        should assign_to(:start_of_week)
+        should assign_to(:end_of_week)
         should assign_to(:events)
         should render_template :tech_schedule
       end
@@ -232,6 +238,7 @@ class CalendarControllerTest < ActionController::TestCase
       should respond_with :success
       should assign_to(:number_of_weeks)
       should assign_to(:weeks)
+      should assign_to(:tech_id)
       should assign_to(:tech)
       should assign_to(:date_range)
       should assign_to(:time_format)
