@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110713195238) do
+ActiveRecord::Schema.define(:version => 20110805121951) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -97,6 +97,16 @@ ActiveRecord::Schema.define(:version => 20110713195238) do
   create_table "options", :force => true do |t|
     t.string "name",  :null => false
     t.string "value"
+  end
+
+  create_table "programs", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "benifit"
+    t.integer  "contact_id"
+    t.integer  "created_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "scenario_templates", :force => true do |t|
