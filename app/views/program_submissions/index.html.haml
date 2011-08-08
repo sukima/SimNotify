@@ -1,0 +1,22 @@
+- title "Program Development Application Forms"
+- wide_content
+%table
+  %thead
+    %tr
+      %th Name
+      %th Department
+      %th Summery
+      %th Submitted On
+      %th Actions
+  %tbody
+    - for p in @program_submissions
+      %tr
+        %td=h p.name
+        %td=h p.department
+        %td=h truncate(p.summary, 50, "...")
+        %td=d p.created_on
+        %td= link_icon_to "trash", t(:destroy), :confirm => t(:destroy_confirm)
+
+%h1
+  Test
+  = render :partial => "preamble"
