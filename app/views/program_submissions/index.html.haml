@@ -16,7 +16,3 @@
         %td=h truncate(p.summary, 50, "...")
         %td=d p.created_on
         %td= link_icon_to "trash", t(:destroy), :confirm => t(:destroy_confirm)
-
-%h1
-  Test
-  = render :partial => "preamble"
