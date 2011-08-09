@@ -7,6 +7,12 @@
       :label => "System email recipients",
       :hint => "Select who should recieve system email notifications."
   = f.buttons
+- semantic_form_for @options["scheduler_phone"], :namespace => "scheduler_phone" do |f|
+  - f.inputs do
+    = f.input :value,
+      :label => "Phone number for scheduler",
+      :hint => "The phone number for the scheduling contact. Used for givind contact info if someone needs to talk to a person."
+  = f.buttons
 - semantic_form_for @options["days_to_send_event_notifications"], :namespace => "days_to_send_event_notifications" do |f|
   - f.inputs do
     = f.input :value,
