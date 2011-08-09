@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20110808184134) do
     t.string   "department"
     t.string   "phone"
     t.string   "email"
-    t.text     "summery"
+    t.text     "summary"
     t.text     "outcome"
     t.boolean  "supervisor_notified"
     t.string   "proximity"

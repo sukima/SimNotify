@@ -6,7 +6,7 @@ class CreateProgramSubmissions < ActiveRecord::Migration
       t.string  :department
       t.string  :phone
       t.string  :email
-      t.text    :summery
+      t.text    :summary
       t.text    :outcome
       t.boolean :supervisor_notified
       t.string  :proximity
