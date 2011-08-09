@@ -2,6 +2,9 @@
 - confirm_on_exit
 :css
   p { padding: 5px 0; }
+  @media print { #url_notice { display: none } }
+- if logged_in?
+  #url_notice.notification Copy and paste the following URL to your emails so your contacts can refer to this page when submitting a new application.<br /><code>#{new_program_submission_url}</code>
 = render :partial => "preamble"
 - semantic_form_for @program_submission do |f|
   - f.inputs "Contact Information", :id => "contact" do
