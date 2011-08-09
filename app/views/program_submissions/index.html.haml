@@ -14,9 +14,9 @@
     %tbody
       - @program_submissions.each do |p|
         %tr
-          %td=h p.name
-          %td=h p.department
-          %td=h truncate(p.summary, 50, "...")
-          %td=d p.created_on
-          %td= link_icon_to "trash", t(:destroy), :confirm => t(:destroy_confirm)
+          %td=link_to_program_submission h(p.name), p
+          %td=link_to_program_submission h(p.department), p
+          %td=link_to_program_submission h(truncate(p.summary, 50, "...")), p
+          %td=link_to_program_submission dt(p.created_at), p
+          %td= link_icon_to "trash", t(:destroy), delete_program_submission_path(p), :confirm => t(:destroy_confirm)
 =link_to_confirm t(:submit_item, :item => "Program Development Application"), new_program_submission_path
