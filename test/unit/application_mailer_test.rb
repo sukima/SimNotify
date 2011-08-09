@@ -55,5 +55,14 @@ class ApplicationMailerTest < ActionMailer::TestCase
         assert_emails 1
       end
     end
+    context "for new program_submission" do
+      setup do
+        @program_submission = Factory(:program_submission)
+      end
+      should "send email for new_program_submission_email" do
+        ApplicationMailer.deliver_new_program_submission_email(@program_submission)
+        assert_emails 1
+      end
+    end
   end
 end

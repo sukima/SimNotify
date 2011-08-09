@@ -1,0 +1,31 @@
+## Application for a new program development
+
+You may view [this application](<%= program_submission_url(@program_submission) %>) online.
+
+Submitted on <%=d @program_submission.created_on %>.
+
+* Name: <%= @program_submission.name %>
+* Job Title: <%= @program_submission.job_title %>
+* Department: <%= @program_submission.department %>
+* Phone Number: <%= @program_submission.phone %>
+* E-Mail: <%= @program_submission.email %>
+
+Requested <%= @program_submission.proximity %>.
+
+<% if @program_submission.supervisor_notified? -%>
+Supervisor has been notified.
+<% else -%>
+Supervisor has **NOT** been notified!
+<% end -%>
+
+#### Summary
+
+<%= @program_submission.summary %>
+
+#### Outcome
+
+<%= @program_submission.outcome %>
+
+#### Additional Information
+
+<%= @program_submission.additional_info%>
