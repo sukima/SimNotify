@@ -48,7 +48,7 @@ class Option < ActiveRecord::Base
       return Option.create(:name => "system_email_recipients", :value => [])
     when "scheduler_phone"
       # Phone number for the scheduling secretary.
-      return Option.create(:name => "scheduler_phone", :value => "")
+      return Option.create(:name => "scheduler_phone", :value => "the scheduler")
     when "days_to_send_event_notifications"
       # Number of days to look for upcomming events.
       return Option.create(:name =>"days_to_send_event_notifications", :value => 2)
