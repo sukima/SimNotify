@@ -39,6 +39,9 @@ en:
   missing_parameters: "Missing key parameter information from the request. (Possible bug)"
   technician_assignment_denied: "You do not have permission to assigna technician."
   no_scenarios_attached: "You must attach a scenario to this event before it can be submitted."
+  no_items_found: "No %{items} found."
+  create_an_item: "Create an %{item}"
+  submit_item: "Submit a new %{item}"
   formtastic:
     titles:
       previous_uploads: "Pick a previous upload"

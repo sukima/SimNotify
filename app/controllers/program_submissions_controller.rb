@@ -1,5 +1,6 @@
 class ProgramSubmissionsController < ApplicationController
   # Allow public access to :new and :create
+  before_filter :logged_in?
   before_filter :login_admin, :except => [ :new, :create ]
 
   def index

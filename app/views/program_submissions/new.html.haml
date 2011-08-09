@@ -1,0 +1,13 @@
+- title "Program Development Application"
+- confirm_on_exit
+= render :partial => "preamble"
+- semantic_form_for @program_submission do |f|
+  - f.inputs "Contact Information", :id => "contact" do
+    = f.input :name
+    = f.input :job_title
+    = f.input :department
+    = f.input :phone
+    = f.input :email
+  - f.inputs "Program Description", :id => "description" do
+    = f.input :summery
+  = f.buttons
