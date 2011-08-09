@@ -1,5 +1,7 @@
 - title "Program Development Application"
 - confirm_on_exit
+:css
+  p { padding: 5px 0; }
 = render :partial => "preamble"
 - semantic_form_for @program_submission do |f|
   - f.inputs "Contact Information", :id => "contact" do
