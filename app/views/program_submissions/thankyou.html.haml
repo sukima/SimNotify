@@ -1,4 +1,9 @@
 - title "Thank you for your application"
-%h2 Thank you for your application submission.
-%p A copy of the application was sent to <code>#{@program_submission.email}</code>
-%p You should hear from us shortly.
+:markdown
+  ## Thank you for your application submission.
+
+  A copy of the application was sent to `#{@program_submission.email}`
+
+  You should hear from us shortly.
+
+  If you have any questions or concerns please call #{Option.value_for("scheduler_phone")}
