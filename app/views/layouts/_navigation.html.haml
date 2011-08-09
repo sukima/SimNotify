@@ -4,9 +4,9 @@
     %li
       = link_to_sub_menu("Programs")
       %ul
-        = nav_link_to "Submit Application", new_program_submission_path
         - if is_admin?
           = nav_link_to "View Applications", program_submissions_path
+        = nav_link_to "Submit Application", new_program_submission_path
     %li
       = link_to_sub_menu("Sessions")
       %ul
