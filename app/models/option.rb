@@ -14,6 +14,10 @@ class Option < ActiveRecord::Base
     return option
   end
 
+  def self.value_for(option_name)
+    Option.find_option_for(option_name).value
+  end
+
   private
   def sanatize_value
     case name
