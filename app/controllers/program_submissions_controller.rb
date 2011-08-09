@@ -26,8 +26,15 @@ class ProgramSubmissionsController < ApplicationController
 
     respond_to do |wants|
       if @program_submission.save
-        #flash[:notice] = 'Your submission has been sent. Thank You.'
-        wants.html { redirect_to(@program_submission) }
+        ApplicationMailer.deliver_new_program_submission_email(@program_submission)
+        flash[:notice] = 'Your application has been sent. Thank You.'
+        wants.html do
+          if is_admin?
+            redirect_to(@program_submission)
+          else
+            render "thankyou"
+          end
+        end
         wants.xml  { render :xml => @program_submission, :status => :created, :location => @program_submission }
       else
         wants.html { render :action => "new" }
@@ -48,6 +55,7 @@ class ProgramSubmissionsController < ApplicationController
   def destroy
     @program_submission = ProgramSubmission.find(params[:id])
     @program_submission.destroy
+    flash[:notice] = "Application deleted."
 
     respond_to do |wants|
       wants.html { redirect_to(program_submissions_url) }
