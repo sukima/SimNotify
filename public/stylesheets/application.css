@@ -80,6 +80,11 @@ a {
   list-style: disc;
 }
 
+p.disclaimer {
+  font-size: 0.75em;
+  font-style: italic;
+}
+
 .priority {
   color: red;
 }
