@@ -2,7 +2,7 @@
 
 You may view [this application](<%= program_submission_url(@program_submission) %>) online.
 
-Submitted on <%=d @program_submission.created_on %>.
+Submitted on <%=dt @program_submission.created_at %>.
 
 * Name: <%= @program_submission.name %>
 * Job Title: <%= @program_submission.job_title %>

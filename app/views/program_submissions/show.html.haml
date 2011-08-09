@@ -1,12 +1,12 @@
 - title "Submitted Program Application"
-:markdown
-  The following application for a new simulation program was submitted on
-  **#{d @program_submission.created_on}**.
 %table
   %tbody
     %tr
       %td Submitted By:
       %td=h @program_submission.name
+    %tr
+      %td Submitted On:
+      %td=dt @program_submission.created_at
     %tr
       %td Job Title:
       %td=h @program_submission.job_title
