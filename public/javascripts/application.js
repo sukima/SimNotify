@@ -303,9 +303,31 @@ APP.initButtons = function() {
         }
     });
 
-    $("input.create, input.update, .button").button();
+    $("input.create, input.update").button();
 
     $(".button_box").addClass("ui-widget");
+
+    // Create button links into buttons and include icons if specified.
+    $(".button").each(function() {
+        var icon = $(this).data('button-icon');
+        var pos = $(this).data('button-icon-pos');
+        if (icon)
+        {
+            switch (pos)
+            {
+                case "r", "R", "e", "E":
+                    $(this).button({icons:{secondary:icon}});
+                    break;
+                default:
+                    $(this).button({icons:{primary:icon}});
+                    break;
+            }
+        }
+        else
+        {
+            $(this).button();
+        }
+    });
 
     // Add a new user icon to the help button.
     if (APP.config.new_user) {

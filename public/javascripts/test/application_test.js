@@ -264,6 +264,31 @@ module("APP.initButtons()", { // {{{1
     this.a.clone().attr("id", "test-link-4").addClass("dropdown").appendTo(this.nav_div);
     this.a.clone().attr("id", "nav_help_link").appendTo(this.nav_div);
     this.a.clone().attr("id", "test-link-6").data('button-icon', "ui-icon-check").appendTo(this.nav_div);
+    this.data_btn = this.a.clone()
+      .attr("id", "test-link-7")
+      .addClass("button")
+      .data('button-icon', "ui-icon-check")
+      .appendTo("#qunit-fixture");
+    this.data_btn.clone()
+      .attr("id", "test-link-8")
+      .data('button-icon', "ui-icon-check")
+      .data('button-icon-pos', 'l')
+      .appendTo("#qunit-userAgent");
+    this.data_btn.clone()
+      .attr("id", "test-link-9")
+      .data('button-icon', "ui-icon-check")
+      .data('button-icon-pos', 'w')
+      .appendTo("#qunit-fixture");
+    this.data_btn.clone()
+      .attr("id", "test-link-10")
+      .data('button-icon', "ui-icon-check")
+      .data('button-icon-pos', 'r')
+      .appendTo("#qunit-fixture");
+    this.data_btn.clone()
+      .attr("id", "test-link-11")
+      .data('button-icon', "ui-icon-check")
+      .data('button-icon-pos', 'e')
+      .appendTo("#qunit-fixture");
     APP.config.new_user = true;
   },
   teardown: function() { // {{{2
@@ -281,6 +306,21 @@ test("should create all button widgets", function() { // {{{2
   ok($("#nav_help_link").find(".ui-icon").length > 0, "nav_help_link has an icon");
   ok($("#test-link-6").hasClass("ui-button"), "test-link-6 is a button");
   ok($("#test-link-6").find(".ui-icon").length > 0, "test-link-6 has an icon");
+  ok($("#test-link-7").hasClass("ui-button"), "test-link-7 is a button");
+  ok($("#test-link-7").find(".ui-icon").length > 0, "test-link-7 has an icon");
+  ok($("#test-link-7").find(".ui-button-icon-primary").length > 0, "test-link-7 icon is on the left");
+  ok($("#test-link-8").hasClass("ui-button"), "test-link-8 is a button");
+  ok($("#test-link-8").find(".ui-icon").length > 0, "test-link-8 has an icon");
+  ok($("#test-link-8").find(".ui-button-icon-primary").length > 0, "test-link-8 icon is on the left");
+  ok($("#test-link-9").hasClass("ui-button"), "test-link-9 is a button");
+  ok($("#test-link-9").find(".ui-icon").length > 0, "test-link-9 has an icon");
+  ok($("#test-link-9").find(".ui-button-icon-primary").length > 0, "test-link-9 icon is on the left");
+  ok($("#test-link-10").hasClass("ui-button"), "test-link-10 is a button");
+  ok($("#test-link-10").find(".ui-icon").length > 0, "test-link-10 has an icon");
+  ok($("#test-link-10").find(".ui-button-icon-primary").length > 0, "test-link-10 icon is on the right");
+  ok($("#test-link-11").hasClass("ui-button"), "test-link-11 is a button");
+  ok($("#test-link-11").find(".ui-icon").length > 0, "test-link-11 has an icon");
+  ok($("#test-link-11").find(".ui-button-icon-primary").length > 0, "test-link-11 icon is on the right");
 });
 
 module("APP.initAutoApproveDialog()", { // {{{1
