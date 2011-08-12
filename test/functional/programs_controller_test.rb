@@ -29,7 +29,7 @@ class ProgramsControllerTest < ActionController::TestCase
       setup do
         get :new
       end
-      should_require_admin_access :redirect => :programs_path
+      should_require_admin_access :return_to => :new_program_path
     end
 
     # context "PUT :update" do
