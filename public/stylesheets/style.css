@@ -98,7 +98,7 @@ p {
 /* Horizontal navbar links {{{ */
 /* Make a horizontal navigation bar */
 div.nav-widget {
-  padding: 0 2px;
+  padding: 2px;
   font-size: 1.0em;
 }
 
@@ -215,6 +215,13 @@ table td {
   text-align: left;
 }
 
+.table-list-label {
+  font-weight: bold;
+}
+
+.table-list-value {
+}
+
 input, textarea, select {
   background-color: #FAFAFA;
   border: 1px solid #ccc;
@@ -251,6 +258,10 @@ input:focus, textarea:focus {
 #footer a:hover {
   color: #fff;
   text-decoration: underline;
+}
+
+hr {
+  margin: 5px;
 }
 
 /* fixes for RoR specific elements that get buggered by this theme */

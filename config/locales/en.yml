@@ -22,6 +22,7 @@ en:
   submit: "Submit for approval"
   revoke: "Revoke"
   edit: "Edit"
+  view_all: "View all"
   login_required: "You must first log in or sign up before accessing this page."
   admin_required: "You must be an administrator to access that page"
   cancel_confirm: "This form has not been saved. Are you sure you want to continue?"
