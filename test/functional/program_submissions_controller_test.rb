@@ -2,6 +2,9 @@ require 'test_helper'
 
 class ProgramSubmissionsControllerTest < ActionController::TestCase
   # TODO: Test for logged in/admin status
+  setup :activate_authlogic
+
+  should_map_resources :program_submissions
 
   context "GET :new" do
     setup do
