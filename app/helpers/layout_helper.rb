@@ -91,13 +91,17 @@ module LayoutHelper
   # Links {{{1
   def link_to_with_icon(title, path, opts=nil)
     if opts[:icon]
-      if opts[:is_button]
+      if opts[:is_button] or opts[:btn_icon_pos]
+        opts[:btn_icon_pos] ||= "w"
         opts["data-button-icon"] = "ui-icon-#{opts[:icon]}"
+        opts["data-button-icon-pos"] = opts[:btn_icon_pos]
       else
         title = "<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>#{title}"
       end
     end
+    opts[:class] ||= "button" if opts[:is_button] or opts[:btn_icon_pos]
     opts.delete(:is_button)
+    opts.delete(:btn_icon_pos)
     opts.delete(:icon)
     return link_to title, path, opts
   end
@@ -205,6 +209,11 @@ module LayoutHelper
     ret += "</span>"
     ret += name if option[:pos] == :left
     ret
+  end
+
+  # control_box {{{1
+  def control_box
+
   end
   # }}}1
 end
