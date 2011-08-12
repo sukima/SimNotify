@@ -36,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :options, :only=> [:index, :update]
 
-  map.resources :programs
+  map.resources :programs, :member => { :delete => :get }
   map.resources :program_submissions, :except => [ :edit, :update ], :member => { :delete => :get }
 
   # The priority is based upon order of creation: first created -> highest priority.
