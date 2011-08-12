@@ -2,7 +2,7 @@ class ProgramsController < ApplicationController
   before_filter :login_required
   before_filter :login_admin, :except => [ :index, :show ]
 
-  def index
+  def index # {{{1
     @programs = Program.all
 
     respond_to do |wants|
@@ -11,7 +11,7 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def show
+  def show # {{{1
     @program = Program.find(params[:id])
 
     respond_to do |wants|
@@ -20,7 +20,7 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def new
+  def new # {{{1
     @program = Program.new
 
     respond_to do |wants|
@@ -29,8 +29,9 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def create
+  def create # {{{1
     @program = Program.new(params[:program])
+    @program.created_by = @current_instructor
 
     respond_to do |wants|
       if @program.save
@@ -44,11 +45,11 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def edit
+  def edit # {{{1
     @program = Program.find(params[:id])
   end
 
-  def update
+  def update # {{{1
     @program = Program.find(params[:id])
 
     respond_to do |wants|
@@ -63,7 +64,7 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy # {{{1
     @program = Program.find(params[:id])
     @program.destroy
 
@@ -72,4 +73,7 @@ class ProgramsController < ApplicationController
       wants.xml  { head :ok }
     end
   end
+
+  # }}}1
 end
+# vim:set sw=2 ts=2 sts=2 et fdm=marker:

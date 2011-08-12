@@ -72,11 +72,15 @@ class ProgramsControllerTest < ActionController::TestCase
         @f = Factory.build(:program)
         @old_count = Program.count
         post :create, :program => @f.attributes
+        @program = Program.last
       end
       should "increase count by 1" do
         assert Program.count - @old_count == 1
       end
-      should redirect_to(":show") { program_path(Program.last) }
+      should "set created_by in program model" do
+        assert_not_nil @program.created_by, "Program model has nil for created_by"
+      end
+      should redirect_to(":show") { program_path(@program) }
     end
 
     # :edit {{{2
