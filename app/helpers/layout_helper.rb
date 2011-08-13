@@ -51,6 +51,7 @@ module LayoutHelper
     ret += javascript_include_tag "jquery.icolorpicker.min"
     ret += javascript_include_tag "jquery.ba-dotimeout.min"
     ret += javascript_include_tag "jquery.notifications.min"
+    ret += javascript_include_tag "jquery.hoverIntent.min"
     return ret
   end
 

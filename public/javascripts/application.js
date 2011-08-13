@@ -214,9 +214,10 @@ APP.initNavBar = function() {
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");
     $("#navigation>ul").addClass("nav-list");
     $("#navigation>ul li>ul").addClass("sub-nav-list ui-widget ui-widget-content ui-corner-all ui-helper-clearfix").hide();
-    $(".nav-list li").hover(function() {
+    $(".nav-list li").hoverIntent(function() {
         $('ul', this).slideDown(100);
-    }, function() {
+    },
+    function() {
         $('ul', this).slideUp(100);
     });
 };
