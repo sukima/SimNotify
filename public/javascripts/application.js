@@ -34,21 +34,6 @@ APP.locale = {
     pick_datetime: "Pick a date and time..."
 };
 
-// Function: log() {{{1
-// APP.log = function (msg) {
-    // var alert_needed = true;
-    // var str = msg;
-    // if (!typeof msg === String) srt = msg.toString();
-    // if (console && console.log) {
-        // console.log(msg);
-        // alert_needed = false;
-    // }
-    // if ( $("#general_debug_info").length ) {
-        // $("#general_debug_info").append(str);
-        // alert_needed = false;
-    // }
-    // if (alert_needed) alert(str);
-// };
 
 // Function: getTimeValues() {{{1
 APP.getTimeValues = function(dateTimeStr) {

@@ -55,6 +55,29 @@ module LayoutHelper
     return ret
   end
 
+  def javascript_logging
+    if RAILS_ENV == "development"
+      log_code = <<-EOF
+        var alert_needed = true;
+        var str = msg;
+        if (!typeof msg === String) str = msg.toString();
+        if (console && console.log) {
+          console.log(str);
+          alert_needed = false;
+        }
+        if ( $("#general_debug_info").length ) {
+          $("<div/>").clone().html(str).appendTo("#general_debug_info");
+          alert_needed = false;
+        }
+        if (alert_needed) alert(str);
+      EOF
+    else
+      log_code = "/* Logging is only enabled in development environment. */"
+    end
+
+    "<script type=\"text/javascript\">\nAPP.log = function (msg) {\n#{log_code}\n};\n</script>\n"
+  end
+
   # IE Bug Fixes {{{1
   def iebugfixes_include_tag
     #min_ext = (APP_CONFIG[:use_minified_js]) ? ".min" : ""
