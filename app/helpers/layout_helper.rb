@@ -212,8 +212,26 @@ module LayoutHelper
   end
 
   # control_box {{{1
-  def control_box
+  def control_box(&block)
+    contents = 'barfpoo'
+    if block_given?
+      contents = if @template.respond_to?(:is_haml?) && @template.is_haml?
+                   @template.capture_haml(&block)
+                 else
+                   @template.capture(&block)
+                 end
+    end
 
+    <<-EOF
+      <script type="text/javascript">
+        $(function() {
+          APP.appendToNavBar("#controls");
+        });
+      </script>
+      <div id="controls" class="ui-widget ui-widget-header ui-corner-all">
+        #{contents}
+      </div>
+    EOF
   end
   # }}}1
 end
