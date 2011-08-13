@@ -1,8 +1,4 @@
 - title "#{@program.name} Program"
-:javascript
-  $(function() {
-    APP.appendToNavBar("#controls");
-  });
 %h2 #{@program.name} Program
 %table
   %tbody
@@ -23,7 +19,7 @@
 %h4 Benifit
 :markdown
   #{@program.benifit}
-#controls.ui-widget.ui-widget-header.ui-corner-all
+= control_box do
   Program Actions:
   = link_to_with_icon t(:view_all), programs_path, :is_button => true
   = link_to_with_icon t(:edit), edit_program_path(@program), :is_button => true, :icon => "pencil"
