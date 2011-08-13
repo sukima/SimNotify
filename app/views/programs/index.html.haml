@@ -11,9 +11,11 @@
     - @programs.each do |p|
       %tr
         %td= link_to h(p.name), p
-        %td= link_to_with_icon h(p.contact.name), p.contact, :icon => "contact"
+        %td= link_to_with_icon h(p.contact.name), p.contact, :icon => "contact", :icon_pos => "r"
         %td= truncate(h(p.description), 50, "...")
         %td=d p.updated_at
         %td
           = link_icon_to "pencil", t(:edit), edit_program_path(p)
           = link_icon_to "trash", t(:destroy), delete_program_path(p), :confirm => t(:destroy_item_confirm, :item => h(p.name))
+= control_box "Program Actions:" do
+  = link_to_with_icon t(:new_item, :item => "program"), new_program_path, :icon => "document", :is_button => true

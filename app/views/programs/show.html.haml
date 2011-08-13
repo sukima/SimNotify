@@ -4,10 +4,10 @@
   %tbody
     %tr
       %td.table-list-label Program Contact:
-      %td.table-list-value= link_to_with_icon h(@program.contact.name), @program.contact, :icon => "contact"
+      %td.table-list-value= link_to_with_icon h(@program.contact.name), @program.contact, :icon => "contact", :icon_pos => "r"
     %tr
       %td.table-list-label Created by:
-      %td.table-list-value= link_to_with_icon h(@program.created_by.name), @program.created_by, :icon => "contact"
+      %td.table-list-value= link_to_with_icon h(@program.created_by.name), @program.created_by, :icon => "contact", :icon_pos => "r"
     %tr
       %td.table-list-label Created on:
       %td.table-list.value=dt @program.created_at
@@ -19,8 +19,7 @@
 %h4 Benifit
 :markdown
   #{@program.benifit}
-= control_box do
-  Program Actions:
+= control_box "Program Actions:" do
   = link_to_with_icon t(:view_all), programs_path, :is_button => true
   = link_to_with_icon t(:edit), edit_program_path(@program), :is_button => true, :icon => "pencil"
   - if is_admin?

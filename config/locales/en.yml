@@ -22,6 +22,8 @@ en:
   submit: "Submit for approval"
   revoke: "Revoke"
   edit: "Edit"
+  new: "New"
+  new_item: "Create new %{item}"
   view_all: "View all"
   login_required: "You must first log in or sign up before accessing this page."
   admin_required: "You must be an administrator to access that page"
