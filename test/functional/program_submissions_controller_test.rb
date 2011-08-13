@@ -1,10 +1,11 @@
 require 'test_helper'
 
 class ProgramSubmissionsControllerTest < ActionController::TestCase
-  # TODO: Test for logged in/admin status
   setup :activate_authlogic
 
   should_map_resources :program_submissions
+
+  should_require_logged_in_access_for_resources :except => [ :new, :create ]
 
   context "GET :new" do
     setup do
@@ -25,9 +26,16 @@ class ProgramSubmissionsControllerTest < ActionController::TestCase
       assert ProgramSubmission.count - @old_count == 1
     end
     should redirect_to(":show") { program_submission_path(ProgramSubmission.last) }
+    should "send email notification" do
+      assert_emails 1
+    end
   end
 
-  loggedin_as :admin
+  logged_in_as :instructor do
+    should_require_admin_access_for_resources :except => [ :new, :create ]
+  end
+
+  logged_in_as :admin do
     context "GET :index" do
       setup do
         get :index
