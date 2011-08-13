@@ -34,21 +34,6 @@ APP.locale = {
     pick_datetime: "Pick a date and time..."
 };
 
-// Function: log() {{{1
-// APP.log = function (msg) {
-    // var alert_needed = true;
-    // var str = msg;
-    // if (!typeof msg === String) srt = msg.toString();
-    // if (console && console.log) {
-        // console.log(msg);
-        // alert_needed = false;
-    // }
-    // if ( $("#general_debug_info").length ) {
-        // $("#general_debug_info").append(str);
-        // alert_needed = false;
-    // }
-    // if (alert_needed) alert(str);
-// };
 
 // Function: getTimeValues() {{{1
 APP.getTimeValues = function(dateTimeStr) {
@@ -214,9 +199,10 @@ APP.initNavBar = function() {
     $("#content").removeClass("side-nav-width").addClass("top-nav-width");
     $("#navigation>ul").addClass("nav-list");
     $("#navigation>ul li>ul").addClass("sub-nav-list ui-widget ui-widget-content ui-corner-all ui-helper-clearfix").hide();
-    $(".nav-list li").hover(function() {
+    $(".nav-list li").hoverIntent(function() {
         $('ul', this).slideDown(100);
-    }, function() {
+    },
+    function() {
         $('ul', this).slideUp(100);
     });
 };
@@ -303,9 +289,31 @@ APP.initButtons = function() {
         }
     });
 
-    $("input.create, input.update, .button").button();
+    $("input.create, input.update").button();
 
     $(".button_box").addClass("ui-widget");
+
+    // Create button links into buttons and include icons if specified.
+    $(".button").each(function() {
+        var icon = $(this).data('button-icon');
+        var pos = $(this).data('button-icon-pos');
+        if (icon)
+        {
+            switch (pos)
+            {
+                case "r", "R", "e", "E":
+                    $(this).button({icons:{secondary:icon}});
+                    break;
+                default:
+                    $(this).button({icons:{primary:icon}});
+                    break;
+            }
+        }
+        else
+        {
+            $(this).button();
+        }
+    });
 
     // Add a new user icon to the help button.
     if (APP.config.new_user) {

@@ -47,6 +47,16 @@ class ApplicationMailer < ActionMailer::Base
     body        :event => event
   end
 
+  def new_program_submission_email(program_submission)
+    recipients  ApplicationMailer.recipients_from_options
+    cc          program_submission.email
+    reply_to    program_submission.email
+    from        APP_CONFIG[:system_email_address]
+    subject     "[#{APP_CONFIG[:application_name]}] New program application submitted from: #{program_submission.name}"
+    sent_on     Time.now
+    body        :program_submission => program_submission
+  end
+
   # Find the emails that should be sent out to. The typical way to handle this
   # is to search the Option model for the entry +system_email_recipients+ which
   # is an array of ids that associate to the Instructor model.

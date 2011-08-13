@@ -51,7 +51,31 @@ module LayoutHelper
     ret += javascript_include_tag "jquery.icolorpicker.min"
     ret += javascript_include_tag "jquery.ba-dotimeout.min"
     ret += javascript_include_tag "jquery.notifications.min"
+    ret += javascript_include_tag "jquery.hoverIntent.min"
     return ret
+  end
+
+  def javascript_logging
+    if RAILS_ENV == "development"
+      log_code = <<-EOF
+        var alert_needed = true;
+        var str = msg;
+        if (!typeof msg === String) str = msg.toString();
+        if (console && console.log) {
+          console.log(str);
+          alert_needed = false;
+        }
+        if ( $("#general_debug_info").length ) {
+          $("<div/>").clone().html(str).appendTo("#general_debug_info");
+          alert_needed = false;
+        }
+        if (alert_needed) alert(str);
+      EOF
+    else
+      log_code = "/* Logging is only enabled in development environment. */"
+    end
+
+    "<script type=\"text/javascript\">\nAPP.log = function (msg) {\n#{log_code}\n};\n</script>\n"
   end
 
   # IE Bug Fixes {{{1
@@ -92,12 +116,20 @@ module LayoutHelper
   def link_to_with_icon(title, path, opts=nil)
     if opts[:icon]
       if opts[:is_button]
+        opts[:icon_pos] ||= "w"
         opts["data-button-icon"] = "ui-icon-#{opts[:icon]}"
+        opts["data-button-icon-pos"] = opts[:icon_pos]
       else
-        title = "<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>#{title}"
+        if opts[:icon_pos] =~ /[rRwW]/
+          title = "#{title}<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>"
+        else
+          title = "<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>#{title}"
+        end
       end
     end
+    opts[:class] ||= "button" if opts[:is_button] or opts[:btn_icon_pos]
     opts.delete(:is_button)
+    opts.delete(:btn_icon_pos)
     opts.delete(:icon)
     return link_to title, path, opts
   end
@@ -205,6 +237,34 @@ module LayoutHelper
     ret += "</span>"
     ret += name if option[:pos] == :left
     ret
+  end
+
+  # control_box {{{1
+  def control_box(title=nil, &block)
+    if title
+      contents = "<span class=\"control-box-title\">#{title}</span>\n"
+    else
+      contents = ''
+    end
+
+    if block_given?
+      contents += if @template.respond_to?(:is_haml?) && @template.is_haml?
+                    @template.capture_haml(&block)
+                  else
+                    @template.capture(&block)
+                  end
+    end
+
+    <<-EOF
+      <script type="text/javascript">
+        $(function() {
+          APP.appendToNavBar("#controls");
+        });
+      </script>
+      <div id="controls" class="ui-widget ui-widget-header ui-corner-all">
+        #{contents}
+      </div>
+    EOF
   end
   # }}}1
 end

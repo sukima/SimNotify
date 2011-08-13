@@ -1,0 +1,41 @@
+- title "Submitted Program Application"
+%table
+  %tbody
+    %tr
+      %td Submitted By:
+      %td=h @program_submission.name
+    %tr
+      %td Submitted On:
+      %td=dt @program_submission.created_at
+    %tr
+      %td Job Title:
+      %td=h @program_submission.job_title
+    %tr
+      %td Department:
+      %td=h @program_submission.department
+    %tr
+      %td Phone Number:
+      %td=h @program_submission.phone
+    %tr
+      %td E-Mail:
+      %td= mail_to @program_submission.email
+    %tr
+      %td{:colspan=>"2"} Requested #{h @program_submission.proximity}
+    %tr
+      %td{:colspan=>"2"}
+        - if @program_submission.supervisor_notified?
+          .notification Supervisor has been notified.
+        - else
+          .warning Supervisor has <strong>not</strong> been notified.
+%h2 Summary
+%p.program-desc
+  :markdown
+    #{@program_submission.summary}
+%h2 Outcome
+%p.program-desc
+  :markdown
+    #{@program_submission.outcome}
+%h2 Additional Information
+%p.program-desc
+  :markdown
+    #{@program_submission.additional_info}

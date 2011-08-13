@@ -14,6 +14,7 @@
     = javascript_include_jquery
     = javascript_include_tag 'application'
     = iebugfixes_include_tag
+    = javascript_logging
     = yield(:head)
     :javascript
       $(document).ready(function() {
@@ -36,30 +37,7 @@
       #logo-container= image_tag "logo.png"
       = render :partial => "layouts/header.html.haml"
       - if logged_in?
-        #navigation.side-navigation
-          %ul
-            %li= link_to_home
-            %li
-              = link_to_sub_menu("Sessions")
-              %ul
-                = nav_link_to "New Session", new_event_path
-                = nav_link_to "Special Events", special_events_path
-            %li
-              = link_to_sub_menu("Administration")
-              %ul
-                = nav_link_to "Edit Profile", edit_instructor_path(@current_instructor)
-                - if is_admin?
-                  = nav_link_to "System Options", options_path
-                  = nav_link_to "View Sessions", events_path
-                  = nav_link_to "Notifications", notifications_path
-                  = nav_link_to "Instructors", instructors_path
-                  = nav_link_to "Facilities", facilities_path
-                  = nav_link_to "Manikins", manikins_path
-                  = nav_link_to "Location Suggestions", location_suggestions_path
-                = nav_link_to "Log Out", logout_path
-            = nav_link_to_calendar if (!@is_calendar)
-            = yield :nav_list
-            = nav_link_to_help if (!@is_help)
+        = render :partial => "layouts/navigation.html.haml"
       - if wide_content?
         .clear
       #content.side-nav-width
