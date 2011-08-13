@@ -115,12 +115,16 @@ module LayoutHelper
   # Links {{{1
   def link_to_with_icon(title, path, opts=nil)
     if opts[:icon]
-      if opts[:is_button] or opts[:btn_icon_pos]
-        opts[:btn_icon_pos] ||= "w"
+      if opts[:is_button]
+        opts[:icon_pos] ||= "w"
         opts["data-button-icon"] = "ui-icon-#{opts[:icon]}"
-        opts["data-button-icon-pos"] = opts[:btn_icon_pos]
+        opts["data-button-icon-pos"] = opts[:icon_pos]
       else
-        title = "<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>#{title}"
+        if opts[:icon_pos] =~ /[rRwW]/
+          title = "#{title}<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>"
+        else
+          title = "<span class=\"ui-icon ui-icon-#{opts[:icon]}\"></span>#{title}"
+        end
       end
     end
     opts[:class] ||= "button" if opts[:is_button] or opts[:btn_icon_pos]
@@ -236,14 +240,19 @@ module LayoutHelper
   end
 
   # control_box {{{1
-  def control_box(&block)
-    contents = 'barfpoo'
+  def control_box(title=nil, &block)
+    if title
+      contents = "<span class=\"control-box-title\">#{title}</span>\n"
+    else
+      contents = ''
+    end
+
     if block_given?
-      contents = if @template.respond_to?(:is_haml?) && @template.is_haml?
-                   @template.capture_haml(&block)
-                 else
-                   @template.capture(&block)
-                 end
+      contents += if @template.respond_to?(:is_haml?) && @template.is_haml?
+                    @template.capture_haml(&block)
+                  else
+                    @template.capture(&block)
+                  end
     end
 
     <<-EOF
