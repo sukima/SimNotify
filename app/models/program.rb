@@ -10,5 +10,5 @@ class Program < ActiveRecord::Base
   belongs_to :created_by, :class_name => "Instructor"
 
   validates_presence_of :name, :description, :benifit, :contact_id
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :case_sensitive => false
 end

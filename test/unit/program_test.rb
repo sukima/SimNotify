@@ -7,6 +7,12 @@ class ProgramTest < ActiveSupport::TestCase
   should validate_presence_of :name
   should validate_presence_of :description
   should validate_presence_of :benifit
+  should validate_presence_of :contact_id
 
-  should validate_uniquness_of :name
+  context "" do
+    setup do
+      Factory.create(:program)
+    end
+    should validate_uniqueness_of(:name).case_insensitive
+  end
 end
