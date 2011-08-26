@@ -1,0 +1,35 @@
+= stylesheet_link_tag "agenda"
+:javascript
+  $(function() {
+    APP.initAgendaButtons();
+    $("#up").button({
+      icons: { secondary: 'ui-icon-triangle-1-e' }
+    }).click(function() {
+      // Use "- 0" to force integer arithmetic and not string concatenation.
+      week = $("#week_index").val() - 0 + 1; // Raise week value
+      $("#week_index").val(week);
+      $("#control_form").submit();
+    });
+    $("#down").button({
+      icons: { primary: 'ui-icon-triangle-1-w' }
+    }).click(function() {
+      week = $("#week_index").val() - 0 - 1; // Lower week value
+      $("#week_index").val(week);
+      $("#control_form").submit();
+    });
+    $("#this_week").button().click(function() {
+      $("#week_index").val(0);
+      $("#control_form").submit();
+    });
+    APP.appendToNavBar("#controls");
+  });
+#controls.ui-widget.ui-widget-header.ui-corner-all
+  %button#down Prev Week
+  %button#this_week This Week
+  %button#up Next Week
+  %button#print-button Print
+  - form_tag tech_schedule_path, {:id => "control_form"} do
+    %input#week_index{:type=>'hidden', :name=>'week_index', :value=>@week_index}
+%h2 #{h @tech.name} schedule for #{dt @start_of_week} - #{dt @end_of_week}
+%ol
+  = render :partial => "agenda_event", :collection => @events

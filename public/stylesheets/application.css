@@ -80,6 +80,11 @@ a {
   list-style: disc;
 }
 
+p.disclaimer {
+  font-size: 0.75em;
+  font-style: italic;
+}
+
 .priority {
   color: red;
 }
@@ -174,4 +179,26 @@ tr.approved td {
 
 #theme_sample {
   margin: 0px 0px 10px 0px;
+}
+
+#jquery-notifications {
+  position: fixed !important;
+}
+
+.grav-icon {
+  float: right;
+}
+
+.grav-mini-icon {
+  margin: 0 2px;
+}
+
+.grav-mini-icon img {
+  vertical-align: middle;
+}
+
+/* Instructor active buton */
+
+.instructor_inactive {
+  text-decoration: line-through;
 }

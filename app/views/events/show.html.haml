@@ -37,17 +37,18 @@
     %strong Equipment is there for an extended stay
 %p
   %strong Instructor:
-  = link_to h(@event.instructor.name), @event.instructor
+  = name_with_gravatar @event.instructor, :pos => :right
 - if !@event.instructors.empty?
   %p
     %strong Other Instructors:
-    = @event.instructors.map(&:name).to_sentence
+    - other_instructors = @event.instructors.collect {|i| name_with_gravatar(i, :link=>false)}
+    = other_instructors.to_sentence
 - if @event.technician.nil?
   %p No technician has been assigned to this session.
 - else
   %p
     %strong Technician:
-    = link_to h(@event.technician.name), @event.technician
+    = name_with_gravatar @event.technician.name, :pos => :right
 %p
   %strong Created at:
   = dt @event.created_at

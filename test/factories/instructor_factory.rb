@@ -20,3 +20,8 @@ end
 Factory.define :new_instructor, :parent => :instructor do |i|
   i.new_user true
 end
+
+Factory.define :technician, :parent => :instructor do |i|
+  i.admin true
+  i.is_tech true
+end

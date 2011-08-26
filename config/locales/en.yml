@@ -22,6 +22,9 @@ en:
   submit: "Submit for approval"
   revoke: "Revoke"
   edit: "Edit"
+  new: "New"
+  new_item: "Create new %{item}"
+  view_all: "View all"
   login_required: "You must first log in or sign up before accessing this page."
   admin_required: "You must be an administrator to access that page"
   cancel_confirm: "This form has not been saved. Are you sure you want to continue?"
@@ -32,13 +35,16 @@ en:
   no_reverse_time_travel: "can not end before it starts"
   bad_phone_number: "should look like a phone number"
   destroy: "Delete"
-  destroy_confirm: "Are you sure?"
+  destroy_confirm: "Are you sure you want to delete this?"
   destroy_item_confirm: "Are you sure you want to delete %{item}?"
   cannot_destroy_event: "You cannot delete a session after it has been submitted and/or approved. You must revoke it first."
   permission_denied: "You do not have permission to access that action."
   missing_parameters: "Missing key parameter information from the request. (Possible bug)"
   technician_assignment_denied: "You do not have permission to assigna technician."
   no_scenarios_attached: "You must attach a scenario to this event before it can be submitted."
+  no_items_found: "No %{items} found."
+  create_an_item: "Create an %{item}"
+  submit_item: "Submit a new %{item}"
   formtastic:
     titles:
       previous_uploads: "Pick a previous upload"
@@ -51,6 +57,7 @@ en:
         is_tech: "Is a technician?"
         notify_recipient: "Recive session submission emails."
         gui_theme: "Theme"
+        active: "Is instructor active?"
       event:
         title: "Title of session"
         location: "Location of the simulation"
@@ -74,6 +81,7 @@ en:
         phone: "A phone number to reach you if you have questions. Ex (203) 688-4781"
         notify_recipient: "Check this if you wish to be emailed whenever someone submits a session or there is a change to one. This is meant for the administrators who recive the notifications."
         gui_theme: "If you wish to change the look of the site you can select one of the listed themes."
+        active: "Is this instructor able to log into the system? Uncheck to prevent this user from logging in."
       event:
         benefit: "What is the benefit to the system, staff / patient saftey, etc?"
         live_in: "Check this if the equipment is to be staying for a long period of time with no specific schedule when it is used."

@@ -14,6 +14,10 @@ class Option < ActiveRecord::Base
     return option
   end
 
+  def self.value_for(option_name)
+    Option.find_option_for(option_name).value
+  end
+
   private
   def sanatize_value
     case name
@@ -25,8 +29,10 @@ class Option < ActiveRecord::Base
   def self.set_all_defaults!(options={})
     [
       "system_email_recipients",
+      "scheduler_phone",
       "days_to_send_event_notifications",
       "not_approved_color",
+      "gravatar_default",
       "special_event_color"
     ].each do |o|
       options[o] ||= self.create_default_for(o)
@@ -40,6 +46,9 @@ class Option < ActiveRecord::Base
     when "system_email_recipients"
       # list of instructors that will receive email when changes occur
       return Option.create(:name => "system_email_recipients", :value => [])
+    when "scheduler_phone"
+      # Phone number for the scheduling secretary.
+      return Option.create(:name => "scheduler_phone", :value => "the scheduler")
     when "days_to_send_event_notifications"
       # Number of days to look for upcomming events.
       return Option.create(:name =>"days_to_send_event_notifications", :value => 2)
@@ -49,6 +58,9 @@ class Option < ActiveRecord::Base
     when "special_event_color"
       # The color for special events in calendar
       return Option.create(:name => "special_event_color", :value => "#f90")
+    when "gravatar_default"
+      # The default gravatar icons to use ("identicon", "monsterid", "wavatar")
+      return Option.create(:name => "gravatar_default", :value => "wavatar")
     else
       return Option.new(:name => option_name)
     end

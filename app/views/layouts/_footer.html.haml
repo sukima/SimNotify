@@ -1,0 +1,8 @@
+#footer
+  \&copy; 2011
+  %a{:href => "#"}= APP_CONFIG[:company_name]
+  - if APP_CONFIG[:include_designer_credit]
+    | #{link_to(image_tag("humantxt_badge.png", :alt => "information about the authors and humans involved in the making of this site", :valign => "middle"), "/humans.txt")}
+  #test_link
+    %a{:href => "/javascripts/test/index.html"} &nbsp;
+  / Design Created By Nicolas Fafchamps (2006) - Public domain

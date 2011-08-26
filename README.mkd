@@ -1,7 +1,7 @@
 SimNotify
 =========
 
-Version: 1.3.0beta  
+Version: 1.4.0alpha
 Author: Devin Weaver <suki@tritarget.org>
 
 SimNotify is a simple web app designed to make it easy for instructors to
@@ -113,9 +113,52 @@ Building
 
 The following setup procedures are required with a fresh build.
 
-1. `rake gems:install` - Installs needed gems.
+1. `bundle install` - Installs needed gems. (Requires the bundler gem:
+   `gem install bundler`)
 2. `rake init:config` - Copyies over the sample config to the real config.
    Provides defaults. _Please edit the files for your purpose_
 3. `rake mailer:views` - Builds the views needed to send mail. You can
    clean the genrated files with `rake mailer:clean`
 4. `rake db:schema:load` - Loads the database.
+5. `rake db:seed` - Load default values to the database.
+
+Requirements Refactor
+=====================
+
+The requirements of this project have changed so drastically it is time to
+refactor a lot of the old ideas into new ones. The following is that set of new
+requirements.
+
+A program is what instructors develop. They will consist of a creator, Assigned
+contact, involved instructors, and Benefit to the system. A program has many
+simulations.
+
+Instructors (or administrators) will add SimSession (sessions and events were
+taken keywords in old system) which are associated to a program. It has a
+creator, assigned instructor, a carbon copy list of contacts, a facility and a
+location. It has a start and end time. It has an assigned technician.
+
+A SimSession will have multiple file attachments which should be a filled in
+predefined word document specific to the department. This document will
+describe a simulation.
+
+After entering, if the creator is not an admin the SimSession is submitted to
+the admins for approval first. Otherwise it is official on the calendar. Only
+admins can make changes to the facility, location, start and end time after
+that. Creators and admins can make changes to the attached documents anytime.
+
+There are special events that have a creator, carbon copy contact list,
+facility, location, start and end times. These are used for booking locations
+when there is no program or simulation. (ie. A meeting, holiday, facility day,
+etc.). Location is optional to handle cases like holidays.)
+
+Whiteboard is at: http://bit.ly/qahhtz
+
+Versions
+========
+
+Be sure to update the following files to the correct version number:
+
+1. `README.md`
+2. `public/humans.txt`
+3. `config/initializers/load_config.rb`

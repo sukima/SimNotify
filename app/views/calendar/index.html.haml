@@ -1,37 +1,33 @@
 - title "Event Calendar"
 - javascript (APP_CONFIG[:use_minified_js] ? 'fullcalendar.min' : 'fullcalendar')
+- javascript 'calendar_index'
 - stylesheet 'fullcalendar'
 - stylesheet 'fullcalendar.print', :media => :print
 - stylesheet "calendar-fixes"
+- if current_instructor.is_tech?
+  - add_nav_link "My Schedule", tech_schedule_path(current_instructor.id), { :icon => 'check', :is_button => true }
 - add_nav_link "Print Agenda", agenda_path, { :icon => 'print', :is_button => true }
 - wide_content
 :css
   #controls-box { margin: 0 0 10px 0; }
 :javascript
-  $(document).ready(function () {
-    $("#calendar").fullCalendar({
-        firstDay: 1, // Monday
-        events: '/calendar/events',
-        defaultView: 'agendaWeek',
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        }
-    });
-
-    $("#calendar-legend").wrap("<div class=\"ui-widget\" />").
-        addClass("ui-corner-all ui-helper-clearfix");
+  $(function() {
+    CAL.initFullCalendar();
+    CAL.initFacilityChangeEvents();
   });
-#calendar-header.calendar-home-link
+#calendar-header.ui-helper-clearfix
 #calendar
-#calendar-footer.calendar-home-link
-  = link_to "Home", root_path
-  #calendar-legend
-    - @facilities.each do |f|
-      %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{h f.agenda_color};"}
-        =h f.name
-    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("not_approved_color").value};"}
-      %strong Not Approved
-    %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("special_event_color").value};"}
-      %strong Special Event
+#calendar-footer.ui-helper-clearfix
+  .ui-widget
+    #calendar-legend.ui-widget-content.ui-corner-all
+      - @facilities.each do |f|
+        %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{h f.agenda_color};"}
+          - is_checked = (@facility_preferences == :all || @facility_preferences.include?(f.id.to_s))
+          = check_box_tag("facility-checkbox-#{f.id}", f.id, is_checked, { :class => 'facility' })
+          =h f.name
+      %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("special_event_color").value};"}
+        - is_checked = (@facility_preferences == :all || @facility_preferences.include?("special"))
+        = check_box_tag("special-event-checkbox", "special", is_checked, { :class => 'facility' })
+        Special Event
+      %span.fc-event.fc-event-hori.fc-corner-left.fc-corner-right{:style=>"background-color:#{Option.find_option_for("not_approved_color").value};"}
+        Not Approved

@@ -9,4 +9,8 @@ class SpecialEvent < ActiveRecord::Base
   def status_as_class
     "special-event"
   end
+
+  def self.type_list
+    return ["Other", "Meeting", "Holiday", "Maintinence"]
+  end
 end

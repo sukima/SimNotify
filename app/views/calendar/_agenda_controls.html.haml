@@ -1,0 +1,8 @@
+#controls.ui-widget.ui-widget-header.ui-corner-all
+  - form_tag agenda_path do
+    = link_to "Return", calendar_path, :id => "return-button"
+    = link_to "Print", "javascript:window.print()", :id => "print-button"
+    = text_field_tag 'number_of_weeks', @number_of_weeks
+    = select_tag "tech", "<option value='all'>All Technicians</option>" +                |
+      options_from_collection_for_select(Instructor.technicians, "id", "name", @tech_id) |
+    = submit_tag "Refresh"

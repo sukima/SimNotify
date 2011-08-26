@@ -1,0 +1,4 @@
+%li.week-list-item
+  = agenda_event_description_for(agenda_event)
+  %span.facility-box{:style=>"background-color: #{facility_color(agenda_event)};"}
+    = facility_name(agenda_event)

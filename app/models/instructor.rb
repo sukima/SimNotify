@@ -1,8 +1,12 @@
 class Instructor < ActiveRecord::Base
-  has_many :events
-  has_many :assets
-  belongs_to :facility
+  include Gravtastic
+
   acts_as_authentic
+  gravtastic :rating => 'PG', :default => Option.find_option_for("gravatar_default")
+
+  has_many :events, :dependent => :nullify
+  has_many :assets, :dependent => :nullify
+  belongs_to :facility
 
   before_destroy :destroyable?
 
@@ -72,5 +76,9 @@ class Instructor < ActiveRecord::Base
   def destroyable?
     # TODO: This should check for event dependencies and allow them to be moved/detroyed first.
     false
+  end
+
+  def self.technicians
+    self.find(:all, :conditions => { :is_tech => true })
   end
 end

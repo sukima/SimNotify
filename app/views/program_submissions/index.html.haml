@@ -1,0 +1,22 @@
+- title "Program Development Application Forms"
+- wide_content
+- if @program_submissions.count == 0
+  %p.notification= t(:no_items_found, :items => "Program Development Applications")
+- else
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Department
+        %th Summary
+        %th Submitted On
+        %th Actions
+    %tbody
+      - @program_submissions.each do |p|
+        %tr
+          %td=link_to_program_submission h(p.name), p
+          %td=link_to_program_submission h(p.department), p
+          %td=link_to_program_submission h(truncate(p.summary, 50, "...")), p
+          %td=link_to_program_submission dt(p.created_at), p
+          %td= link_icon_to "trash", t(:destroy), delete_program_submission_path(p), :confirm => t(:destroy_confirm)
+=link_to_confirm t(:submit_item, :item => "Program Development Application"), new_program_submission_path

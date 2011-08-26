@@ -1,5 +1,7 @@
 - title "Special Event"
-%h2 Event: #{h @special_event.title}
+%h2
+  Event: #{h @special_event.title}
+  = "(#{@special_event.event_type})" if !@special_event.event_type.blank?
 %p
   %strong Notes:
   = h @special_event.notes

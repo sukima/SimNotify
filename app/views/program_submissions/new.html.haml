@@ -1,0 +1,29 @@
+- title "Program Development Application"
+- confirm_on_exit
+:css
+  p { padding: 5px 0; }
+  @media print { #url_notice { display: none } }
+- if logged_in?
+  #url_notice.notification Copy and paste the following URL to your emails so your contacts can refer to this page when submitting a new application.<br /><code>#{new_program_submission_url}</code>
+= render :partial => "preamble"
+- semantic_form_for @program_submission do |f|
+  - f.inputs "Contact Information", :id => "contact" do
+    %p.instruction Please complete the following fields so that we can contact you with questions:
+    = f.input :name
+    = f.input :job_title
+    = f.input :department
+    = f.input :phone
+    = f.input :email
+  - f.inputs "Program Description", :id => "description" do
+    %p.instruction In order to better serve you needs, please answer the following questions about the educational initiative you are planning.
+    = f.input :summary, :hint => "Please provide a summary of the program you would like to develop including: 1) current issues you would like to address with simulation, 2) goals of the program and 3) a brief description of the target audience."
+    = f.input :outcome, :hint => "What is the outcome that you would like to change and mesure through your program? (e.g. improved perceptions, descreased training hours, improved confidence)"
+    = f.input :supervisor_notified, :label => "Have you discussed this idea with your supervisor?"
+    = f.input :proximity, :as => :radio, :collection => ["ASAP", "within 2 months", "within 4 months", "within 6 months", "within 12 months", "other"], :label => "When do you need this?", :hint => "When do you need to begin the training program? What is the level of urgency? If other explain below."
+    = f.input :additional_info, :label => "Additional Information", :hint => "If you have further requests or would like to provide additional information, please provide above."
+  %p.information If this is urgent, please call #{Option.value_for("scheduler_phone")} to discuss.
+  - f.buttons do
+    = f.commit_button :label => "Submit application"
+%p.disclaimer
+  %a{:href=>"http://daringfireball.net/projects/markdown/syntax"} Markdown
+  is supported for all text boxes.

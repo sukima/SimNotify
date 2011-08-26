@@ -1,0 +1,11 @@
+li.week-list-item {
+  margin: 5px 0px;
+}
+.facility-box {
+  padding: 0px 5px;
+}
+@media print {
+  #controls {
+    display: none;
+  }
+}

@@ -1,0 +1,5 @@
+#header
+  %span#title= APP_CONFIG[:company_name]
+  - if show_title?
+    %br/
+    %span#subtitle= h yield(:title)

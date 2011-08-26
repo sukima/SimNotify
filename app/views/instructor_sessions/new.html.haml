@@ -1,6 +1,6 @@
 - title "Welcome"
-%p
-  Don't have an account? #{link_to "Sign up!", signup_path}
+%p Don't have an account? #{link_to "Sign up!", signup_path}
+%p Interested in developing a new program? Submit an #{link_to "application", new_program_submission_path}.
 - semantic_form_for @instructor_session do |f|
   - f.inputs do
     = f.input :email, :as => :autocomplete

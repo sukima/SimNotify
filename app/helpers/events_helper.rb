@@ -1,10 +1,13 @@
 module EventsHelper
   def session_description(event)
     ret = dt event.start_time
-    ret += " (#{distance_of_time_in_words(event.start_time, event.end_time)})"
+    ret << " (#{distance_of_time_in_words(event.start_time, event.end_time)})"
     if event.kind_of? Event
-      ret += " - #{pluralize(event.scenarios.count, "senario")}"
-      ret += h event.need_flags_as_words if event.collective_has_needs
+      ret << " - "
+      ret << "#{h event.facility.name} " if event.facility
+      ret << "#{h event.location} - "
+      ret << "#{pluralize(event.scenarios.count, "scenario")} - "
+      ret << "#{h event.need_flags_as_words}" if event.collective_has_needs
     end
     return ret
   end

@@ -1,0 +1,36 @@
+/* TEAM */
+
+    Designer / Programmer: Devin Weaver
+    Contact: devin.weaver [at] ynhh.org
+    From: Old Mystic, Connecticut, USA
+
+    Tester: Cathy Glinsky
+    Contact: cathy.glinsky [at] ynhh.org
+    From: West Haven, Connecticut, USA
+
+    Tester: Serena Marlo
+    Contact: serena.marlo [at] ynhh.org
+    From: Clinton, Connecticut, USA
+
+
+/* THANKS */
+
+    For giving the time and patience to let the project grow.
+    Manager: Jason Zigmont
+    Contact: jason.zigmont [at] ynhh.org
+    From: West Haven, Connecticut, USA
+
+    For the initial layout of the site
+    Design by: Nicolas Fafchamps
+    Website: http://nicolas.freezee.org
+
+
+/* SITE */
+
+    Last update: 2011/08/26
+    Language: English
+    Doctype: HTML4
+    Framework: Ruby on Rails, jQuery
+    Tools: VIM, Chrome, Git
+
+/* About humans.txt: http://humanstxt.org/ */

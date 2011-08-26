@@ -11,11 +11,15 @@
       %th Actions
   %tbody
     - for instructor in @instructors
+      - inactive_class = (instructor.active?) ? "" : "instructor_inactive"
       %tr
-        %td= link_to instructor.name, instructor
-        %td= h instructor.office
-        %td= h instructor.email
-        %td= h instructor.phone
+        %td{:class=>inactive_class}
+          = name_with_gravatar(instructor)
+          - if !instructor.active?
+            %span.ui-icon.ui-icon-locked{:style=>"float:right;margin-left:.3em"}
+        %td{:class=>inactive_class}= h instructor.office
+        %td{:class=>inactive_class}= h instructor.email
+        %td{:class=>inactive_class}= h instructor.phone
         %td
           - if instructor.admin?
             %span.ui-icon.ui-icon-check Yes

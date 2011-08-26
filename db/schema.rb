@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110611205112) do
+ActiveRecord::Schema.define(:version => 20110808184134) do
 
   create_table "assets", :force => true do |t|
     t.string   "session_asset_file_name"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110611205112) do
     t.boolean  "new_user",          :default => true
     t.boolean  "is_tech",           :default => false
     t.integer  "facility_id"
+    t.boolean  "active",            :default => true
   end
 
   create_table "location_suggestions", :force => true do |t|
@@ -96,6 +97,31 @@ ActiveRecord::Schema.define(:version => 20110611205112) do
   create_table "options", :force => true do |t|
     t.string "name",  :null => false
     t.string "value"
+  end
+
+  create_table "program_submissions", :force => true do |t|
+    t.string   "name"
+    t.string   "job_title"
+    t.string   "department"
+    t.string   "phone"
+    t.string   "email"
+    t.text     "summary"
+    t.text     "outcome"
+    t.boolean  "supervisor_notified"
+    t.string   "proximity"
+    t.text     "additional_info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "programs", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "benifit"
+    t.integer  "contact_id"
+    t.integer  "created_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "scenario_templates", :force => true do |t|
@@ -147,6 +173,7 @@ ActiveRecord::Schema.define(:version => 20110611205112) do
     t.integer  "instructor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "event_type"
   end
 
 end

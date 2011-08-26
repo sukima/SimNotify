@@ -3,7 +3,8 @@
   %head
     %title= "#{APP_CONFIG[:application_name]} - " + h(yield(:title) || "Untitled")
     %meta{:content => "text/html; charset=iso-8859-15", "http-equiv" => "content-type"}/
-    %meta{:content => "#{APP_CONFIG[:application_name]} v#{APP_CONFIG[:application_version]} by Devin Weaver suki (at) tritarget.org", :name => "generator"}/
+    %meta{:content => "#{APP_CONFIG[:application_name]} v#{APP_CONFIG[:application_version]}", :name => "generator"}/
+    %link{:rel => "author", :href => "/humans.txt"}/
     = stylesheet_link_tag 'application'
     = stylesheet_link_tag 'style'
     = formtastic_stylesheet_link_tag
@@ -13,40 +14,30 @@
     = javascript_include_jquery
     = javascript_include_tag 'application'
     = iebugfixes_include_tag
+    = javascript_logging
     = yield(:head)
+    :javascript
+      $(document).ready(function() {
+          APP.flagDetection();
+          APP.autocomplete.load();
+          APP.loadMultiselect();
+          APP.initNavBar();
+          APP.initDateTimePickers();
+          APP.initAccordions();
+          APP.initButtons();
+          APP.initAutoApproveDialog();
+          APP.initNotifications();
+          APP.overideConfirmLinks();
+          APP.initThemePicker();
+          APP.initHelpDialog();
+          APP.initEventSubmitNote();
+      });
   %body
     #container
       #logo-container= image_tag "logo.png"
-      #header
-        %span#title= APP_CONFIG[:company_name]
-        - if show_title?
-          %br/
-          %span#subtitle= h yield(:title)
+      = render :partial => "layouts/header.html.haml"
       - if logged_in?
-        #navigation.side-navigation
-          %ul
-            %li= link_to_home
-            %li
-              = link_to_sub_menu("Sessions")
-              %ul
-                = nav_link_to "New Session", new_event_path
-                = nav_link_to "Special Events", special_events_path
-            %li
-              = link_to_sub_menu("Administration")
-              %ul
-                = nav_link_to "Edit Profile", edit_instructor_path(@current_instructor)
-                - if is_admin?
-                  = nav_link_to "System Options", options_path
-                  = nav_link_to "View Sessions", events_path
-                  = nav_link_to "Notifications", notifications_path
-                  = nav_link_to "Instructors", instructors_path
-                  = nav_link_to "Facilities", facilities_path
-                  = nav_link_to "Manikins", manikins_path
-                  = nav_link_to "Location Suggestions", location_suggestions_path
-                = nav_link_to "Log Out", logout_path
-            = nav_link_to_calendar if (!@is_calendar)
-            = yield :nav_list
-            = nav_link_to_help if (!@is_help)
+        = render :partial => "layouts/navigation.html.haml"
       - if wide_content?
         .clear
       #content.side-nav-width
@@ -54,14 +45,8 @@
           = content_tag :div, msg, :id => "flash_#{name}"
         = yield
       #clear
-      #footer
-        \&copy; 2011
-        %a{:href => "#"}= APP_CONFIG[:company_name]
-        - if APP_CONFIG[:include_designer_credit]
-          | Design by
-          %a{:href => "http://nicolas.freezee.org", :target => "_BLANK"} Nicolas Fafchamps
+      = render :partial => "layouts/footer.html.haml"
       = ie_footer
-    / Design Created By Nicolas Fafchamps (2006) - Public domain
     - if @current_instructor && @current_instructor.new_user?
       #NewUserFlag{:style=>'display:none;'}
     - if force_display_help? # Deprecated in favor of #NewUserFlag

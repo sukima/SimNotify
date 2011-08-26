@@ -35,6 +35,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :facilities, :except => :show, :member => { :delete => :get }
 
   map.resources :options, :only=> [:index, :update]
+
+  map.resources :programs, :member => { :delete => :get }
+  map.resources :program_submissions, :except => [ :edit, :update ], :member => { :delete => :get }
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -75,6 +79,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.calendar 'calendar', :controller => 'calendar'
   map.agenda 'calendar/agenda', :controller => 'calendar', :action => 'agenda'
+  map.tech_schedule 'calendar/tech_schedule/:tech_id', :controller => 'calendar', :action => 'tech_schedule'
+  map.save_preferences 'calendar/save_preferences', :controller => 'calendar', :action => 'save_preferences'
   map.connect 'calendar/:action', :controller => 'calendar'
   map.connect 'calendar/:action.:format', :controller => 'calendar'
 
