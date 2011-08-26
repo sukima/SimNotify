@@ -27,7 +27,7 @@
 
 /* SITE */
 
-    Last update: 2011/07/18
+    Last update: 2011/08/26
     Language: English
     Doctype: HTML4
     Framework: Ruby on Rails, jQuery
