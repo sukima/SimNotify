@@ -35,8 +35,18 @@ class EventsControllerTest < ActionController::TestCase
         should render_template :index
       end
 
-      context "GET :show" do
+      context "GET :show (without tech)" do
         setup do
+          get :show, :id => @f.id
+        end
+        should assign_to(:event)
+        should respond_with :success
+        should render_template :show
+      end
+
+      context "GET :show (with tech)" do
+        setup do
+          @f.update_attributes(:technician => @instructor)
           get :show, :id => @f.id
         end
         should assign_to(:event)
