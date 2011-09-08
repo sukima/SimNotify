@@ -27,11 +27,4 @@
         - if week[:events].empty?
           .info No sessions scheduled for this week.
         - else
-          %ol.week-list
-            - day_match = nil
-            - week[:events].each do |event|
-              - event_day = event.start_time.strftime("%A - %B %d")
-              - if event_day != day_match
-                - day_match = event_day
-                %h4= event_day
-              = render :partial => "agenda_event", :object => event
+          = render :partial => "agenda_event", :object => week[:events]

@@ -16,13 +16,25 @@ CAL.buildURL = function(param) {
 
 // Function: cache.sync() {{{1
 CAL.cache.sync = function() {
+    var has_facility = false;
     CAL.cache.facility_urls = [ ];
+
     $(".facility").each(function() {
+        if ($(this).val() != "special")
+        {
+            has_facility = true;
+        }
         if (this.checked)
         {
             CAL.cache.facility_urls.push(CAL.buildURL($(this).val()));
         }
     });
+
+    if (!has_facility)
+    {
+        // There are no facilities defined. Default to 'all'
+        CAL.cache.facility_urls.push(CAL.buildURL("all"));
+    }
 };
 
 // Function: savePreferences() {{{1
