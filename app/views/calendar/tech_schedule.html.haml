@@ -31,4 +31,6 @@
   - form_tag tech_schedule_path, {:id => "control_form"} do
     %input#week_index{:type=>'hidden', :name=>'week_index', :value=>@week_index}
 %h2 #{h @tech.name} schedule for #{dt @start_of_week} - #{dt @end_of_week}
+- if @events.empty?
+  .info There are no events scheduled.
 = render :partial => "agenda_event", :object => @events
