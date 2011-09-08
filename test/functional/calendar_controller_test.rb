@@ -187,6 +187,7 @@ class CalendarControllerTest < ActionController::TestCase
     context "get :tech_schedule" do
       setup do
         @tech = Factory(:technician)
+        @event = Factory(:event, :technician => @tech)
       end
       context "without week_index" do
         setup do
