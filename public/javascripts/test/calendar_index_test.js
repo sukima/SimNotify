@@ -38,8 +38,12 @@ test("should return correct string", function() { // {{{2
 
 module("CAL.cache.sync()", { // {{{1
   setup: function() { // {{{2
-    $("<input type='checkbox' id='facility-box' class='facility' />")
+    this.input = $("<input type='checkbox' id='facility-box' class='facility' />")
       .attr('value', "Unique-test-identifier-jhjfhise")
+      .attr('checked', true)
+      .appendTo("#qunit-fixture");
+    this.special = $("<input type='checkbox' id='facility-box' />")
+      .attr('value', "special")
       .attr('checked', true)
       .appendTo("#qunit-fixture");
   },
@@ -51,6 +55,27 @@ test("should sync facility_urls with facility checkboxes", function() { // {{{2
   CAL.cache.sync();
   ok(CAL.cache.facility_urls.length > 0, "CAL.cache.facility_urls is not empty");
   ok(CAL.cache.facility_urls[0].indexOf("Unique-test-identifier-jhjfhise") != -1, "have proper value from checkbox");
+});
+test("with special should sync facility_urls with special", function() { // {{{2
+  this.special.addClass("facility");
+  CAL.cache.sync();
+  ok(CAL.cache.facility_urls.length > 1, "CAL.cache.facility_urls is not empty and has two elements");
+  ok(CAL.cache.facility_urls[0].indexOf("Unique-test-identifier-jhjfhise") != -1, "have proper value from checkbox");
+  ok(CAL.cache.facility_urls[1].indexOf("special") != -1, "have value of 'special' for facility_urls");
+});
+test("without facility should sync facility_urls with all", function() { // {{{2
+  this.input.remove();
+  CAL.cache.sync();
+  ok(CAL.cache.facility_urls.length > 0, "CAL.cache.facility_urls is not empty");
+  ok(CAL.cache.facility_urls[0].indexOf("all") != -1, "have value of 'all' for facility_urls");
+});
+test("with special and without facility should sync facility_urls with all", function() { // {{{2
+  this.input.remove();
+  this.special.addClass("facility");
+  CAL.cache.sync();
+  ok(CAL.cache.facility_urls.length > 1, "CAL.cache.facility_urls is not empty and has two elements");
+  ok(CAL.cache.facility_urls[0].indexOf("special") != -1, "have value of 'special' for facility_urls");
+  ok(CAL.cache.facility_urls[1].indexOf("all") != -1, "have value of 'all' for facility_urls");
 });
 
 module("CAL.scanFacilityOptions()", { // {{{1

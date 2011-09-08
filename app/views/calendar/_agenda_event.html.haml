@@ -1,4 +1,11 @@
-%li.week-list-item
-  = agenda_event_description_for(agenda_event)
-  %span.facility-box{:style=>"background-color: #{facility_color(agenda_event)};"}
-    = facility_name(agenda_event)
+%ol.week-list
+  - day_match = nil
+  - agenda_event.each do |e|
+    - event_day = e.start_time.strftime("%A - %B %d")
+    - if event_day != day_match
+      - day_match = event_day
+      %h4= event_day
+    %li.week-list-item
+      = agenda_event_description_for(e)
+      %span.facility-box{:style=>"background-color: #{facility_color(e)};"}
+        = facility_name(e)
