@@ -48,7 +48,7 @@
 - else
   %p
     %strong Technician:
-    = name_with_gravatar @event.technician.name, :pos => :right
+    = name_with_gravatar @event.technician, :pos => :right
 %p
   %strong Created at:
   = dt @event.created_at
