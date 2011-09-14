@@ -28,8 +28,10 @@ class Test::Unit::TestCase # :nodoc:
   def self.logged_in_as(person, &block) # {{{
     context "logged in as #{person.to_s}" do
       setup do
-        @instructor = Factory(person)
-        InstructorSession.create(@instructor)
+        # @instructor deprecated. Use @current_instructor
+        @current_instructor = Factory(person)
+        @instructor = @current_instructor # Backwards compatable.
+        InstructorSession.create(@current_instructor)
       end
 
       yield
@@ -151,6 +153,8 @@ class Test::Unit::TestCase # :nodoc:
   # Convinience method to test if controller properly handled a user who is not
   # logged in.
   #
+  # This assumes that you have already established a context for the shoulda tests to run.
+  #
   # Options:
   #   opt => Hash of options (Optional). See should_check_logged_in_status().
   #
@@ -172,8 +176,33 @@ class Test::Unit::TestCase # :nodoc:
     self.should_check_logged_in_status(opt)
   end # }}}
 
+  # Shoulda context specific to test if login access is required.
+  # This will only use the get method. You can pass in params using the opt hash.
+  #
+  # This method uses should_require_logged_in_access internally.
+  #
+  # Options:
+  #   action => symbol for the action to test
+  #   opt => See should_require_logged_in_access
+  #
+  def self.should_require_logged_in_access_for(action, opt={}) # {{{
+    action = [ action ] if !action.kind_of? Array
+    param = opt.clone
+    param.delete([:flash, :redirect, :return_to])
+    action.each do |a|
+      context "get #{a.to_s}" do
+        setup do
+          get action, param
+        end
+        self.should_require_logged_in_access opt
+      end
+    end
+  end # }}}
+
   # Convinience method to test if controller properly handled a user who is not
   # an admin.
+  #
+  # This assumes that you have already established a context for the shoulda tests to run.
   #
   # Options:
   #   opt => Hash of options (Optional). See should_check_logged_in_status().
@@ -194,6 +223,29 @@ class Test::Unit::TestCase # :nodoc:
     opt[:redirect] ||= :login_path
     opt[:return_to] ||= false
     self.should_check_logged_in_status(opt)
+  end # }}}
+
+  # Shoulda context specific to test if admin access is required.
+  # This will only use the get method. You can pass in params using the opt hash.
+  #
+  # This method uses should_require_admin_access internally.
+  #
+  # Options:
+  #   action => symbol for the action to test
+  #   opt => See should_require_admin_access
+  #
+  def self.should_require_admin_access_for(action, opt={}) # {{{
+    action = [ action ] if !action.kind_of? Array
+    param = opt.clone
+    param.delete([:flash, :redirect, :return_to])
+    action.each do |a|
+      context "get #{a.to_s}" do
+        setup do
+          get action, param
+        end
+        self.should_require_admin_access opt
+      end
+    end
   end # }}}
 
   # Checks REST actions for correct login or admin access.
