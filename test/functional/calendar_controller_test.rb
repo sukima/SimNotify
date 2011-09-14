@@ -7,25 +7,29 @@ class CalendarControllerTest < ActionController::TestCase
   should route(:get, "/calendar/events").to(:action => :events)
   should route(:get, "/calendar/agenda").to(:action => :agenda)
 
-  should_require_logged_in
-  should_require_logged_in :action => :events
-  should_require_logged_in :action => :agenda
+  # Check for required login {{{1
+  should_require_logged_in_access_for [:index, :agenda, :save_preferences]
+  should_require_logged_in_access_for :tech_schedule, :tech_id => 1
 
+  # Logged in as :instructor tests {{{1
   logged_in_as :instructor do
+
+    should_require_admin_access_for [:agenda]
+    # Needs admin if tech_id != current_instructor.id
+    context "get :tech_schedule with id that is not self" do
+      setup do
+        @tech = Factory(:technician)
+        get :tech_schedule, :tech_id => @tech.id
+      end
+      should_require_admin_access
+    end
+
     context "get :index" do
       setup do
         get :index
       end
       should respond_with :success
       should render_template :index
-    end
-
-    context "get :agenda" do
-      should_require_admin :action => :agenda
-    end
-
-    context "get :tech_schedule" do
-      should_require_admin :action => :tech_schedule
     end
 
     context "get :events" do
@@ -119,6 +123,17 @@ class CalendarControllerTest < ActionController::TestCase
     end
   end
 
+  # logged in as :technician test {{{1
+  logged_in_as :technician do
+    context "get :tech_schedule" do
+      setup do
+        get :tech_schedule, :tech_id => @current_instructor.id
+      end
+      should respond_with :success
+    end
+  end
+
+  # logged in as :admin tests {{{1
   logged_in_as :admin do
     context "get :events" do
       context "with unsubmitted event," do
@@ -197,7 +212,6 @@ class CalendarControllerTest < ActionController::TestCase
         should assign_to(:week_index).with("0")
         should assign_to(:tech)
         should assign_to(:tech_id)
-        should assign_to(:technicians)
         should assign_to(:start_of_week)
         should assign_to(:end_of_week)
         should assign_to(:events)
@@ -211,7 +225,6 @@ class CalendarControllerTest < ActionController::TestCase
         should assign_to(:week_index).with("3")
         should assign_to(:tech)
         should assign_to(:tech_id)
-        should assign_to(:technicians)
         should assign_to(:start_of_week)
         should assign_to(:end_of_week)
         should assign_to(:events)
@@ -246,7 +259,7 @@ class CalendarControllerTest < ActionController::TestCase
     end
   end
 
-  private
+  private # {{{1
   def construct_params(event_type)
     assert @event = Factory(event_type)
     assert @start = @event.start_time - 5.days
@@ -264,3 +277,4 @@ class CalendarControllerTest < ActionController::TestCase
     @json = [{}] if (@json.nil? || @json[0].nil?)
   end
 end
+# vim:set sw=2 ts=2 et fdm=marker:
