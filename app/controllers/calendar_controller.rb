@@ -28,7 +28,7 @@ class CalendarController < ApplicationController
     @week_index = params[:week_index]
     @week_index ||= "0"
     @tech = Instructor.find(params[:tech_id])
-    @technicians = Instructor.technicians
+    login_admin if @current_instructor != @tech
 
     i = @week_index.to_i
     @start_of_week = Time.now.beginning_of_week + i.weeks
