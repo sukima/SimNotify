@@ -1,5 +1,5 @@
 # Sets the current person in the session from the person fixtures.
-class Test::Unit::TestCase # :nodoc:
+class Test::Unit::TestCase
 
   # Set the current state of being logged in.
   #
