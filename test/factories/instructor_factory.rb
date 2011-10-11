@@ -1,6 +1,4 @@
 Factory.define :instructor do |i|
-  # Prevents Authlogic from logging in automatically
-  i.skip_session_maintenance true
   i.sequence(:name) { |n| "first_name#{n} last_name#{n}" }
   i.sequence(:email) { |n| "testemail#{n}@example.com" }
   i.office "nowhere"
@@ -9,19 +7,30 @@ Factory.define :instructor do |i|
   i.notify_recipient false
   i.gui_theme nil
   i.new_user false
-  i.password "secret"
-  i.password_confirmation "secret"
+  i.password "secret_password"
+  i.password_confirmation "secret_password"
 end
 
-Factory.define :admin, :parent => :instructor do |i|
+Factory.define :create_instructor, :parent => :instructor do |i|
   i.admin true
-end
-
-Factory.define :new_instructor, :parent => :instructor do |i|
+  i.notify_recipient true
   i.new_user true
 end
 
-Factory.define :technician, :parent => :instructor do |i|
+Factory.define :instructor_auth, :parent => :instructor do |i|
+  # Prevents Authlogic from logging in automatically
+  i.skip_session_maintenance true
+end
+
+Factory.define :admin, :parent => :instructor_auth do |i|
+  i.admin true
+end
+
+Factory.define :new_instructor, :parent => :instructor_auth do |i|
+  i.new_user true
+end
+
+Factory.define :technician, :parent => :instructor_auth do |i|
   i.admin true
   i.is_tech true
 end
