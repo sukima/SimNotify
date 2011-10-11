@@ -51,23 +51,30 @@ module Authentication
   def login_required_no_flash
     unless logged_in?
       redirect_to_login
+      return false
     end
+    return true
   end
   
   def login_required
     unless logged_in?
       flash[:error] = t(:login_required)
       redirect_to_login
+      return false
     end
+    return true
   end
 
   def login_admin
     if !logged_in?
       login_required
+      return false
     elsif !current_instructor.admin?
       flash[:error] = t(:admin_required)
       redirect_to_login
+      return false
     end
+    return true
   end
   
   def redirect_to_target_or_default(default)

@@ -1,6 +1,7 @@
 class InstructorsController < ApplicationController
   before_filter :login_required, :except => [:new, :create, :emails]
-  before_filter :login_admin, :only => [:index, :destroy]
+  before_filter :login_admin, :only => :index
+  # We do not allow instructors to be destroyed; no :destroy action available.
 
   def index
     @instructors = Instructor.all
@@ -44,24 +45,24 @@ class InstructorsController < ApplicationController
 
   def update
     @instructor = Instructor.find(params[:id])
-    login_admin unless @instructor == @current_instructor
-
+    unless @instructor == @current_instructor || login_admin
+      return
+    end
+    
     # Prevent self promotion to admin.
     @instructor.admin = false unless is_admin?
+    @instructor.notify_recipient = false unless is_admin?
 
-    if @instructor.update_attributes(params[:instructor])
-      flash[:notice] = "Successfully updated your profile."
-      redirect_to root_url
-    else
-      render :action => 'edit'
+    respond_to do |wants|
+      if @instructor.update_attributes(params[:instructor])
+        flash[:notice] = "Successfully updated #{(is_admin?) ? "#{@instructor.name}'s" : "your" } profile."
+        wants.html { redirect_to(@instructor) }
+        wants.xml  { head :ok }
+      else
+        wants.html { render :action => "edit" }
+        wants.xml  { render :xml => @instructor.errors, :status => :unprocessable_entity }
+      end
     end
-  end
-
-  def destroy
-    @instructor = Instructor.find(params[:id])
-    @instructor.destroy
-    flash[:notice] = "Successfully destroyed instructor profile."
-    redirect_to :action => 'show'
   end
 
   def emails
