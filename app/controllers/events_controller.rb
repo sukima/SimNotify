@@ -111,7 +111,9 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     if event_owned_or_admin_check(@event)
-      if @event.submitted? || @event.approved?
+      # Added admin check to allow any admin to just delete regardless of
+      # submitted or approved status. (Requested for Hotfix 1.4.4)
+      if !is_admin? && ( @event.submitted? || @event.approved?)
         flash[:error] = t(:cannot_destroy_event)
       else
         @event.destroy
